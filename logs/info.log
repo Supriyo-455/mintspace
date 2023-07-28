@@ -1,0 +1,2 @@
+INFO: 2023/07/28 16:37:55 router.go:17: Successfully converted routerFunc to httprouter.Handle!
+INFO: 2023/07/28 16:39:42 main.go:17: Server started with address:  127.0.0.1:8080

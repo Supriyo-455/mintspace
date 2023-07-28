@@ -12,9 +12,7 @@ type routerFunc func(w http.ResponseWriter, r *http.Request, p httprouter.Params
 func makeRouterHandleFunc(f routerFunc) httprouter.Handle {
 	return func(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 		if err := f(w, r, p); err != nil {
-			// handle error
-			// log the error
-			print(err)
+			Error().Println(err.Error())
 		}
 	}
 }

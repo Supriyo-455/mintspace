@@ -14,6 +14,6 @@ func main() {
 		Handler: router.mux,
 	}
 
-	print("Listening on port: ", config.Address)
+	Info().Println("Server started with address: ", config.Address)
 	server.ListenAndServe()
 }
