@@ -1,7 +1,6 @@
 package main
 
 import (
-	"log"
 	"os"
 )
 
@@ -14,7 +13,7 @@ func ReadFile(path string) error {
 	if FileExist(path) {
 		file, err := os.OpenFile(path, os.O_RDONLY, 0666)
 		if err != nil {
-			log.Fatalln("error occured! ", err.Error())
+			Error().Fatalln("error occured! ", err.Error())
 			return err
 		}
 		// TODO: DO stuff with the file
@@ -30,7 +29,7 @@ func FileExist(path string) bool {
 		if os.IsNotExist(err) {
 			return false
 		}
-		log.Fatalln("error occured! ", err.Error())
+		Error().Fatalln("error occured! ", err.Error())
 	}
 	return true
 }

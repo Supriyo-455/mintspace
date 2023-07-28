@@ -1,4 +1,4 @@
-module github.com/Supriyo-455/mint_space
+module github.com/Supriyo-455/mintspace
 
 go 1.20
 
