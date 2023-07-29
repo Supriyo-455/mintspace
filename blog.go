@@ -1,7 +1,7 @@
 package main
 
 type Blog struct {
-	Id            int64  `json:"id"`
+	Id            int    `json:"id"`
 	Author        *User  `json:"author"`
 	Title         string `json:"title"`
 	Content       string `json:"content"`

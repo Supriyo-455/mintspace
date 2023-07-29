@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{ .Title }}</title>
+  </head>
+  <body>
+    <h1>{{ .Title }}</h1>
+    <h3>Author: {{ .Author.Name }}</h3>
+    <p>ImageURL: {{ .CoverImageURL }}</p>
+    <p>
+      Type: {{ if .Premium }} Premium Content {{ else }} Regular Content {{ end
+      }}
+    </p>
+    <h5>{{ .Content }}</h5>
+  </body>
+</html>
