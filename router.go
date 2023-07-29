@@ -1,17 +1,17 @@
 package main
 
 import (
-	"fmt"
 	"net/http"
+	"text/template"
 
 	"github.com/julienschmidt/httprouter"
 )
 
-type routerFunc func(w http.ResponseWriter, r *http.Request, p httprouter.Params) error
+type routerFunc func(res http.ResponseWriter, req *http.Request, params httprouter.Params) error
 
 func makeRouterHandleFunc(f routerFunc) httprouter.Handle {
-	return func(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
-		if err := f(w, r, p); err != nil {
+	return func(res http.ResponseWriter, req *http.Request, params httprouter.Params) {
+		if err := f(res, req, params); err != nil {
 			Error().Println(err.Error())
 		}
 	}
@@ -31,6 +31,7 @@ func NewRouter() *Router {
 }
 
 func index(res http.ResponseWriter, req *http.Request, _ httprouter.Params) error {
-	fmt.Fprintf(res, "My blogging app!!")
-	return nil
+	templ, err := template.ParseFiles("templates/home.html")
+	templ.Execute(res, "")
+	return err
 }

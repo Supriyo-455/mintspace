@@ -1,2 +1,10 @@
 INFO: 2023/07/28 16:37:55 router.go:17: Successfully converted routerFunc to httprouter.Handle!
 INFO: 2023/07/28 16:39:42 main.go:17: Server started with address:  127.0.0.1:8080
+INFO: 2023/07/29 07:33:30 main.go:17: Server started with address:  127.0.0.1:8080
+INFO: 2023/07/29 08:03:27 main.go:19: Server started with address:  127.0.0.1:8080
+INFO: 2023/07/29 08:03:39 main.go:19: Server started with address:  127.0.0.1:8080
+INFO: 2023/07/29 08:04:22 main.go:19: Server started with address:  127.0.0.1:8080
+INFO: 2023/07/29 08:04:37 main.go:19: Server started with address:  127.0.0.1:8080
+INFO: 2023/07/29 08:13:20 storage.go:34: ObjectID("64c47cc8052c29a33fded2e1")
+INFO: 2023/07/29 08:13:20 storage.go:45: [ObjectID("64c47cc8052c29a33fded2e2") ObjectID("64c47cc8052c29a33fded2e3") ObjectID("64c47cc8052c29a33fded2e4")]
+INFO: 2023/07/29 08:13:20 main.go:19: Server started with address:  127.0.0.1:8080

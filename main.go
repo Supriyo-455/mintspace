@@ -7,6 +7,8 @@ import (
 func main() {
 	print(config.Address, config.Static)
 
+	TestMongo(ConnectToMongo())
+
 	router := NewRouter()
 
 	server := http.Server{
@@ -15,5 +17,8 @@ func main() {
 	}
 
 	Info().Println("Server started with address: ", config.Address)
-	server.ListenAndServe()
+	err := server.ListenAndServe()
+	if err != nil {
+		Error().Fatalln(err)
+	}
 }
