@@ -1,2 +1,4 @@
 ERROR: 2023/07/29 08:04:22 main.go:22: listen tcp 127.0.0.1:8080: bind: address already in use
 ERROR: 2023/07/29 18:04:27 fileutils.go:48: json: cannot unmarshal bool into Go struct field User.array.author.admin of type string
+ERROR: 2023/07/29 18:45:42 main.go:22: listen tcp 192.168.0.100:8080: bind: cannot assign requested address
+ERROR: 2023/07/29 18:47:33 main.go:22: listen tcp 192.168.0.101:8080: bind: cannot assign requested address

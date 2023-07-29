@@ -22,3 +22,10 @@ INFO: 2023/07/29 18:12:17 storage.go:34: ObjectID("64c509290ac72b46ae282a0c")
 INFO: 2023/07/29 18:12:17 storage.go:45: [ObjectID("64c509290ac72b46ae282a0d") ObjectID("64c509290ac72b46ae282a0e") ObjectID("64c509290ac72b46ae282a0f")]
 INFO: 2023/07/29 18:12:17 main.go:19: Server started with address:  127.0.0.1:8080
 INFO: 2023/07/29 18:12:20 router.go:37: {5 [{1 0xc0002aa340 Example blog Example content www.image.com false} {1 0xc0002aa3c0 Example blog Example content www.image.com false} {1 0xc0002aa400 Example blog Example content www.image.com false} {1 0xc0002aa440 Example blog Example content www.image.com false} {1 0xc0002aa480 Example blog Example content www.image.com false}]}
+INFO: 2023/07/29 18:27:24 main.go:19: Server started with address:  127.0.0.1:8080
+INFO: 2023/07/29 18:45:42 main.go:19: Server started with address:  192.168.0.100:8080
+INFO: 2023/07/29 18:47:33 main.go:19: Server started with address:  192.168.0.101:8080
+INFO: 2023/07/29 18:57:56 main.go:19: Server started with address:  192.168.0.102:8080
+INFO: 2023/07/29 19:13:34 config.go:23: {192.168.0.102:8080 static LocalRouter}
+INFO: 2023/07/29 19:15:33 config.go:23: Server configuration: Addr: 192.168.0.102:8080, StaticDir: static, Mode: LocalRouter
+INFO: 2023/07/29 19:16:11 config.go:23: Server configuration-> { Addr: 192.168.0.102:8080, StaticDir: static, Mode: LocalRouter}

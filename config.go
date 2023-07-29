@@ -11,15 +11,16 @@ var config Configuration
 type Configuration struct {
 	Address string
 	Static  string
+	Mode    string
 }
 
-// Convenience function for printing to stdout
 func print(a ...interface{}) {
 	fmt.Println(a...)
 }
 
 func init() {
 	loadConfig()
+	Info().Printf("Server configuration-> { Addr: %s, StaticDir: %s, Mode: %s}\n", config.Address, config.Static, config.Mode)
 }
 
 func loadConfig() {

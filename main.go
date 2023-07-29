@@ -5,8 +5,6 @@ import (
 )
 
 func main() {
-	print(config.Address, config.Static)
-
 	// TestMongo(ConnectToMongo())
 
 	router := NewRouter()
@@ -16,7 +14,7 @@ func main() {
 		Handler: router.mux,
 	}
 
-	Info().Println("Server started with address: ", config.Address)
+	print("Server config:", config)
 	err := server.ListenAndServe()
 	if err != nil {
 		Error().Fatalln(err)
