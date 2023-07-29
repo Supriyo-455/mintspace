@@ -7,3 +7,6 @@ type User struct {
 	EncryptedPassword string `json:"password"`
 	Admin             bool   `json:"admin"`
 }
+
+// User authentications
+// User permissions
