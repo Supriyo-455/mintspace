@@ -32,6 +32,9 @@ func NewRouter() *Router {
 
 func index(res http.ResponseWriter, req *http.Request, _ httprouter.Params) error {
 	templ, err := template.ParseFiles("templates/home.html")
-	templ.Execute(res, "")
+
+	blogs := getSampleBlogs()
+	templ.Execute(res, blogs.Array)
+
 	return err
 }

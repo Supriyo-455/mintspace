@@ -8,3 +8,17 @@ INFO: 2023/07/29 08:04:37 main.go:19: Server started with address:  127.0.0.1:80
 INFO: 2023/07/29 08:13:20 storage.go:34: ObjectID("64c47cc8052c29a33fded2e1")
 INFO: 2023/07/29 08:13:20 storage.go:45: [ObjectID("64c47cc8052c29a33fded2e2") ObjectID("64c47cc8052c29a33fded2e3") ObjectID("64c47cc8052c29a33fded2e4")]
 INFO: 2023/07/29 08:13:20 main.go:19: Server started with address:  127.0.0.1:8080
+INFO: 2023/07/29 18:04:17 storage.go:34: ObjectID("64c50749218802cff6d16107")
+INFO: 2023/07/29 18:04:17 storage.go:45: [ObjectID("64c50749218802cff6d16108") ObjectID("64c50749218802cff6d16109") ObjectID("64c50749218802cff6d1610a")]
+INFO: 2023/07/29 18:04:17 main.go:19: Server started with address:  127.0.0.1:8080
+INFO: 2023/07/29 18:05:03 storage.go:34: ObjectID("64c50777c0cf42d286f1ee4c")
+INFO: 2023/07/29 18:05:03 storage.go:45: [ObjectID("64c50777c0cf42d286f1ee4d") ObjectID("64c50777c0cf42d286f1ee4e") ObjectID("64c50777c0cf42d286f1ee4f")]
+INFO: 2023/07/29 18:05:03 main.go:19: Server started with address:  127.0.0.1:8080
+INFO: 2023/07/29 18:06:13 storage.go:34: ObjectID("64c507bd85ed7d50115ad33c")
+INFO: 2023/07/29 18:06:13 storage.go:45: [ObjectID("64c507bd85ed7d50115ad33d") ObjectID("64c507bd85ed7d50115ad33e") ObjectID("64c507bd85ed7d50115ad33f")]
+INFO: 2023/07/29 18:06:13 main.go:19: Server started with address:  127.0.0.1:8080
+INFO: 2023/07/29 18:06:17 router.go:36: {5 [{1 0xc000078bc0 Example blog Example content www.image.com false} {1 0xc000078c40 Example blog Example content www.image.com false} {1 0xc000078c80 Example blog Example content www.image.com false} {1 0xc000078cc0 Example blog Example content www.image.com false} {1 0xc000078d00 Example blog Example content www.image.com false}]}
+INFO: 2023/07/29 18:12:17 storage.go:34: ObjectID("64c509290ac72b46ae282a0c")
+INFO: 2023/07/29 18:12:17 storage.go:45: [ObjectID("64c509290ac72b46ae282a0d") ObjectID("64c509290ac72b46ae282a0e") ObjectID("64c509290ac72b46ae282a0f")]
+INFO: 2023/07/29 18:12:17 main.go:19: Server started with address:  127.0.0.1:8080
+INFO: 2023/07/29 18:12:20 router.go:37: {5 [{1 0xc0002aa340 Example blog Example content www.image.com false} {1 0xc0002aa3c0 Example blog Example content www.image.com false} {1 0xc0002aa400 Example blog Example content www.image.com false} {1 0xc0002aa440 Example blog Example content www.image.com false} {1 0xc0002aa480 Example blog Example content www.image.com false}]}

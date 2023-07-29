@@ -7,7 +7,7 @@ import (
 func main() {
 	print(config.Address, config.Static)
 
-	TestMongo(ConnectToMongo())
+	// TestMongo(ConnectToMongo())
 
 	router := NewRouter()
 

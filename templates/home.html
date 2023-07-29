@@ -12,7 +12,20 @@
       development
     </p>
 
-    <div class="content"></div>
+    <div class="content">
+      <h3>Blogs list</h3>
+      <ul>
+        {{ range . }}
+        <li>
+          <div>
+            <h4>Id: {{ .Id }}</h4>
+            <h4>Name: {{ .Title }}</h4>
+            <h5>Author: {{ .Author.Name }}</h5>
+          </div>
+        </li>
+        {{ end }}
+      </ul>
+    </div>
 
     <footer>
       <!-- About me -->
