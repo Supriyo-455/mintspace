@@ -4,7 +4,6 @@ type Blog struct {
 	Id            int    `json:"id"`
 	Author        *User  `json:"author"`
 	Title         string `json:"title"`
-	Content       string `json:"content"`
 	CoverImageURL string `json:"coverImageURL"`
 	Premium       bool   `json:"premium"`
 }

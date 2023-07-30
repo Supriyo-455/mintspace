@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"net/http"
+	"strconv"
 	"text/template"
 
 	"github.com/julienschmidt/httprouter"
@@ -13,8 +14,17 @@ type routerFunc func(res http.ResponseWriter, req *http.Request, params httprout
 func makeRouterHandleFunc(f routerFunc) httprouter.Handle {
 	return func(res http.ResponseWriter, req *http.Request, params httprouter.Params) {
 		if err := f(res, req, params); err != nil {
-			fmt.Fprintln(res, "Error Occured!")
-			LogError().Println(err.Error())
+			LogError().Println(err.Error()) // Not so fatal error
+
+			temp, err := template.ParseFiles("templates/404.html")
+			if err != nil {
+				LogError().Fatalln(err.Error()) // Fatal error for not finding 404.html
+			}
+
+			err = temp.Execute(res, nil)
+			if err != nil {
+				LogError().Fatalln(err.Error()) // Fatal error for not finding 404.html
+			}
 		}
 	}
 }
@@ -30,16 +40,20 @@ func NewRouter() *Router {
 	files := http.FileServer(http.Dir(config.Static))
 	router.mux.Handler("GET", "/static/", http.StripPrefix("/static/", files))
 
-	router.mux.GET("/", makeRouterHandleFunc(home))
 	router.mux.GET("/blog/", makeRouterHandleFunc(getBlogsHandle))
 	router.mux.GET("/blog/:id", makeRouterHandleFunc(getBlogByIdHandle))
+
+	router.mux.NotFound = http.HandlerFunc(handle404)
 
 	return router
 }
 
-func home(res http.ResponseWriter, req *http.Request, _ httprouter.Params) error {
-	fmt.Fprintln(res, "Hello world!")
-	return nil
+func handle404(res http.ResponseWriter, req *http.Request) {
+	temp, err := template.ParseFiles("templates/404.html")
+	if err != nil {
+		LogError().Fatalln(err)
+	}
+	temp.Execute(res, nil)
 }
 
 func getBlogsHandle(res http.ResponseWriter, req *http.Request, _ httprouter.Params) error {
@@ -59,17 +73,18 @@ func getBlogByIdHandle(res http.ResponseWriter, req *http.Request, params httpro
 	// 	return err
 	// }
 
-	// id, err := strconv.Atoi(params.ByName("id"))
-	// if err != nil {
-	// 	return err
-	// }
+	id, err := strconv.Atoi(params.ByName("id"))
+	if err != nil {
+		return err
+	}
 
-	// blog, err := getSampleBlogById(id)
-	// if err != nil {
-	// 	return err
-	// }
+	blog, err := getSampleBlogById(id)
+	if err != nil {
+		return err
+	}
 
-	blogContent := ReadFile("blogs/SampleBlog.md")
+	path := fmt.Sprintf("blogs/%d.md", blog.Id)
+	blogContent := ReadFile(path)
 	blogContentHtml := MdToHTML(blogContent)
 
 	fmt.Fprintln(res, string(blogContentHtml))
