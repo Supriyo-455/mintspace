@@ -17,6 +17,6 @@ func main() {
 	print("Server config:", config)
 	err := server.ListenAndServe()
 	if err != nil {
-		Error().Fatalln(err)
+		LogError().Fatalln(err)
 	}
 }

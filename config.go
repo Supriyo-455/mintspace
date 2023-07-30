@@ -20,18 +20,18 @@ func print(a ...interface{}) {
 
 func init() {
 	loadConfig()
-	Info().Printf("Server configuration-> { Addr: %s, StaticDir: %s, Mode: %s}\n", config.Address, config.Static, config.Mode)
+	LogInfo().Printf("Server configuration-> { Addr: %s, StaticDir: %s, Mode: %s}\n", config.Address, config.Static, config.Mode)
 }
 
 func loadConfig() {
 	file, err := os.Open("config.json")
 	if err != nil {
-		Error().Fatalln("Cannot open config file", err)
+		LogError().Fatalln("Cannot open config file", err)
 	}
 	decoder := json.NewDecoder(file)
 	config = Configuration{}
 	err = decoder.Decode(&config)
 	if err != nil {
-		Error().Fatalln("Cannot get configuration from file", err)
+		LogError().Fatalln("Cannot get configuration from file", err)
 	}
 }

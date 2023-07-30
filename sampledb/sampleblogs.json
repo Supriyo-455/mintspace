@@ -1,75 +1,75 @@
 {
-    "length": 5,
-    "array": [
-        {
-            "id" : 1,
-            "author": {
-                "id": 1,
-                "name": "supriyo paul",
-                "email": "example.com",
-                "password": "dasdkasjdaksdjlaksd",
-                "admin": true
-            },
-            "title": "Example blog",
-            "content": "Example content",
-            "coverImageURL": "www.image.com",
-            "premium": false
-        },
-        {
-            "id" : 1,
-            "author": {
-                "id": 1,
-                "name": "supriyo paul",
-                "email": "example.com",
-                "password": "dasdkasjdaksdjlaksd",
-                "admin": true
-            },
-            "title": "Example blog",
-            "content": "Example content",
-            "coverImageURL": "www.image.com",
-            "premium": false
-        },
-        {
-            "id" : 1,
-            "author": {
-                "id": 1,
-                "name": "supriyo paul",
-                "email": "example.com",
-                "password": "dasdkasjdaksdjlaksd",
-                "admin": true
-            },
-            "title": "Example blog",
-            "content": "Example content",
-            "coverImageURL": "www.image.com",
-            "premium": false
-        },
-        {
-            "id" : 1,
-            "author": {
-                "id": 1,
-                "name": "supriyo paul",
-                "email": "example.com",
-                "password": "dasdkasjdaksdjlaksd",
-                "admin": true
-            },
-            "title": "Example blog",
-            "content": "Example content",
-            "coverImageURL": "www.image.com",
-            "premium": false
-        },
-        {
-            "id" : 1,
-            "author": {
-                "id": 1,
-                "name": "supriyo paul",
-                "email": "example.com",
-                "password": "dasdkasjdaksdjlaksd",
-                "admin": true
-            },
-            "title": "Example blog",
-            "content": "Example content",
-            "coverImageURL": "www.image.com",
-            "premium": false
-        }
-    ]
+  "length": 5,
+  "array": [
+    {
+      "id": 1,
+      "author": {
+        "id": 1,
+        "name": "supriyo paul",
+        "email": "example.com",
+        "password": "dasdkasjdaksdjlaksd",
+        "admin": true
+      },
+      "title": "Example blog",
+      "content": "Example content",
+      "coverImageURL": "www.image.com",
+      "premium": true
+    },
+    {
+      "id": 1,
+      "author": {
+        "id": 1,
+        "name": "supriyo paul",
+        "email": "example.com",
+        "password": "dasdkasjdaksdjlaksd",
+        "admin": true
+      },
+      "title": "Example blog",
+      "content": "Example content",
+      "coverImageURL": "www.image.com",
+      "premium": false
+    },
+    {
+      "id": 1,
+      "author": {
+        "id": 1,
+        "name": "supriyo paul",
+        "email": "example.com",
+        "password": "dasdkasjdaksdjlaksd",
+        "admin": true
+      },
+      "title": "Example blog",
+      "content": "Example content",
+      "coverImageURL": "www.image.com",
+      "premium": false
+    },
+    {
+      "id": 1,
+      "author": {
+        "id": 1,
+        "name": "supriyo paul",
+        "email": "example.com",
+        "password": "dasdkasjdaksdjlaksd",
+        "admin": true
+      },
+      "title": "Example blog",
+      "content": "Example content",
+      "coverImageURL": "www.image.com",
+      "premium": false
+    },
+    {
+      "id": 1,
+      "author": {
+        "id": 1,
+        "name": "supriyo paul",
+        "email": "example.com",
+        "password": "dasdkasjdaksdjlaksd",
+        "admin": true
+      },
+      "title": "Example blog",
+      "content": "Example content",
+      "coverImageURL": "www.image.com",
+      "premium": false
+    }
+  ]
 }

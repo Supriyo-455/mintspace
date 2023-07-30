@@ -12,11 +12,11 @@ import (
 func ConnectToMongo() *mongo.Client {
 	client, err := mongo.Connect(context.TODO(), options.Client().ApplyURI("mongodb://localhost:27017"))
 	if err != nil {
-		Error().Fatalln(err)
+		LogError().Fatalln(err)
 	}
 
 	if err := client.Ping(context.TODO(), readpref.Primary()); err != nil {
-		Error().Fatalln(err)
+		LogError().Fatalln(err)
 	}
 
 	return client
@@ -29,9 +29,9 @@ func TestMongo(client *mongo.Client) {
 
 	result, err := usersCollection.InsertOne(context.TODO(), user)
 	if err != nil {
-		Error().Fatalln(err)
+		LogError().Fatalln(err)
 	}
-	Info().Println(result.InsertedID)
+	LogInfo().Println(result.InsertedID)
 
 	users := []interface{}{
 		bson.D{{Key: "fullName", Value: "User 2"}, {Key: "age", Value: 25}},
@@ -40,7 +40,7 @@ func TestMongo(client *mongo.Client) {
 	}
 	results, err := usersCollection.InsertMany(context.TODO(), users)
 	if err != nil {
-		Error().Fatalln(err)
+		LogError().Fatalln(err)
 	}
-	Info().Println(results.InsertedIDs)
+	LogInfo().Println(results.InsertedIDs)
 }

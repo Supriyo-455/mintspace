@@ -13,6 +13,6 @@
       Type: {{ if .Premium }} Premium Content {{ else }} Regular Content {{ end
       }}
     </p>
-    <h5>{{ .Content }}</h5>
+    <h5>{{ template "content" }}</h5>
   </body>
 </html>

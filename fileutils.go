@@ -3,6 +3,10 @@ package main
 import (
 	"encoding/json"
 	"os"
+
+	"github.com/gomarkdown/markdown"
+	"github.com/gomarkdown/markdown/html"
+	"github.com/gomarkdown/markdown/parser"
 )
 
 func WriteToFile(path, data string) error {
@@ -10,18 +14,12 @@ func WriteToFile(path, data string) error {
 	return err
 }
 
-func ReadFile(path string) error {
-	if FileExist(path) {
-		file, err := os.OpenFile(path, os.O_RDONLY, 0666)
-		if err != nil {
-			Error().Fatalln(err.Error())
-			return err
-		}
-		// TODO: DO stuff with the file
-
-		file.Close()
+func ReadFile(path string) []byte {
+	data, err := os.ReadFile(path)
+	if err != nil {
+		LogError().Fatalln(err.Error())
 	}
-	return nil
+	return data
 }
 
 func FileExist(path string) bool {
@@ -30,7 +28,7 @@ func FileExist(path string) bool {
 		if os.IsNotExist(err) {
 			return false
 		}
-		Error().Fatalln(err.Error())
+		LogError().Fatalln(err.Error())
 	}
 	return true
 }
@@ -38,15 +36,29 @@ func FileExist(path string) bool {
 func LoadJson(filename string, key interface{}) {
 	inFile, err := os.Open(filename)
 	if err != nil {
-		Error().Fatalln(err.Error())
+		LogError().Fatalln(err.Error())
 	}
 
 	decoder := json.NewDecoder(inFile)
 
 	err = decoder.Decode(key)
 	if err != nil {
-		Error().Fatalln(err.Error())
+		LogError().Fatalln(err.Error())
 	}
 
 	inFile.Close()
+}
+
+func MdToHTML(md []byte) []byte {
+	// create markdown parser with extensions
+	extensions := parser.CommonExtensions | parser.AutoHeadingIDs | parser.NoEmptyLineBeforeBlock
+	p := parser.NewWithExtensions(extensions)
+	doc := p.Parse(md)
+
+	// create html renderer with extensions
+	htmlFlags := html.CommonFlags | html.HrefTargetBlank
+	opts := html.RendererOptions{Flags: htmlFlags}
+	renderer := html.NewRenderer(opts)
+
+	return markdown.Render(doc, renderer)
 }

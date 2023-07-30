@@ -5,3 +5,6 @@ ERROR: 2023/07/29 18:47:33 main.go:22: listen tcp 192.168.0.101:8080: bind: cann
 ERROR: 2023/07/29 21:34:08 router.go:17: blog with id 100 not found
 ERROR: 2023/07/29 21:44:10 router.go:17: strconv.Atoi: parsing "ds": invalid syntax
 ERROR: 2023/07/29 21:46:37 router.go:18: strconv.Atoi: parsing "1das": invalid syntax
+ERROR: 2023/07/30 13:04:34 fileutils.go:52: invalid character '\n' in string literal
+ERROR: 2023/07/30 13:55:23 router.go:17: open templates/blogContent.html: no such file or directory
+ERROR: 2023/07/30 13:56:21 fileutils.go:20: open blogs/sampleBlog.md: no such file or directory

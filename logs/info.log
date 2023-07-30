@@ -1,38 +1,618 @@
-INFO: 2023/07/28 16:37:55 router.go:17: Successfully converted routerFunc to httprouter.Handle!
-INFO: 2023/07/28 16:39:42 main.go:17: Server started with address:  127.0.0.1:8080
-INFO: 2023/07/29 07:33:30 main.go:17: Server started with address:  127.0.0.1:8080
-INFO: 2023/07/29 08:03:27 main.go:19: Server started with address:  127.0.0.1:8080
-INFO: 2023/07/29 08:03:39 main.go:19: Server started with address:  127.0.0.1:8080
-INFO: 2023/07/29 08:04:22 main.go:19: Server started with address:  127.0.0.1:8080
-INFO: 2023/07/29 08:04:37 main.go:19: Server started with address:  127.0.0.1:8080
-INFO: 2023/07/29 08:13:20 storage.go:34: ObjectID("64c47cc8052c29a33fded2e1")
-INFO: 2023/07/29 08:13:20 storage.go:45: [ObjectID("64c47cc8052c29a33fded2e2") ObjectID("64c47cc8052c29a33fded2e3") ObjectID("64c47cc8052c29a33fded2e4")]
-INFO: 2023/07/29 08:13:20 main.go:19: Server started with address:  127.0.0.1:8080
-INFO: 2023/07/29 18:04:17 storage.go:34: ObjectID("64c50749218802cff6d16107")
-INFO: 2023/07/29 18:04:17 storage.go:45: [ObjectID("64c50749218802cff6d16108") ObjectID("64c50749218802cff6d16109") ObjectID("64c50749218802cff6d1610a")]
-INFO: 2023/07/29 18:04:17 main.go:19: Server started with address:  127.0.0.1:8080
-INFO: 2023/07/29 18:05:03 storage.go:34: ObjectID("64c50777c0cf42d286f1ee4c")
-INFO: 2023/07/29 18:05:03 storage.go:45: [ObjectID("64c50777c0cf42d286f1ee4d") ObjectID("64c50777c0cf42d286f1ee4e") ObjectID("64c50777c0cf42d286f1ee4f")]
-INFO: 2023/07/29 18:05:03 main.go:19: Server started with address:  127.0.0.1:8080
-INFO: 2023/07/29 18:06:13 storage.go:34: ObjectID("64c507bd85ed7d50115ad33c")
-INFO: 2023/07/29 18:06:13 storage.go:45: [ObjectID("64c507bd85ed7d50115ad33d") ObjectID("64c507bd85ed7d50115ad33e") ObjectID("64c507bd85ed7d50115ad33f")]
-INFO: 2023/07/29 18:06:13 main.go:19: Server started with address:  127.0.0.1:8080
-INFO: 2023/07/29 18:06:17 router.go:36: {5 [{1 0xc000078bc0 Example blog Example content www.image.com false} {1 0xc000078c40 Example blog Example content www.image.com false} {1 0xc000078c80 Example blog Example content www.image.com false} {1 0xc000078cc0 Example blog Example content www.image.com false} {1 0xc000078d00 Example blog Example content www.image.com false}]}
-INFO: 2023/07/29 18:12:17 storage.go:34: ObjectID("64c509290ac72b46ae282a0c")
-INFO: 2023/07/29 18:12:17 storage.go:45: [ObjectID("64c509290ac72b46ae282a0d") ObjectID("64c509290ac72b46ae282a0e") ObjectID("64c509290ac72b46ae282a0f")]
-INFO: 2023/07/29 18:12:17 main.go:19: Server started with address:  127.0.0.1:8080
-INFO: 2023/07/29 18:12:20 router.go:37: {5 [{1 0xc0002aa340 Example blog Example content www.image.com false} {1 0xc0002aa3c0 Example blog Example content www.image.com false} {1 0xc0002aa400 Example blog Example content www.image.com false} {1 0xc0002aa440 Example blog Example content www.image.com false} {1 0xc0002aa480 Example blog Example content www.image.com false}]}
-INFO: 2023/07/29 18:27:24 main.go:19: Server started with address:  127.0.0.1:8080
-INFO: 2023/07/29 18:45:42 main.go:19: Server started with address:  192.168.0.100:8080
-INFO: 2023/07/29 18:47:33 main.go:19: Server started with address:  192.168.0.101:8080
-INFO: 2023/07/29 18:57:56 main.go:19: Server started with address:  192.168.0.102:8080
-INFO: 2023/07/29 19:13:34 config.go:23: {192.168.0.102:8080 static LocalRouter}
-INFO: 2023/07/29 19:15:33 config.go:23: Server configuration: Addr: 192.168.0.102:8080, StaticDir: static, Mode: LocalRouter
-INFO: 2023/07/29 19:16:11 config.go:23: Server configuration-> { Addr: 192.168.0.102:8080, StaticDir: static, Mode: LocalRouter}
-INFO: 2023/07/29 21:26:36 config.go:23: Server configuration-> { Addr: 192.168.0.102:8080, StaticDir: static, Mode: LocalRouter}
-INFO: 2023/07/29 21:30:03 config.go:23: Server configuration-> { Addr: 192.168.0.102:8080, StaticDir: static, Mode: LocalRouter}
-INFO: 2023/07/29 21:31:33 config.go:23: Server configuration-> { Addr: 192.168.0.102:8080, StaticDir: static, Mode: LocalRouter}
-INFO: 2023/07/29 21:31:46 config.go:23: Server configuration-> { Addr: 192.168.0.102:8080, StaticDir: static, Mode: LocalRouter}
-INFO: 2023/07/29 21:34:05 config.go:23: Server configuration-> { Addr: 192.168.0.102:8080, StaticDir: static, Mode: LocalRouter}
-INFO: 2023/07/29 21:41:58 config.go:23: Server configuration-> { Addr: 192.168.0.102:8080, StaticDir: static, Mode: LocalRouter}
-INFO: 2023/07/29 21:46:27 config.go:23: Server configuration-> { Addr: 192.168.0.102:8080, StaticDir: static, Mode: LocalRouter}
+INFO: 2023/07/30 14:01:55 config.go:23: Server configuration-> { Addr: 192.168.0.102:8080, StaticDir: static, Mode: LocalRouter}
+INFO: 2023/07/30 14:01:57 router.go:73: # Markdown Parser and HTML Renderer for Go
+
+[![pkg.go.dev](https://pkg.go.dev/badge/github.com/gomarkdown/markdown)](https://pkg.go.dev/github.com/gomarkdown/markdown)
+
+Package `github.com/gomarkdown/markdown` is a Go library for parsing Markdown text and rendering as HTML.
+
+It's very fast and supports common extensions.
+
+Tutorial: https://blog.kowalczyk.info/article/cxn3/advanced-markdown-processing-in-go.html
+
+Code examples:
+* https://onlinetool.io/goplayground/#txO7hJ-ibeU : basic markdown => HTML
+* https://onlinetool.io/goplayground/#yFRIWRiu-KL : customize HTML renderer
+* https://onlinetool.io/goplayground/#2yV5-HDKBUV : modify AST
+* https://onlinetool.io/goplayground/#9fqKwRbuJ04 : customize parser
+* https://onlinetool.io/goplayground/#Bk0zTvrzUDR : syntax highlight
+
+Those examples are also in [examples](./examples) directory.
+
+## API Docs:
+
+- https://pkg.go.dev/github.com/gomarkdown/markdown : top level package
+- https://pkg.go.dev/github.com/gomarkdown/markdown/ast : defines abstract syntax tree of parsed markdown document
+- https://pkg.go.dev/github.com/gomarkdown/markdown/parser : parser
+- https://pkg.go.dev/github.com/gomarkdown/markdown/html : html renderer
+
+## Usage
+
+To convert markdown text to HTML using reasonable defaults:
+
+```go
+package main
+
+import (
+	"os"
+
+	"github.com/gomarkdown/markdown"
+	"github.com/gomarkdown/markdown/ast"
+	"github.com/gomarkdown/markdown/html"
+	"github.com/gomarkdown/markdown/parser"
+
+	"fmt"
+)
+
+var mds = `# header
+
+Sample text.
+
+[link](http://example.com)
+`
+
+func mdToHTML(md []byte) []byte {
+	// create markdown parser with extensions
+	extensions := parser.CommonExtensions | parser.AutoHeadingIDs | parser.NoEmptyLineBeforeBlock
+	p := parser.NewWithExtensions(extensions)
+	doc := p.Parse(md)
+
+	// create HTML renderer with extensions
+	htmlFlags := html.CommonFlags | html.HrefTargetBlank
+	opts := html.RendererOptions{Flags: htmlFlags}
+	renderer := html.NewRenderer(opts)
+
+	return markdown.Render(doc, renderer)
+}
+
+func main() {
+	md := []byte(mds)
+	html := mdToHTML(md)
+
+	fmt.Printf("--- Markdown:\n%s\n\n--- HTML:\n%s\n", md, html)
+}
+```
+
+Try it online: https://onlinetool.io/goplayground/#txO7hJ-ibeU
+
+For more documentation read [this guide](https://blog.kowalczyk.info/article/cxn3/advanced-markdown-processing-in-go.html)
+
+Comparing to other markdown parsers: https://babelmark.github.io/
+
+## Sanitize untrusted content
+
+We don't protect against malicious content. When dealing with user-provided
+markdown, run renderer HTML through HTML sanitizer such as [Bluemonday](https://github.com/microcosm-cc/bluemonday).
+
+Here's an example of simple usage with Bluemonday:
+
+```go
+import (
+    "github.com/microcosm-cc/bluemonday"
+    "github.com/gomarkdown/markdown"
+)
+
+// ...
+maybeUnsafeHTML := markdown.ToHTML(md, nil, nil)
+html := bluemonday.UGCPolicy().SanitizeBytes(maybeUnsafeHTML)
+```
+
+## mdtohtml command-line tool
+
+https://github.com/gomarkdown/mdtohtml is a command-line markdown to html
+converter built using this library.
+
+You can also use it as an example of how to use the library.
+
+You can install it with:
+
+    go get -u github.com/gomarkdown/mdtohtml
+
+To run: `mdtohtml input-file [output-file]`
+
+## Features
+
+- **Compatibility**. The Markdown v1.0.3 test suite passes with
+  the `--tidy` option. Without `--tidy`, the differences are
+  mostly in whitespace and entity escaping, where this package is
+  more consistent and cleaner.
+
+- **Common extensions**, including table support, fenced code
+  blocks, autolinks, strikethroughs, non-strict emphasis, etc.
+
+- **Safety**. Markdown is paranoid when parsing, making it safe
+  to feed untrusted user input without fear of bad things
+  happening. The test suite stress tests this and there are no
+  known inputs that make it crash. If you find one, please let me
+  know and send me the input that does it.
+
+  NOTE: "safety" in this context means _runtime safety only_. In order to
+  protect yourself against JavaScript injection in untrusted content, see
+  [this example](https://github.com/gomarkdown/markdown#sanitize-untrusted-content).
+
+- **Fast**. It is fast enough to render on-demand in
+  most web applications without having to cache the output.
+
+- **Thread safety**. You can run multiple parsers in different
+  goroutines without ill effect. There is no dependence on global
+  shared state.
+
+- **Minimal dependencies**. Only depends on standard library packages in Go.
+
+- **Standards compliant**. Output successfully validates using the
+  W3C validation tool for HTML 4.01 and XHTML 1.0 Transitional.
+
+## Extensions
+
+In addition to the standard markdown syntax, this package
+implements the following extensions:
+
+- **Intra-word emphasis supression**. The `_` character is
+  commonly used inside words when discussing code, so having
+  markdown interpret it as an emphasis command is usually the
+  wrong thing. We let you treat all emphasis markers as
+  normal characters when they occur inside a word.
+
+- **Tables**. Tables can be created by drawing them in the input
+  using a simple syntax:
+
+  ```
+  Name    | Age
+  --------|------
+  Bob     | 27
+  Alice   | 23
+  ```
+
+  Table footers are supported as well and can be added with equal signs (`=`):
+
+  ```
+  Name    | Age
+  --------|------
+  Bob     | 27
+  Alice   | 23
+  ========|======
+  Total   | 50
+  ```
+
+  A cell spanning multiple columns (colspan) is supported, just repeat the pipe symbol:
+
+  ```
+  Name    | Age
+  --------|------
+  Bob     ||
+  Alice   | 23
+  ========|======
+  Total   | 23
+  ```
+
+
+- **Fenced code blocks**. In addition to the normal 4-space
+  indentation to mark code blocks, you can explicitly mark them
+  and supply a language (to make syntax highlighting simple). Just
+  mark it like this:
+
+      ```go
+      func getTrue() bool {
+          return true
+      }
+      ```
+
+  You can use 3 or more backticks to mark the beginning of the
+  block, and the same number to mark the end of the block.
+
+- **Definition lists**. A simple definition list is made of a single-line
+  term followed by a colon and the definition for that term.
+
+      Cat
+      : Fluffy animal everyone likes
+
+      Internet
+      : Vector of transmission for pictures of cats
+
+  Terms must be separated from the previous definition by a blank line.
+
+- **Footnotes**. A marker in the text that will become a superscript number;
+  a footnote definition that will be placed in a list of footnotes at the
+  end of the document. A footnote looks like this:
+
+      This is a footnote.[^1]
+
+      [^1]: the footnote text.
+
+- **Autolinking**. We can find URLs that have not been
+  explicitly marked as links and turn them into links.
+
+- **Strikethrough**. Use two tildes (`~~`) to mark text that
+  should be crossed out.
+
+- **Hard line breaks**. With this extension enabled newlines in the input
+  translates into line breaks in the output. This extension is off by default.
+
+- **Non blocking space**. With this extension enabled spaces preceeded by a backslash
+  in the input translates non-blocking spaces in the output. This extension is off by default.
+
+- **Smart quotes**. Smartypants-style punctuation substitution is
+  supported, turning normal double- and single-quote marks into
+  curly quotes, etc.
+
+- **LaTeX-style dash parsing** is an additional option, where `--`
+  is translated into `&ndash;`, and `---` is translated into
+  `&mdash;`. This differs from most smartypants processors, which
+  turn a single hyphen into an ndash and a double hyphen into an
+  mdash.
+
+- **Smart fractions**, where anything that looks like a fraction
+  is translated into suitable HTML (instead of just a few special
+  cases like most smartypant processors). For example, `4/5`
+  becomes `<sup>4</sup>&frasl;<sub>5</sub>`, which renders as
+  <sup>4</sup>&frasl;<sub>5</sub>.
+
+- **MathJaX Support** is an additional feature which is supported by
+  many markdown editor. It translates inline math equations quoted by `$`
+  and displays math blocks quoted by `$$` into MathJax compatible format.
+  Hyphens (`_`) won't break LaTeX render within a math element any more.
+
+  ```
+  $$
+  \left[ \begin{array}{a} a^l_1 \\ ⋮ \\ a^l_{d_l} \end{array}\right]
+  = \sigma(
+   \left[ \begin{matrix}
+   	w^l_{1,1} & ⋯  & w^l_{1,d_{l-1}} \\
+   	⋮ & ⋱  & ⋮  \\
+   	w^l_{d_l,1} & ⋯  & w^l_{d_l,d_{l-1}} \\
+   \end{matrix}\right]  ·
+   \left[ \begin{array}{x} a^{l-1}_1 \\ ⋮ \\ ⋮ \\ a^{l-1}_{d_{l-1}} \end{array}\right] +
+   \left[ \begin{array}{b} b^l_1 \\ ⋮ \\ b^l_{d_l} \end{array}\right])
+   $$
+  ```
+
+- **Ordered list start number**. With this extension enabled an ordered list will start with
+  the number that was used to start it.
+
+- **Super and subscript**. With this extension enabled sequences between ^ will indicate
+  superscript and ~ will become a subscript. For example: H~2~O is a liquid, 2^10^ is 1024.
+
+- **Block level attributes** allow setting attributes (ID, classes and key/value pairs) on block
+  level elements. The attribute must be enclosed with braces and be put on a line before the
+  element.
+
+  ```
+  {#id3 .myclass fontsize="tiny"}
+  # Header 1
+  ```
+
+  Will convert into `<h1 id="id3" class="myclass" fontsize="tiny">Header 1</h1>`.
+
+- **Mmark support**, see <https://mmark.miek.nl/post/syntax/> for all new syntax elements this adds.
+
+## Users
+
+Some tools using this package: https://pkg.go.dev/github.com/gomarkdown/markdown?tab=importedby
+
+## History
+
+markdown is a fork of v2 of https://github.com/russross/blackfriday.
+
+I refactored the API (split into ast/parser/html sub-packages).
+
+Blackfriday itself was based on C implementation [sundown](https://github.com/vmg/sundown) which in turn was based on [libsoldout](http://fossil.instinctive.eu/libsoldout/home).
+
+## License
+
+[Simplified BSD License](LICENSE.txt)
+
+INFO: 2023/07/30 14:01:57 router.go:75: <h1 id="markdown-parser-and-html-renderer-for-go">Markdown Parser and HTML Renderer for Go</h1>
+
+<p><a href="https://pkg.go.dev/github.com/gomarkdown/markdown" target="_blank"><img src="https://pkg.go.dev/badge/github.com/gomarkdown/markdown" alt="pkg.go.dev" /></a></p>
+
+<p>Package <code>github.com/gomarkdown/markdown</code> is a Go library for parsing Markdown text and rendering as HTML.</p>
+
+<p>It&rsquo;s very fast and supports common extensions.</p>
+
+<p>Tutorial: <a href="https://blog.kowalczyk.info/article/cxn3/advanced-markdown-processing-in-go.html" target="_blank">https://blog.kowalczyk.info/article/cxn3/advanced-markdown-processing-in-go.html</a></p>
+
+<p>Code examples:</p>
+
+<ul>
+<li><a href="https://onlinetool.io/goplayground/#txO7hJ-ibeU" target="_blank">https://onlinetool.io/goplayground/#txO7hJ-ibeU</a> : basic markdown =&gt; HTML</li>
+<li><a href="https://onlinetool.io/goplayground/#yFRIWRiu-KL" target="_blank">https://onlinetool.io/goplayground/#yFRIWRiu-KL</a> : customize HTML renderer</li>
+<li><a href="https://onlinetool.io/goplayground/#2yV5-HDKBUV" target="_blank">https://onlinetool.io/goplayground/#2yV5-HDKBUV</a> : modify AST</li>
+<li><a href="https://onlinetool.io/goplayground/#9fqKwRbuJ04" target="_blank">https://onlinetool.io/goplayground/#9fqKwRbuJ04</a> : customize parser</li>
+<li><a href="https://onlinetool.io/goplayground/#Bk0zTvrzUDR" target="_blank">https://onlinetool.io/goplayground/#Bk0zTvrzUDR</a> : syntax highlight</li>
+</ul>
+
+<p>Those examples are also in <a href="./examples">examples</a> directory.</p>
+
+<h2 id="api-docs">API Docs:</h2>
+
+<ul>
+<li><a href="https://pkg.go.dev/github.com/gomarkdown/markdown" target="_blank">https://pkg.go.dev/github.com/gomarkdown/markdown</a> : top level package</li>
+<li><a href="https://pkg.go.dev/github.com/gomarkdown/markdown/ast" target="_blank">https://pkg.go.dev/github.com/gomarkdown/markdown/ast</a> : defines abstract syntax tree of parsed markdown document</li>
+<li><a href="https://pkg.go.dev/github.com/gomarkdown/markdown/parser" target="_blank">https://pkg.go.dev/github.com/gomarkdown/markdown/parser</a> : parser</li>
+<li><a href="https://pkg.go.dev/github.com/gomarkdown/markdown/html" target="_blank">https://pkg.go.dev/github.com/gomarkdown/markdown/html</a> : html renderer</li>
+</ul>
+
+<h2 id="usage">Usage</h2>
+
+<p>To convert markdown text to HTML using reasonable defaults:</p>
+
+<pre><code class="language-go">package main
+
+import (
+	&quot;os&quot;
+
+	&quot;github.com/gomarkdown/markdown&quot;
+	&quot;github.com/gomarkdown/markdown/ast&quot;
+	&quot;github.com/gomarkdown/markdown/html&quot;
+	&quot;github.com/gomarkdown/markdown/parser&quot;
+
+	&quot;fmt&quot;
+)
+
+var mds = `# header
+
+Sample text.
+
+[link](http://example.com)
+`
+
+func mdToHTML(md []byte) []byte {
+	// create markdown parser with extensions
+	extensions := parser.CommonExtensions | parser.AutoHeadingIDs | parser.NoEmptyLineBeforeBlock
+	p := parser.NewWithExtensions(extensions)
+	doc := p.Parse(md)
+
+	// create HTML renderer with extensions
+	htmlFlags := html.CommonFlags | html.HrefTargetBlank
+	opts := html.RendererOptions{Flags: htmlFlags}
+	renderer := html.NewRenderer(opts)
+
+	return markdown.Render(doc, renderer)
+}
+
+func main() {
+	md := []byte(mds)
+	html := mdToHTML(md)
+
+	fmt.Printf(&quot;--- Markdown:\n%s\n\n--- HTML:\n%s\n&quot;, md, html)
+}
+</code></pre>
+
+<p>Try it online: <a href="https://onlinetool.io/goplayground/#txO7hJ-ibeU" target="_blank">https://onlinetool.io/goplayground/#txO7hJ-ibeU</a></p>
+
+<p>For more documentation read <a href="https://blog.kowalczyk.info/article/cxn3/advanced-markdown-processing-in-go.html" target="_blank">this guide</a></p>
+
+<p>Comparing to other markdown parsers: <a href="https://babelmark.github.io/" target="_blank">https://babelmark.github.io/</a></p>
+
+<h2 id="sanitize-untrusted-content">Sanitize untrusted content</h2>
+
+<p>We don&rsquo;t protect against malicious content. When dealing with user-provided
+markdown, run renderer HTML through HTML sanitizer such as <a href="https://github.com/microcosm-cc/bluemonday" target="_blank">Bluemonday</a>.</p>
+
+<p>Here&rsquo;s an example of simple usage with Bluemonday:</p>
+
+<pre><code class="language-go">import (
+    &quot;github.com/microcosm-cc/bluemonday&quot;
+    &quot;github.com/gomarkdown/markdown&quot;
+)
+
+// ...
+maybeUnsafeHTML := markdown.ToHTML(md, nil, nil)
+html := bluemonday.UGCPolicy().SanitizeBytes(maybeUnsafeHTML)
+</code></pre>
+
+<h2 id="mdtohtml-command-line-tool">mdtohtml command-line tool</h2>
+
+<p><a href="https://github.com/gomarkdown/mdtohtml" target="_blank">https://github.com/gomarkdown/mdtohtml</a> is a command-line markdown to html
+converter built using this library.</p>
+
+<p>You can also use it as an example of how to use the library.</p>
+
+<p>You can install it with:</p>
+
+<pre><code>go get -u github.com/gomarkdown/mdtohtml
+</code></pre>
+
+<p>To run: <code>mdtohtml input-file [output-file]</code></p>
+
+<h2 id="features">Features</h2>
+
+<ul>
+<li><p><strong>Compatibility</strong>. The Markdown v1.0.3 test suite passes with
+the <code>--tidy</code> option. Without <code>--tidy</code>, the differences are
+mostly in whitespace and entity escaping, where this package is
+more consistent and cleaner.</p></li>
+
+<li><p><strong>Common extensions</strong>, including table support, fenced code
+blocks, autolinks, strikethroughs, non-strict emphasis, etc.</p></li>
+
+<li><p><strong>Safety</strong>. Markdown is paranoid when parsing, making it safe
+to feed untrusted user input without fear of bad things
+happening. The test suite stress tests this and there are no
+known inputs that make it crash. If you find one, please let me
+know and send me the input that does it.</p></li>
+</ul>
+
+<p>NOTE: &ldquo;safety&rdquo; in this context means <em>runtime safety only</em>. In order to
+  protect yourself against JavaScript injection in untrusted content, see
+  <a href="https://github.com/gomarkdown/markdown#sanitize-untrusted-content" target="_blank">this example</a>.</p>
+
+<ul>
+<li><p><strong>Fast</strong>. It is fast enough to render on-demand in
+most web applications without having to cache the output.</p></li>
+
+<li><p><strong>Thread safety</strong>. You can run multiple parsers in different
+goroutines without ill effect. There is no dependence on global
+shared state.</p></li>
+
+<li><p><strong>Minimal dependencies</strong>. Only depends on standard library packages in Go.</p></li>
+
+<li><p><strong>Standards compliant</strong>. Output successfully validates using the
+W3C validation tool for HTML 4.01 and XHTML 1.0 Transitional.</p></li>
+</ul>
+
+<h2 id="extensions">Extensions</h2>
+
+<p>In addition to the standard markdown syntax, this package
+implements the following extensions:</p>
+
+<ul>
+<li><p><strong>Intra-word emphasis supression</strong>. The <code>_</code> character is
+commonly used inside words when discussing code, so having
+markdown interpret it as an emphasis command is usually the
+wrong thing. We let you treat all emphasis markers as
+normal characters when they occur inside a word.</p></li>
+
+<li><p><strong>Tables</strong>. Tables can be created by drawing them in the input
+using a simple syntax:</p></li>
+</ul>
+
+<pre><code>  Name    | Age
+  --------|------
+  Bob     | 27
+  Alice   | 23
+</code></pre>
+
+<p>Table footers are supported as well and can be added with equal signs (<code>=</code>):</p>
+
+<pre><code>  Name    | Age
+  --------|------
+  Bob     | 27
+  Alice   | 23
+  ========|======
+  Total   | 50
+</code></pre>
+
+<p>A cell spanning multiple columns (colspan) is supported, just repeat the pipe symbol:</p>
+
+<pre><code>  Name    | Age
+  --------|------
+  Bob     ||
+  Alice   | 23
+  ========|======
+  Total   | 23
+</code></pre>
+
+<ul>
+<li><p><strong>Fenced code blocks</strong>. In addition to the normal 4-space
+indentation to mark code blocks, you can explicitly mark them
+and supply a language (to make syntax highlighting simple). Just
+mark it like this:</p>
+
+<pre><code class="language-go">  func getTrue() bool {
+      return true
+  }
+</code></pre></li>
+</ul>
+
+<p>You can use 3 or more backticks to mark the beginning of the
+  block, and the same number to mark the end of the block.</p>
+
+<ul>
+<li><p><strong>Definition lists</strong>. A simple definition list is made of a single-line
+term followed by a colon and the definition for that term.</p>
+
+<p>Cat
+  : Fluffy animal everyone likes</p>
+
+<p>Internet
+  : Vector of transmission for pictures of cats</p></li>
+</ul>
+
+<p>Terms must be separated from the previous definition by a blank line.</p>
+
+<ul>
+<li><p><strong>Footnotes</strong>. A marker in the text that will become a superscript number;
+a footnote definition that will be placed in a list of footnotes at the
+end of the document. A footnote looks like this:</p>
+
+<p>This is a footnote.[^1]</p>
+
+<p>[^1]: the footnote text.</p></li>
+
+<li><p><strong>Autolinking</strong>. We can find URLs that have not been
+explicitly marked as links and turn them into links.</p></li>
+
+<li><p><strong>Strikethrough</strong>. Use two tildes (<code>~~</code>) to mark text that
+should be crossed out.</p></li>
+
+<li><p><strong>Hard line breaks</strong>. With this extension enabled newlines in the input
+translates into line breaks in the output. This extension is off by default.</p></li>
+
+<li><p><strong>Non blocking space</strong>. With this extension enabled spaces preceeded by a backslash
+in the input translates non-blocking spaces in the output. This extension is off by default.</p></li>
+
+<li><p><strong>Smart quotes</strong>. Smartypants-style punctuation substitution is
+supported, turning normal double- and single-quote marks into
+curly quotes, etc.</p></li>
+
+<li><p><strong>LaTeX-style dash parsing</strong> is an additional option, where <code>--</code>
+is translated into <code>&amp;ndash;</code>, and <code>---</code> is translated into
+<code>&amp;mdash;</code>. This differs from most smartypants processors, which
+turn a single hyphen into an ndash and a double hyphen into an
+mdash.</p></li>
+
+<li><p><strong>Smart fractions</strong>, where anything that looks like a fraction
+is translated into suitable HTML (instead of just a few special
+cases like most smartypant processors). For example, <code>4/5</code>
+becomes <code>&lt;sup&gt;4&lt;/sup&gt;&amp;frasl;&lt;sub&gt;5&lt;/sub&gt;</code>, which renders as
+<sup>4</sup>&amp;frasl;<sub>5</sub>.</p></li>
+
+<li><p><strong>MathJaX Support</strong> is an additional feature which is supported by
+many markdown editor. It translates inline math equations quoted by <code>$</code>
+and displays math blocks quoted by <code>$$</code> into MathJax compatible format.
+Hyphens (<code>_</code>) won&rsquo;t break LaTeX render within a math element any more.</p></li>
+</ul>
+
+<pre><code>  $$
+  \left[ \begin{array}{a} a^l_1 \\ ⋮ \\ a^l_{d_l} \end{array}\right]
+  = \sigma(
+   \left[ \begin{matrix}
+   	w^l_{1,1} &amp; ⋯  &amp; w^l_{1,d_{l-1}} \\
+   	⋮ &amp; ⋱  &amp; ⋮  \\
+   	w^l_{d_l,1} &amp; ⋯  &amp; w^l_{d_l,d_{l-1}} \\
+   \end{matrix}\right]  ·
+   \left[ \begin{array}{x} a^{l-1}_1 \\ ⋮ \\ ⋮ \\ a^{l-1}_{d_{l-1}} \end{array}\right] +
+   \left[ \begin{array}{b} b^l_1 \\ ⋮ \\ b^l_{d_l} \end{array}\right])
+   $$
+</code></pre>
+
+<ul>
+<li><p><strong>Ordered list start number</strong>. With this extension enabled an ordered list will start with
+the number that was used to start it.</p></li>
+
+<li><p><strong>Super and subscript</strong>. With this extension enabled sequences between ^ will indicate
+superscript and ~ will become a subscript. For example: H~2~O is a liquid, 2^10^ is 1024.</p></li>
+
+<li><p><strong>Block level attributes</strong> allow setting attributes (ID, classes and key/value pairs) on block
+level elements. The attribute must be enclosed with braces and be put on a line before the
+element.</p></li>
+</ul>
+
+<pre><code>  {#id3 .myclass fontsize=&quot;tiny&quot;}
+  # Header 1
+</code></pre>
+
+<p>Will convert into <code>&lt;h1 id=&quot;id3&quot; class=&quot;myclass&quot; fontsize=&quot;tiny&quot;&gt;Header 1&lt;/h1&gt;</code>.</p>
+
+<ul>
+<li><strong>Mmark support</strong>, see <a href="https://mmark.miek.nl/post/syntax/" target="_blank">https://mmark.miek.nl/post/syntax/</a> for all new syntax elements this adds.</li>
+</ul>
+
+<h2 id="users">Users</h2>
+
+<p>Some tools using this package: <a href="https://pkg.go.dev/github.com/gomarkdown/markdown?tab=importedby" target="_blank">https://pkg.go.dev/github.com/gomarkdown/markdown?tab=importedby</a></p>
+
+<h2 id="history">History</h2>
+
+<p>markdown is a fork of v2 of <a href="https://github.com/russross/blackfriday" target="_blank">https://github.com/russross/blackfriday</a>.</p>
+
+<p>I refactored the API (split into ast/parser/html sub-packages).</p>
+
+<p>Blackfriday itself was based on C implementation <a href="https://github.com/vmg/sundown" target="_blank">sundown</a> which in turn was based on <a href="http://fossil.instinctive.eu/libsoldout/home" target="_blank">libsoldout</a>.</p>
+
+<h2 id="license">License</h2>
+
+<p><a href="LICENSE.txt" target="_blank">Simplified BSD License</a></p>
+
+INFO: 2023/07/30 14:03:34 config.go:23: Server configuration-> { Addr: 192.168.0.102:8080, StaticDir: static, Mode: LocalRouter}
+INFO: 2023/07/30 14:03:59 config.go:23: Server configuration-> { Addr: 192.168.0.102:8080, StaticDir: static, Mode: LocalRouter}

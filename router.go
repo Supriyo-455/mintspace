@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"net/http"
-	"strconv"
 	"text/template"
 
 	"github.com/julienschmidt/httprouter"
@@ -15,7 +14,7 @@ func makeRouterHandleFunc(f routerFunc) httprouter.Handle {
 	return func(res http.ResponseWriter, req *http.Request, params httprouter.Params) {
 		if err := f(res, req, params); err != nil {
 			fmt.Fprintln(res, "Error Occured!")
-			Error().Println(err.Error())
+			LogError().Println(err.Error())
 		}
 	}
 }
@@ -55,20 +54,24 @@ func getBlogsHandle(res http.ResponseWriter, req *http.Request, _ httprouter.Par
 
 // TODO: Error handleing of the params
 func getBlogByIdHandle(res http.ResponseWriter, req *http.Request, params httprouter.Params) error {
-	templ, err := template.ParseFiles("templates/blog.html")
-	if err != nil {
-		return err
-	}
+	// templ, err := template.ParseFiles("templates/blogcontent.html")
+	// if err != nil {
+	// 	return err
+	// }
 
-	id, err := strconv.Atoi(params.ByName("id"))
-	if err != nil {
-		return err
-	}
+	// id, err := strconv.Atoi(params.ByName("id"))
+	// if err != nil {
+	// 	return err
+	// }
 
-	blog, err := getSampleBlogById(id)
-	if err != nil {
-		return err
-	}
+	// blog, err := getSampleBlogById(id)
+	// if err != nil {
+	// 	return err
+	// }
 
-	return templ.Execute(res, blog)
+	blogContent := ReadFile("blogs/SampleBlog.md")
+	blogContentHtml := MdToHTML(blogContent)
+
+	fmt.Fprintln(res, string(blogContentHtml))
+	return nil
 }
