@@ -1,34 +1,4 @@
-ERROR: 2023/07/29 08:04:22 main.go:22: listen tcp 127.0.0.1:8080: bind: address already in use
-ERROR: 2023/07/29 18:04:27 fileutils.go:48: json: cannot unmarshal bool into Go struct field User.array.author.admin of type string
-ERROR: 2023/07/29 18:45:42 main.go:22: listen tcp 192.168.0.100:8080: bind: cannot assign requested address
-ERROR: 2023/07/29 18:47:33 main.go:22: listen tcp 192.168.0.101:8080: bind: cannot assign requested address
-ERROR: 2023/07/29 21:34:08 router.go:17: blog with id 100 not found
-ERROR: 2023/07/29 21:44:10 router.go:17: strconv.Atoi: parsing "ds": invalid syntax
-ERROR: 2023/07/29 21:46:37 router.go:18: strconv.Atoi: parsing "1das": invalid syntax
-ERROR: 2023/07/30 13:04:34 fileutils.go:52: invalid character '\n' in string literal
-ERROR: 2023/07/30 13:55:23 router.go:17: open templates/blogContent.html: no such file or directory
-ERROR: 2023/07/30 13:56:21 fileutils.go:20: open blogs/sampleBlog.md: no such file or directory
-ERROR: 2023/07/30 18:48:51 router.go:17: blog with id 4 not found
-ERROR: 2023/07/30 18:48:51 router.go:17: blog with id 4 not found
-ERROR: 2023/07/30 18:48:51 router.go:17: blog with id 4 not found
-ERROR: 2023/07/30 18:48:51 router.go:17: blog with id 4 not found
-ERROR: 2023/07/30 18:48:51 router.go:17: blog with id 4 not found
-ERROR: 2023/07/30 18:48:51 router.go:17: blog with id 4 not found
-ERROR: 2023/07/30 18:48:51 router.go:17: blog with id 4 not found
-ERROR: 2023/07/30 18:48:51 router.go:17: blog with id 4 not found
-ERROR: 2023/07/30 18:48:51 router.go:17: blog with id 4 not found
-ERROR: 2023/07/30 18:48:51 router.go:17: blog with id 4 not found
-ERROR: 2023/07/30 18:50:24 router.go:17: blog with id 4 not found
-ERROR: 2023/07/30 18:50:24 router.go:17: blog with id 4 not found
-ERROR: 2023/07/30 18:50:24 router.go:17: blog with id 4 not found
-ERROR: 2023/07/30 18:50:24 router.go:17: blog with id 4 not found
-ERROR: 2023/07/30 18:50:24 router.go:17: blog with id 4 not found
-ERROR: 2023/07/30 18:50:24 router.go:17: blog with id 4 not found
-ERROR: 2023/07/30 18:50:24 router.go:17: blog with id 4 not found
-ERROR: 2023/07/30 18:50:24 router.go:17: blog with id 4 not found
-ERROR: 2023/07/30 18:50:24 router.go:17: blog with id 4 not found
-ERROR: 2023/07/30 18:50:24 router.go:17: blog with id 4 not found
-ERROR: 2023/07/30 18:53:07 main.go:20: listen tcp 192.168.0.102:8080: bind: address already in use
-ERROR: 2023/07/30 19:13:01 router.go:17: blog with id 4 not found
-ERROR: 2023/07/30 19:14:33 router.go:17: blog with id 4 not found
-ERROR: 2023/07/30 19:15:49 router.go:17: blog with id 5 not found
+ERROR: 2023/07/30 21:20:34 fileutils.go:20: open blogs/3.md: no such file or directory
+ERROR: 2023/07/30 21:22:44 fileutils.go:20: open blogs/3.md: no such file or directory
+ERROR: 2023/07/30 21:26:58 router.go:17: blog with id 3 not found
+ERROR: 2023/07/30 21:27:01 router.go:17: blog with id 3 not found
