@@ -1,18 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{{ .Title }}</title>
-  </head>
-  <body>
-    <h1>{{ .Title }}</h1>
-    <h3>Author: {{ .Author.Name }}</h3>
-    <p>ImageURL: {{ .CoverImageURL }}</p>
-    <p>
-      Type: {{ if .Premium }} Premium Content {{ else }} Regular Content {{ end
-      }}
-    </p>
-    <h5>{{ template "content" }}</h5>
-  </body>
-</html>
+{{ define "content" }}
+<h1>{{ .Blog.Title }}</h1>
+<h3>Author: {{ .Blog.Author.Name }}</h3>
+<p>ImageURL: {{ .Blog.CoverImageURL }}</p>
+<p>
+  Type: {{ if .Blog.Premium }} Premium Content {{ else }} Regular Content {{ end
+  }}
+</p>
+{{ template "blogcontent" .Content }} {{ end }}

@@ -2,3 +2,11 @@ ERROR: 2023/07/30 21:20:34 fileutils.go:20: open blogs/3.md: no such file or dir
 ERROR: 2023/07/30 21:22:44 fileutils.go:20: open blogs/3.md: no such file or directory
 ERROR: 2023/07/30 21:26:58 router.go:17: blog with id 3 not found
 ERROR: 2023/07/30 21:27:01 router.go:17: blog with id 3 not found
+ERROR: 2023/07/31 13:00:14 router.go:17: template: layout.html:17: unexpected {{end}}
+ERROR: 2023/07/31 13:00:56 router.go:17: template: layout.html:10:16: executing "layout" at <{{template "content"}}>: template "content" not defined
+ERROR: 2023/07/31 13:02:32 router.go:17: template: layout.html:10:16: executing "layout" at <{{template "content"}}>: template "content" not defined
+ERROR: 2023/07/31 13:02:32 router.go:17: template: layout.html:10:16: executing "layout" at <{{template "content"}}>: template "content" not defined
+ERROR: 2023/07/31 13:07:00 router.go:17: template: layout.html:10:16: executing "layout" at <{{template "content"}}>: template "content" not defined
+ERROR: 2023/07/31 18:34:20 router.go:17: template: blog.html:2:7: executing "content" at <.Title>: can't evaluate field Title in type []uint8
+ERROR: 2023/07/31 18:38:54 router.go:17: template: blog.html:9:31: executing "content" at <.Blog.Content>: can't evaluate field Content in type *main.Blog
+ERROR: 2023/07/31 18:39:27 router.go:17: template: blog.html:9:31: executing "content" at <.Blog.Content>: can't evaluate field Content in type *main.Blog

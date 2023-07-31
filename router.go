@@ -49,44 +49,55 @@ func NewRouter() *Router {
 }
 
 func handle404(res http.ResponseWriter, req *http.Request) {
-	temp, err := template.ParseFiles("templates/404.html")
+	temp, err := template.ParseFiles("templates/layout.html", "templates/404.html")
 	if err != nil {
 		LogError().Fatalln(err)
 	}
-	temp.Execute(res, nil)
+	temp.ExecuteTemplate(res, "layout", nil)
 }
 
 func getBlogsHandle(res http.ResponseWriter, req *http.Request, _ httprouter.Params) error {
+	// TODO: Replace with original DB
 	blogs := getSampleBlogs()
-	templ, err := template.ParseFiles("templates/home.html")
+	templ, err := template.ParseFiles("templates/layout.html", "templates/bloglist.html")
 	if err != nil {
 		return err
 	}
 
-	return templ.Execute(res, blogs.Array)
+	return templ.ExecuteTemplate(res, "layout", blogs.Array)
 }
 
-// TODO: Error handleing of the params
+// TODO: Handle XSS attack
 func getBlogByIdHandle(res http.ResponseWriter, req *http.Request, params httprouter.Params) error {
-	// templ, err := template.ParseFiles("templates/blogcontent.html")
-	// if err != nil {
-	// 	return err
-	// }
+	templ, err := template.ParseFiles("templates/layout.html", "templates/blog.html", "templates/blogcontent.html")
+	if err != nil {
+		return err
+	}
 
 	id, err := strconv.Atoi(params.ByName("id"))
 	if err != nil {
 		return err
 	}
 
+	// TODO: Replace with original DB
 	blog, err := getSampleBlogById(id)
 	if err != nil {
 		return err
 	}
 
+	// TODO: Move to controller
 	path := fmt.Sprintf("blogs/%d.md", blog.Id)
 	blogContent := ReadFile(path)
 	blogContentHtml := MdToHTML(blogContent)
 
-	fmt.Fprintln(res, string(blogContentHtml))
-	return nil
+	type BlogWithContent struct {
+		Blog    *Blog
+		Content string
+	}
+
+	blogWithContent := new(BlogWithContent)
+	blogWithContent.Blog = blog
+	blogWithContent.Content = string(blogContentHtml)
+
+	return templ.ExecuteTemplate(res, "layout", blogWithContent)
 }

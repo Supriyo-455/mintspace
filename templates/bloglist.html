@@ -1,0 +1,25 @@
+{{ define "content" }}
+<h1>Welcome to mint space</h1>
+<p>
+  Here you can find blogs related to popular techonolgies and software
+  development
+</p>
+<div class="content">
+  <h3>Blogs list</h3>
+  <ul>
+    {{ range . }}
+    <li>
+      <div>
+        <h4>Name: {{ .Title }}</h4>
+        <h5>Author: {{ .Author.Name }}</h5>
+        <p>
+          Type: {{ if .Premium }} Premium content {{ else }} Regular content {{
+          end }}
+        </p>
+        <a href="/blog/{{.Id}}"><button id="readmore">ReadMore</button></a>
+      </div>
+    </li>
+    {{ end }}
+  </ul>
+</div>
+{{ end }}
