@@ -6,7 +6,7 @@
             "type": "go",
             "request": "launch",
             "mode": "exec",
-            "program": "${workspaceFolder}/debug/mintspace"
+            "program": "${workspaceFolder}/bin/debug/mintspace"
         }
     ]
 }
