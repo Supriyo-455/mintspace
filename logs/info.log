@@ -28,3 +28,7 @@ INFO: 2023/07/31 20:20:28 config.go:23: Server configuration-> { Addr: 192.168.0
 INFO: 2023/07/31 20:20:37 config.go:23: Server configuration-> { Addr: 192.168.0.102:8080, StaticDir: static, Mode: LocalRouter}
 INFO: 2023/07/31 20:21:14 config.go:23: Server configuration-> { Addr: 192.168.0.102:8080, StaticDir: static, Mode: LocalRouter}
 INFO: 2023/07/31 20:21:35 config.go:23: Server configuration-> { Addr: 192.168.0.102:8080, StaticDir: static, Mode: LocalRouter}
+INFO: 2023/07/31 20:27:11 config.go:23: Server configuration-> { Addr: 192.168.0.102:8080, StaticDir: static, Mode: LocalRouter}
+INFO: 2023/07/31 20:27:24 config.go:23: Server configuration-> { Addr: 192.168.0.102:8080, StaticDir: static, Mode: LocalRouter}
+INFO: 2023/07/31 20:28:53 config.go:23: Server configuration-> { Addr: 192.168.0.102:8080, StaticDir: static, Mode: LocalRouter}
+INFO: 2023/07/31 20:28:59 config.go:23: Server configuration-> { Addr: 192.168.0.102:8080, StaticDir: static, Mode: LocalRouter}

@@ -12,3 +12,4 @@
 
 [Future upgrades]:
     - Dockerise the project
+    - Cache the parsed markdown file result (Use redis or memcache)
