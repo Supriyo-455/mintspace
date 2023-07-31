@@ -1,13 +1,13 @@
 [Important]:
-    - Create layouts for html templates
-    - Use Bluemonday for sanitizing unsafeHTML
     - MVC architecture
+    - Connect database with the app
+    - Create a mechanism to create appropiate markdown file when creating blogs
+    - Use Bluemonday for sanitizing unsafeHTML
+    - Admin page
     - User authentications using jwt
     - User password encryption using bcrypt
     - Create Blog writing page
-    - Connect database with the app
-    - Create a mechanism to create appropiate markdown file when creating blogs
-    - Admin page
+    - Remove sampleDb and sampleDbfuncs
 
 
 [Future upgrades]:

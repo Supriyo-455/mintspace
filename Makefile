@@ -1,11 +1,21 @@
-build: *.go
-	go build -o bin/mintspace
+RELEASE=bin/release/mintspace
+DEBUG=bin/debug/mintspace
 
-debug: *go
-	go build -gcflags="all=-N -l" -o debug/mintspace
+run: $(RELEASE)
+	./$^
 
-run: build
-	./bin/mintspace
+release: $(RELEASE)
+
+debug: $(DEBUG)
+
+$(RELEASE): **.go
+	go build -o $@
+
+$(DEBUG): **.go
+	go build -gcflags="all=-N -l" -o $@
 
 test:
 	go test -v ./...
+
+clean:
+	rm -rf bin/
