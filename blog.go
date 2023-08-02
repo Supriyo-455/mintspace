@@ -1,14 +1,16 @@
 package main
 
+// TODO: Use datecreated
 type Blog struct {
-	Id            int    `json:"id"`
-	Author        *User  `json:"author"`
-	Title         string `json:"title"`
-	CoverImageURL string `json:"coverImageURL"`
-	Premium       bool   `json:"premium"`
+	Id            int    `bson:"id"`
+	Author        *User  `bson:"author"`
+	Title         string `bson:"title"`
+	CoverImageURL string `bson:"coverImageURL"`
+	Premium       bool   `bson:"premium"`
+	DateCreated   string `bson:"datecreated"`
 }
 
 type Blogs struct {
-	Length int    `json:"length"`
-	Array  []Blog `json:"array"`
+	Length int    `bson:"length"`
+	Array  []Blog `bson:"array"`
 }

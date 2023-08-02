@@ -1,11 +1,13 @@
 package main
 
+// TODO: Use datecreated
 type User struct {
-	Id                int    `json:"id"`
-	Name              string `json:"name"`
-	Email             string `json:"email"`
-	EncryptedPassword string `json:"password"`
-	Admin             bool   `json:"admin"`
+	Id                int    `bson:"id"`
+	Name              string `bson:"name"`
+	Email             string `bson:"email"`
+	EncryptedPassword string `bson:"password"`
+	Admin             bool   `bson:"admin"`
+	DateCreated       string `bson:"datecreated"`
 }
 
 // User authentications
