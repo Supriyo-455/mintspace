@@ -9,9 +9,11 @@ import (
 var config Configuration
 
 type Configuration struct {
-	Address string
-	Static  string
-	Mode    string
+	Address       string
+	Static        string
+	Mode          string
+	MongoURI      string
+	MongoDatabase string
 }
 
 func print(a ...interface{}) {

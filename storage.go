@@ -3,44 +3,29 @@ package main
 import (
 	"context"
 
-	"go.mongodb.org/mongo-driver/bson"
-	"go.mongodb.org/mongo-driver/mongo"
-	"go.mongodb.org/mongo-driver/mongo/options"
-	"go.mongodb.org/mongo-driver/mongo/readpref"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
-func ConnectToMongo() *mongo.Client {
-	client, err := mongo.Connect(context.TODO(), options.Client().ApplyURI("mongodb://localhost:27017"))
-	if err != nil {
-		LogError().Fatalln(err)
-	}
+/*
+	Requirements:
+		1) Insert User, Blog
+		2) Update User, Blog
+		3) Delete User, Blog
+		4) Get all blogs
+		5) Store blog content in "blogs/{userID}/{BlogID}.md" this manner
+		6) When deleting the blog, blog content should also be deleted from the file system
+		7) Get blogs by ID
+*/
 
-	if err := client.Ping(context.TODO(), readpref.Primary()); err != nil {
-		LogError().Fatalln(err)
-	}
-
-	return client
-}
-
-func TestMongo(client *mongo.Client) {
-	usersCollection := client.Database("testing").Collection("users")
-
-	user := bson.D{{Key: "fullName", Value: "User 1"}, {Key: "age", Value: 30}}
-
-	result, err := usersCollection.InsertOne(context.TODO(), user)
-	if err != nil {
-		LogError().Fatalln(err)
-	}
-	LogInfo().Println(result.InsertedID)
-
-	users := []interface{}{
-		bson.D{{Key: "fullName", Value: "User 2"}, {Key: "age", Value: 25}},
-		bson.D{{Key: "fullName", Value: "User 3"}, {Key: "age", Value: 20}},
-		bson.D{{Key: "fullName", Value: "User 4"}, {Key: "age", Value: 28}},
-	}
-	results, err := usersCollection.InsertMany(context.TODO(), users)
-	if err != nil {
-		LogError().Fatalln(err)
-	}
-	LogInfo().Println(results.InsertedIDs)
+type Storage interface {
+	Init(ctx *context.Context) error
+	Close(ctx *context.Context) error
+	InsertUser(ctx *context.Context, user *User) (primitive.ObjectID, error)
+	InsertBlog(ctx *context.Context, blog *Blog) (primitive.ObjectID, error)
+	GetAllBlogs(ctx *context.Context) ([]Blog, error)
+	GetBlogByID(ctx *context.Context, id primitive.ObjectID) (Blog, error)
+	UpdateUserByID(ctx *context.Context, id primitive.ObjectID, data *User) error
+	UpdateBlogByID(ctx *context.Context, id primitive.ObjectID, data *Blog) error
+	DeleteBlogByID(ctx *context.Context, id primitive.ObjectID) error
+	DeleteUserByID(ctx *context.Context, id primitive.ObjectID) error
 }
