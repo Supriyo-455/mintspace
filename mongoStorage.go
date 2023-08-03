@@ -88,7 +88,7 @@ func (ms *MongoStorage) InsertUser(ctx context.Context, user *User) (*primitive.
 	insertedID := result.InsertedID.(primitive.ObjectID)
 
 	// create directory using id of user inside blogs directory
-	path := fmt.Sprintln("blogs/", insertedID.String())
+	path := fmt.Sprintln("blogs/", insertedID.Hex())
 	err = CreateFolder(path)
 	if err != nil {
 		return nil, err

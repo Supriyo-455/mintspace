@@ -1,6 +1,7 @@
 [Important]:
+    - Fix the id issue raised by the mongo driver
+    - Try to use int id for the storage interface and mongo driver
     - MVC architecture
-    - Connect database with the app
     - Create a mechanism to create appropiate markdown file when creating blogs
     - Use Bluemonday for sanitizing unsafeHTML
     - Admin page

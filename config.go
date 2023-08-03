@@ -4,22 +4,20 @@ import (
 	"fmt"
 )
 
-var config Configuration
-
 type Configuration struct {
-	Address  string
-	Static   string
-	Mode     string
-	Database string
+	Address string
+	Static  string
+	Mode    string
 }
 
 func print(a ...interface{}) {
 	fmt.Println(a...)
 }
 
+var config *Configuration = new(Configuration)
+
 func init() {
 	filename := "config.json"
-	config := Configuration{}
-	LoadJson(filename, &config)
+	LoadJson(filename, config)
 	LogInfo().Printf("Server configuration-> { Addr: %s, StaticDir: %s, Mode: %s}\n", config.Address, config.Static, config.Mode)
 }

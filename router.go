@@ -86,7 +86,7 @@ func getBlogByIdHandle(res http.ResponseWriter, req *http.Request, params httpro
 	}
 
 	// TODO: Move to controller
-	path := fmt.Sprintf("blogs/%d.md", blog.Id)
+	path := fmt.Sprintf("blogs/%s.md", (blog.Id).(string))
 	blogContent := ReadFile(path)
 	blogContentHtml := MdToHTML(blogContent)
 
