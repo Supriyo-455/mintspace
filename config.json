@@ -2,6 +2,5 @@
   "Address": "192.168.0.102:8080",
   "Static": "static",
   "Mode": "LocalRouter",
-  "mongo_uri": "mongodb://localhost:27017",
-  "mongo_database": "mintspace"
+  "database": "MongoDB"
 }

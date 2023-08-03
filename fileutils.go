@@ -14,6 +14,13 @@ func WriteToFile(path, data string) error {
 	return err
 }
 
+func CreateFolder(path string) error {
+	if err := os.MkdirAll(path, os.ModePerm); err != nil {
+		return err
+	}
+	return nil
+}
+
 func ReadFile(path string) []byte {
 	data, err := os.ReadFile(path)
 	if err != nil {

@@ -18,14 +18,14 @@ import (
 */
 
 type Storage interface {
-	Init(ctx *context.Context) error
-	Close(ctx *context.Context) error
-	InsertUser(ctx *context.Context, user *User) (primitive.ObjectID, error)
-	InsertBlog(ctx *context.Context, blog *Blog) (primitive.ObjectID, error)
-	GetAllBlogs(ctx *context.Context) ([]Blog, error)
-	GetBlogByID(ctx *context.Context, id primitive.ObjectID) (Blog, error)
-	UpdateUserByID(ctx *context.Context, id primitive.ObjectID, data *User) error
-	UpdateBlogByID(ctx *context.Context, id primitive.ObjectID, data *Blog) error
-	DeleteBlogByID(ctx *context.Context, id primitive.ObjectID) error
-	DeleteUserByID(ctx *context.Context, id primitive.ObjectID) error
+	Connect(ctx context.Context) error
+	Disconnect(ctx context.Context) error
+	InsertUser(ctx context.Context, user *User) (primitive.ObjectID, error)
+	InsertBlog(ctx context.Context, blog *Blog) (primitive.ObjectID, error)
+	GetAllBlogs(ctx context.Context) ([]Blog, error)
+	GetBlogByID(ctx context.Context, id primitive.ObjectID) (Blog, error)
+	UpdateUserByID(ctx context.Context, id primitive.ObjectID, data *User) error
+	UpdateBlogByID(ctx context.Context, id primitive.ObjectID, data *Blog) error
+	DeleteBlogByID(ctx context.Context, id primitive.ObjectID) error
+	DeleteUserByID(ctx context.Context, id primitive.ObjectID) error
 }
