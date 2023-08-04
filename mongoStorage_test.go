@@ -14,7 +14,6 @@ func TestInsertUser(t *testing.T) {
 		Email:             "test@email.com",
 		EncryptedPassword: "abcdef",
 		Admin:             true,
-		DateCreated:       "1000-00-00",
 	}
 
 	mongoStorage := createMongoStorage()
@@ -28,7 +27,11 @@ func TestInsertUser(t *testing.T) {
 		t.Errorf("error occured: %s", err.Error())
 	}
 
-	path := fmt.Sprintln("blogs/", id.Hex())
+	if id != user.Id {
+		t.Errorf("want id=%s but got id=%s\n", id, user.Id)
+	}
+
+	path := fmt.Sprintln("blogs/", id)
 	_, err = os.Stat(path)
 	if os.IsNotExist(err) {
 		t.Errorf("error occured: %s", err.Error())

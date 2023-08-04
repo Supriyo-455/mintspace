@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"fmt"
+	"time"
 
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
@@ -55,11 +56,11 @@ func (ms *MongoStorage) Connect(ctx context.Context) error {
 }
 
 // TODO: check
-func (ms *MongoStorage) InsertUser(ctx context.Context, user *User) (*primitive.ObjectID, error) {
+func (ms *MongoStorage) InsertUser(ctx context.Context, user *User) (ObjectID, error) {
 	collection := ms.Client.Database(mongoConfiguration.Database).Collection(usersCollection)
 	indexs, err := collection.Indexes().ListSpecifications(ctx)
 	if err != nil {
-		return nil, err
+		return "", err
 	}
 
 	// Searching for index
@@ -77,22 +78,26 @@ func (ms *MongoStorage) InsertUser(ctx context.Context, user *User) (*primitive.
 			Options: options.Index().SetUnique(true),
 		})
 		if err != nil {
-			return nil, err
+			return "", err
 		}
 	}
 
-	result, err := collection.InsertOne(ctx, user)
+	objectID := primitive.NewObjectID()
+	user.Id = ObjectID(objectID.Hex())
+
+	user.DateCreated = time.Now().Format(time.DateOnly)
+
+	_, err = collection.InsertOne(ctx, user)
 	if err != nil {
-		return nil, err
+		return "", err
 	}
-	insertedID := result.InsertedID.(primitive.ObjectID)
 
 	// create directory using id of user inside blogs directory
-	path := fmt.Sprintln("blogs/", insertedID.Hex())
+	path := fmt.Sprintln("blogs/", user.Id)
 	err = CreateFolder(path)
 	if err != nil {
-		return nil, err
+		return "", err
 	}
 
-	return &insertedID, err
+	return user.Id, err
 }

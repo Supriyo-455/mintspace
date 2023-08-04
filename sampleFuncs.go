@@ -9,12 +9,12 @@ func getSampleBlogs() Blogs {
 	return blogs
 }
 
-func getSampleBlogById(id int) (*Blog, error) {
+func getSampleBlogById(id ObjectID) (*Blog, error) {
 	blogs := getSampleBlogs()
 	for _, blog := range blogs.Array {
 		if blog.Id == id {
 			return &blog, nil
 		}
 	}
-	return nil, fmt.Errorf("blog with id %d not found", id)
+	return nil, fmt.Errorf("blog with id %s not found", id)
 }

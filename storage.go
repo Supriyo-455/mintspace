@@ -2,8 +2,6 @@ package main
 
 import (
 	"context"
-
-	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
 /*
@@ -20,12 +18,12 @@ import (
 type Storage interface {
 	Connect(ctx context.Context) error
 	Disconnect(ctx context.Context) error
-	InsertUser(ctx context.Context, user *User) (primitive.ObjectID, error)
-	InsertBlog(ctx context.Context, blog *Blog) (primitive.ObjectID, error)
+	InsertUser(ctx context.Context, user *User) (ObjectID, error)
+	InsertBlog(ctx context.Context, blog *Blog) (ObjectID, error)
 	GetAllBlogs(ctx context.Context) ([]Blog, error)
-	GetBlogByID(ctx context.Context, id primitive.ObjectID) (Blog, error)
-	UpdateUserByID(ctx context.Context, id primitive.ObjectID, data *User) error
-	UpdateBlogByID(ctx context.Context, id primitive.ObjectID, data *Blog) error
-	DeleteBlogByID(ctx context.Context, id primitive.ObjectID) error
-	DeleteUserByID(ctx context.Context, id primitive.ObjectID) error
+	GetBlogByID(ctx context.Context, id ObjectID) (Blog, error)
+	UpdateUserByID(ctx context.Context, id ObjectID, data *User) error
+	UpdateBlogByID(ctx context.Context, id ObjectID, data *Blog) error
+	DeleteBlogByID(ctx context.Context, id ObjectID) error
+	DeleteUserByID(ctx context.Context, id ObjectID) error
 }

@@ -2,9 +2,9 @@
   "length": 5,
   "array": [
     {
-      "id": 1,
+      "id": "1",
       "author": {
-        "id": 1,
+        "id": "1",
         "name": "supriyo paul",
         "email": "example.com",
         "password": "dasdkasjdaksdjlaksd",
@@ -15,9 +15,9 @@
       "premium": true
     },
     {
-      "id": 2,
+      "id": "2",
       "author": {
-        "id": 1,
+        "id": "1",
         "name": "supriyo paul",
         "email": "example.com",
         "password": "dasdkasjdaksdjlaksd",
@@ -28,9 +28,9 @@
       "premium": false
     },
     {
-      "id": 1,
+      "id": "1",
       "author": {
-        "id": 1,
+        "id": "1",
         "name": "supriyo paul",
         "email": "example.com",
         "password": "dasdkasjdaksdjlaksd",
@@ -41,9 +41,9 @@
       "premium": false
     },
     {
-      "id": 1,
+      "id": "1",
       "author": {
-        "id": 1,
+        "id": "1",
         "name": "supriyo paul",
         "email": "example.com",
         "password": "dasdkasjdaksdjlaksd",
@@ -54,9 +54,9 @@
       "premium": false
     },
     {
-      "id": 1,
+      "id": "1",
       "author": {
-        "id": 1,
+        "id": "1",
         "name": "supriyo paul",
         "email": "example.com",
         "password": "dasdkasjdaksdjlaksd",
