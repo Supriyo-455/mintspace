@@ -7,3 +7,6 @@ INFO: 2023/08/04 09:15:38 config.go:22: Server configuration-> { Addr: 127.0.0.1
 INFO: 2023/08/04 09:15:54 config.go:22: Server configuration-> { Addr: 127.0.0.1:3000, StaticDir: static, Mode: Localhost}
 INFO: 2023/08/04 09:19:19 config.go:22: Server configuration-> { Addr: 127.0.0.1:3000, StaticDir: static, Mode: Localhost}
 INFO: 2023/08/04 09:20:13 config.go:22: Server configuration-> { Addr: 127.0.0.1:3000, StaticDir: static, Mode: Localhost}
+INFO: 2023/08/04 21:39:49 config.go:22: Server configuration-> { Addr: 127.0.0.1:3000, StaticDir: static, Mode: Localhost}
+INFO: 2023/08/04 21:40:44 config.go:22: Server configuration-> { Addr: 127.0.0.1:3000, StaticDir: static, Mode: Localhost}
+INFO: 2023/08/04 21:44:33 config.go:22: Server configuration-> { Addr: 127.0.0.1:3000, StaticDir: static, Mode: Localhost}

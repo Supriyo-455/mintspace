@@ -2,7 +2,7 @@ package main
 
 import (
 	"context"
-	"fmt"
+	"path/filepath"
 	"time"
 
 	"go.mongodb.org/mongo-driver/bson"
@@ -92,8 +92,7 @@ func (ms *MongoStorage) InsertUser(ctx context.Context, user *User) (ObjectID, e
 		return "", err
 	}
 
-	// create directory using id of user inside blogs directory
-	path := fmt.Sprintln("blogs/", user.Id)
+	path := filepath.Join(".", "blogs", string(user.Id))
 	err = CreateFolder(path)
 	if err != nil {
 		return "", err
