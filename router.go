@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"net/http"
-	"strconv"
 	"text/template"
 
 	"github.com/julienschmidt/httprouter"
@@ -74,26 +73,18 @@ func getBlogByIdHandle(res http.ResponseWriter, req *http.Request, params httpro
 		return err
 	}
 
-	id, err := strconv.Atoi(params.ByName("id"))
-	if err != nil {
-		return err
-	}
+	id := params.ByName("id")
 
 	// TODO: Replace with original DB
-	blog, err := getSampleBlogById(id)
+	blog, err := getSampleBlogById(ObjectID(id))
 	if err != nil {
 		return err
 	}
 
 	// TODO: Move to controller
-	path := fmt.Sprintf("blogs/%s.md", (blog.Id).(string))
+	path := fmt.Sprintf("blogs/%s.md", blog.Id)
 	blogContent := ReadFile(path)
 	blogContentHtml := MdToHTML(blogContent)
-
-	type BlogWithContent struct {
-		Blog    *Blog
-		Content string
-	}
 
 	blogWithContent := new(BlogWithContent)
 	blogWithContent.Blog = blog
