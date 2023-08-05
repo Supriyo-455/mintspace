@@ -10,3 +10,15 @@ INFO: 2023/08/04 09:20:13 config.go:22: Server configuration-> { Addr: 127.0.0.1
 INFO: 2023/08/04 21:39:49 config.go:22: Server configuration-> { Addr: 127.0.0.1:3000, StaticDir: static, Mode: Localhost}
 INFO: 2023/08/04 21:40:44 config.go:22: Server configuration-> { Addr: 127.0.0.1:3000, StaticDir: static, Mode: Localhost}
 INFO: 2023/08/04 21:44:33 config.go:22: Server configuration-> { Addr: 127.0.0.1:3000, StaticDir: static, Mode: Localhost}
+INFO: 2023/08/05 07:51:01 config.go:22: Server configuration-> { Addr: 127.0.0.1:3000, StaticDir: static, Mode: Localhost}
+INFO: 2023/08/05 07:52:16 config.go:22: Server configuration-> { Addr: 127.0.0.1:3000, StaticDir: static, Mode: Localhost}
+INFO: 2023/08/05 07:52:31 config.go:22: Server configuration-> { Addr: 127.0.0.1:3000, StaticDir: static, Mode: Localhost}
+INFO: 2023/08/05 07:56:27 config.go:22: Server configuration-> { Addr: 127.0.0.1:3000, StaticDir: static, Mode: Localhost}
+INFO: 2023/08/05 07:57:14 config.go:22: Server configuration-> { Addr: 127.0.0.1:3000, StaticDir: static, Mode: Localhost}
+INFO: 2023/08/05 08:06:50 config.go:22: Server configuration-> { Addr: 127.0.0.1:3000, StaticDir: static, Mode: Localhost}
+INFO: 2023/08/05 08:07:58 config.go:22: Server configuration-> { Addr: 127.0.0.1:3000, StaticDir: static, Mode: Localhost}
+INFO: 2023/08/05 23:17:12 config.go:22: Server configuration-> { Addr: 127.0.0.1:3000, StaticDir: static, Mode: Localhost}
+INFO: 2023/08/05 23:24:53 config.go:22: Server configuration-> { Addr: 127.0.0.1:3000, StaticDir: static, Mode: Localhost}
+INFO: 2023/08/05 23:27:16 config.go:22: Server configuration-> { Addr: 127.0.0.1:3000, StaticDir: static, Mode: Localhost}
+INFO: 2023/08/05 23:31:59 config.go:22: Server configuration-> { Addr: 127.0.0.1:3000, StaticDir: static, Mode: Localhost}
+INFO: 2023/08/05 23:32:12 router.go:113: Details got:  {paulsupriyo64nk@gmail.com dasdasdasd}

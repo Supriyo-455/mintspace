@@ -10,5 +10,10 @@ type User struct {
 	DateCreated       string   `bson:"datecreated"`
 }
 
+type UserLoginRequest struct {
+	Email    string `bson:"email"`
+	Password string `bson:"_password"`
+}
+
 // User authentications
 // User permissions

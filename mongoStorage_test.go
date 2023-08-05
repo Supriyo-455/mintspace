@@ -2,8 +2,8 @@ package main
 
 import (
 	"context"
-	"fmt"
 	"os"
+	"path/filepath"
 	"testing"
 )
 
@@ -31,7 +31,7 @@ func TestInsertUser(t *testing.T) {
 		t.Errorf("want id=%s but got id=%s\n", id, user.Id)
 	}
 
-	path := fmt.Sprintln("blogs/", id)
+	path := filepath.Join(".", "blogs", string(id))
 	_, err = os.Stat(path)
 	if os.IsNotExist(err) {
 		t.Errorf("error occured: %s", err.Error())

@@ -41,6 +41,9 @@ func NewRouter() *Router {
 
 	router.mux.GET("/blog/", makeRouterHandleFunc(getBlogsHandle))
 	router.mux.GET("/blog/:id", makeRouterHandleFunc(getBlogByIdHandle))
+	router.mux.GET("/login", makeRouterHandleFunc(getLoginHandle))
+
+	router.mux.POST("/login", makeRouterHandleFunc(postLoginHandle))
 
 	router.mux.NotFound = http.HandlerFunc(handle404)
 
@@ -91,4 +94,22 @@ func getBlogByIdHandle(res http.ResponseWriter, req *http.Request, params httpro
 	blogWithContent.Content = string(blogContentHtml)
 
 	return templ.ExecuteTemplate(res, "layout", blogWithContent)
+}
+
+func getLoginHandle(res http.ResponseWriter, req *http.Request, params httprouter.Params) error {
+	templ, err := template.ParseFiles("templates/layout.html", "templates/login.html")
+	if err != nil {
+		return err
+	}
+	return templ.ExecuteTemplate(res, "layout", nil)
+}
+
+func postLoginHandle(res http.ResponseWriter, req *http.Request, params httprouter.Params) error {
+	UserLoginRequest := UserLoginRequest{
+		Email:    req.FormValue("email"),
+		Password: req.FormValue("password"),
+	}
+
+	LogInfo().Println("Details got: ", UserLoginRequest)
+	return nil
 }

@@ -1,3 +1,13 @@
 {{ define "content" }}
-<form action=""></form>
+<form action="/login" method="POST">
+    <label id="email">
+        Email Address
+        <input type="email" name="email" required />
+    </label>
+    <label>
+        Password
+        <input type="password" name="password" required />
+    </label>
+    <input type="submit" class="validateDontSubmit" name="login" value="Login" />
+</form>
 {{ end }}
