@@ -19,8 +19,8 @@ type Storage interface {
 	Connect(ctx context.Context) error
 	Disconnect(ctx context.Context) error
 	InsertUser(ctx context.Context, user *User) (ObjectID, error)
-	InsertBlog(ctx context.Context, blog *Blog) (ObjectID, error)
-	GetAllBlogs(ctx context.Context) ([]Blog, error)
+	InsertBlog(ctx context.Context, blog *Blog) (string, error)
+	GetAllBlogs(ctx context.Context) (Blogs, error)
 	GetBlogByID(ctx context.Context, id ObjectID) (Blog, error)
 	UpdateUserByID(ctx context.Context, id ObjectID, data *User) error
 	UpdateBlogByID(ctx context.Context, id ObjectID, data *Blog) error

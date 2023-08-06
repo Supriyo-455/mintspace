@@ -82,8 +82,8 @@ func (ms *MongoStorage) InsertUser(ctx context.Context, user *User) (ObjectID, e
 		}
 	}
 
-	objectID := primitive.NewObjectID()
-	user.Id = ObjectID(objectID.Hex())
+	mongoObjectID := primitive.NewObjectID()
+	user.Id = ObjectID(mongoObjectID.Hex())
 
 	user.DateCreated = time.Now().Format(time.DateOnly)
 
@@ -100,3 +100,23 @@ func (ms *MongoStorage) InsertUser(ctx context.Context, user *User) (ObjectID, e
 
 	return user.Id, err
 }
+
+func (ms *MongoStorage) InsertBlog(ctx context.Context, blog *Blog) (string, error) {
+	collection := ms.Client.Database(mongoConfiguration.Database).Collection(blogsCollection)
+
+	mongoObjectID := primitive.NewObjectID()
+	blog.Id = ObjectID(mongoObjectID.Hex())
+	blog.DateCreated = time.Now().Format(time.DateOnly)
+
+	_, err := collection.InsertOne(ctx, blog)
+	if err != nil {
+		return "", err
+	}
+
+	path := filepath.Join(".", "blogs", string(blog.Author.Id), string(blog.Id)+".md")
+	return path, nil
+}
+
+// func (ms *MongoStorage) GetAllBlogs(ctx context.Context) (Blogs, error) {
+// 	collection := ms.Client.Database(mongoConfiguration.Database).Collection(blogsCollection)
+// }

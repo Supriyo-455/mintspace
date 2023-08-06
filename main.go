@@ -5,8 +5,6 @@ import (
 )
 
 func main() {
-	// TestMongo(ConnectToMongo())
-
 	router := NewRouter()
 
 	server := http.Server{
