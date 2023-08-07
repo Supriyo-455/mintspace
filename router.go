@@ -42,8 +42,12 @@ func NewRouter() *Router {
 	router.mux.GET("/blog/", makeRouterHandleFunc(getBlogsHandle))
 	router.mux.GET("/blog/:id", makeRouterHandleFunc(getBlogByIdHandle))
 	router.mux.GET("/login", makeRouterHandleFunc(getLoginHandle))
+	router.mux.GET("/signup", makeRouterHandleFunc(getSignupHandle))
+	router.mux.GET("/write", makeRouterHandleFunc(getWriteBlogHandle))
 
 	router.mux.POST("/login", makeRouterHandleFunc(postLoginHandle))
+	router.mux.POST("/signup", makeRouterHandleFunc(postSignupHandle))
+	router.mux.POST("/write", makeRouterHandleFunc(postWriteBlogHandle))
 
 	router.mux.NotFound = http.HandlerFunc(handle404)
 
@@ -106,10 +110,43 @@ func getLoginHandle(res http.ResponseWriter, req *http.Request, params httproute
 
 func postLoginHandle(res http.ResponseWriter, req *http.Request, params httprouter.Params) error {
 	UserLoginRequest := UserLoginRequest{
-		Email:    req.FormValue("email"),
-		Password: req.FormValue("password"),
+		Email:             req.FormValue("email"),
+		EncryptedPassword: req.FormValue("password"),
 	}
 
 	LogInfo().Println("Details got: ", UserLoginRequest)
+	return nil
+}
+
+func getSignupHandle(res http.ResponseWriter, req *http.Request, params httprouter.Params) error {
+	templ, err := template.ParseFiles("templates/layout.html", "templates/signup.html")
+	if err != nil {
+		return err
+	}
+	return templ.ExecuteTemplate(res, "layout", nil)
+}
+
+func postSignupHandle(res http.ResponseWriter, req *http.Request, params httprouter.Params) error {
+	userSignupRequest := UserSignupRequest{
+		Name:              req.FormValue("name"),
+		Email:             req.FormValue("email"),
+		DateOfBirth:       req.FormValue("dob"),
+		EncryptedPassword: req.FormValue("password"),
+	}
+
+	LogInfo().Println("Details got: ", userSignupRequest)
+	return nil
+}
+
+func getWriteBlogHandle(res http.ResponseWriter, req *http.Request, params httprouter.Params) error {
+	templ, err := template.ParseFiles("templates/layout.html", "templates/writeBlog.html")
+	if err != nil {
+		return err
+	}
+	return templ.ExecuteTemplate(res, "layout", nil)
+}
+
+func postWriteBlogHandle(res http.ResponseWriter, req *http.Request, params httprouter.Params) error {
+
 	return nil
 }
