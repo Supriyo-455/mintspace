@@ -1,0 +1,13 @@
+{{ define "content" }}
+<form action="/write" method="POST">
+    <label id="title">
+        Blog title
+        <input type="text" name="title" required />
+    </label>
+    <label id="content">
+        Blog content
+        <input type="text" name="content" required />
+    </label>
+    <input type="submit" name="create" value="create" />
+</form>
+{{ end }}

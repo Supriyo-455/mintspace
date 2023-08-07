@@ -22,3 +22,10 @@ INFO: 2023/08/05 23:24:53 config.go:22: Server configuration-> { Addr: 127.0.0.1
 INFO: 2023/08/05 23:27:16 config.go:22: Server configuration-> { Addr: 127.0.0.1:3000, StaticDir: static, Mode: Localhost}
 INFO: 2023/08/05 23:31:59 config.go:22: Server configuration-> { Addr: 127.0.0.1:3000, StaticDir: static, Mode: Localhost}
 INFO: 2023/08/05 23:32:12 router.go:113: Details got:  {paulsupriyo64nk@gmail.com dasdasdasd}
+INFO: 2023/08/07 08:27:14 config.go:22: Server configuration-> { Addr: 127.0.0.1:3000, StaticDir: static, Mode: Localhost}
+INFO: 2023/08/07 08:28:02 router.go:135: Details got:  {Supriyo Paul asdaswfdf 2023-08-18 asdaswfdf}
+INFO: 2023/08/07 08:28:53 config.go:22: Server configuration-> { Addr: 127.0.0.1:3000, StaticDir: static, Mode: Localhost}
+INFO: 2023/08/07 08:29:00 router.go:135: Details got:  {Supriyo Paul paulsupriyo64nk@gmail.com 2023-08-18 xcvdxfafdsadasd}
+INFO: 2023/08/07 08:43:12 config.go:22: Server configuration-> { Addr: 127.0.0.1:3000, StaticDir: static, Mode: Localhost}
+INFO: 2023/08/07 08:44:05 router.go:150: Blog title:  Test blog
+INFO: 2023/08/07 08:44:05 router.go:151: Blog content:  # Changelog  ## v1.0.0  ### Added or Changed - Added this changelog :) - Fixed typos in both templates - Back to top links - Added more "Built With" frameworks/libraries - Changed table of contents to start collapsed - Added checkboxes for major features on roadmap  ### Removed  - Some packages/libraries from acknowledgements I no longer use
