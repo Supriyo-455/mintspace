@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"net/http"
+	"path/filepath"
 	"text/template"
 
 	"github.com/julienschmidt/httprouter"
@@ -147,6 +148,9 @@ func getWriteBlogHandle(res http.ResponseWriter, req *http.Request, params httpr
 }
 
 func postWriteBlogHandle(res http.ResponseWriter, req *http.Request, params httprouter.Params) error {
+	blogTitle := req.FormValue("title")
+	blogContent := req.FormValue("content")
 
-	return nil
+	path := filepath.Join("blogs", blogTitle+".md")
+	return WriteToFile(path, blogContent)
 }

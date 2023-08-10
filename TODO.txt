@@ -1,4 +1,5 @@
 [Important]:
+    - Get the post request from blog create page
     - User password encryption using bcrypt
         =ref: https://heynode.com/blog/2020-04/salt-and-hash-passwords-bcrypt/
     - Get user data struct when required

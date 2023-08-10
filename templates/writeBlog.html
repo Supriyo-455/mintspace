@@ -1,13 +1,9 @@
 {{ define "content" }}
-<form action="/write" method="POST">
-    <label id="title">
-        Blog title
-        <input type="text" name="title" required />
-    </label>
-    <label id="content">
-        Blog content
-        <input type="text" name="content" required />
-    </label>
-    <input type="submit" name="create" value="create" />
-</form>
+<link rel="stylesheet" href="https://unpkg.com/easymde/dist/easymde.min.css">
+<script src="https://unpkg.com/easymde/dist/easymde.min.js"></script>
+<textarea id="blog-content"></textarea>
+<button>Save blog</button>
+<script>
+    const easyMDE = new EasyMDE({ element: document.getElementById('blog-content'), lineNumbers: true });
+</script>
 {{ end }}
