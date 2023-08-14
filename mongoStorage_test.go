@@ -7,7 +7,6 @@ import (
 	"testing"
 )
 
-// TODO: seperate mongo test database and production database
 func TestInsertUser(t *testing.T) {
 	user := User{
 		Name:              "test testing",

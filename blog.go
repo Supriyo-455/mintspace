@@ -1,6 +1,5 @@
 package main
 
-// TODO: Use datecreated
 type Blog struct {
 	Id            ObjectID `bson:"_id"`
 	Author        *User    `bson:"author"`

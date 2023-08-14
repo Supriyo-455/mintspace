@@ -55,7 +55,6 @@ func (ms *MongoStorage) Connect(ctx context.Context) error {
 	return nil
 }
 
-// TODO: check
 func (ms *MongoStorage) InsertUser(ctx context.Context, user *User) (ObjectID, error) {
 	collection := ms.Client.Database(mongoConfiguration.Database).Collection(usersCollection)
 	indexs, err := collection.Indexes().ListSpecifications(ctx)
