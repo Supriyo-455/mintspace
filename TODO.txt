@@ -8,7 +8,11 @@
         -ref: https://dev.to/theghostmac/understanding-and-building-authentication-sessions-in-golang-1c9k 
     - MVC architecture
     - Create a mechanism to create appropiate markdown file when creating blogs
-    - Use Bluemonday for sanitizing unsafeHTML
+    - Use Bluemonday for sanitizing unsafeHTML (XSS Attack prevention)
+    - Remove SampleDB functions
+    - Seperate mongo test database and production database
+    - Singleton pattern and error handling for mongo database
+    - Use TemplateData struct for data passing between template and golang
     - Admin page
     - Create Blog writing page
     - Remove sampleDb and sampleDbfuncs

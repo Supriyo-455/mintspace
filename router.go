@@ -37,9 +37,6 @@ func NewRouter() *Router {
 	router := new(Router)
 	router.mux = httprouter.New()
 
-	files := http.FileServer(http.Dir(config.Static))
-	router.mux.Handler("GET", "/static/", http.StripPrefix("/static/", files))
-
 	router.mux.GET("/blog/", makeRouterHandleFunc(getBlogsHandle))
 	router.mux.GET("/blog/:id", makeRouterHandleFunc(getBlogByIdHandle))
 	router.mux.GET("/login", makeRouterHandleFunc(getLoginHandle))
@@ -60,21 +57,19 @@ func handle404(res http.ResponseWriter, req *http.Request) {
 	if err != nil {
 		LogError().Fatalln(err)
 	}
-	temp.ExecuteTemplate(res, "layout", nil)
+	temp.ExecuteTemplate(res, "layout", MakeTemplateData("NotFound", nil))
 }
 
 func getBlogsHandle(res http.ResponseWriter, req *http.Request, _ httprouter.Params) error {
-	// TODO: Replace with original DB
 	blogs := getSampleBlogs()
 	templ, err := template.ParseFiles("templates/layout.html", "templates/bloglist.html")
 	if err != nil {
 		return err
 	}
 
-	return templ.ExecuteTemplate(res, "layout", blogs.Array)
+	return templ.ExecuteTemplate(res, "layout", MakeTemplateData("Blogs", blogs.Array))
 }
 
-// TODO: Handle XSS attack
 func getBlogByIdHandle(res http.ResponseWriter, req *http.Request, params httprouter.Params) error {
 	templ, err := template.ParseFiles("templates/layout.html", "templates/blog.html", "templates/blogcontent.html")
 	if err != nil {
@@ -83,13 +78,11 @@ func getBlogByIdHandle(res http.ResponseWriter, req *http.Request, params httpro
 
 	id := params.ByName("id")
 
-	// TODO: Replace with original DB
 	blog, err := getSampleBlogById(ObjectID(id))
 	if err != nil {
 		return err
 	}
 
-	// TODO: Move to controller
 	path := fmt.Sprintf("blogs/%s.md", blog.Id)
 	blogContent := ReadFile(path)
 	blogContentHtml := MdToHTML(blogContent)
@@ -98,7 +91,7 @@ func getBlogByIdHandle(res http.ResponseWriter, req *http.Request, params httpro
 	blogWithContent.Blog = blog
 	blogWithContent.Content = string(blogContentHtml)
 
-	return templ.ExecuteTemplate(res, "layout", blogWithContent)
+	return templ.ExecuteTemplate(res, "layout", MakeTemplateData(blog.Title, blogWithContent))
 }
 
 func getLoginHandle(res http.ResponseWriter, req *http.Request, params httprouter.Params) error {
@@ -106,7 +99,7 @@ func getLoginHandle(res http.ResponseWriter, req *http.Request, params httproute
 	if err != nil {
 		return err
 	}
-	return templ.ExecuteTemplate(res, "layout", nil)
+	return templ.ExecuteTemplate(res, "layout", MakeTemplateData("login", nil))
 }
 
 func postLoginHandle(res http.ResponseWriter, req *http.Request, params httprouter.Params) error {
@@ -124,7 +117,7 @@ func getSignupHandle(res http.ResponseWriter, req *http.Request, params httprout
 	if err != nil {
 		return err
 	}
-	return templ.ExecuteTemplate(res, "layout", nil)
+	return templ.ExecuteTemplate(res, "layout", MakeTemplateData("signup", nil))
 }
 
 func postSignupHandle(res http.ResponseWriter, req *http.Request, params httprouter.Params) error {
@@ -144,7 +137,7 @@ func getWriteBlogHandle(res http.ResponseWriter, req *http.Request, params httpr
 	if err != nil {
 		return err
 	}
-	return templ.ExecuteTemplate(res, "layout", nil)
+	return templ.ExecuteTemplate(res, "layout", MakeTemplateData("write blog", nil))
 }
 
 func postWriteBlogHandle(res http.ResponseWriter, req *http.Request, params httprouter.Params) error {

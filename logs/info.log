@@ -31,3 +31,7 @@ INFO: 2023/08/07 08:44:05 router.go:150: Blog title:  Test blog
 INFO: 2023/08/07 08:44:05 router.go:151: Blog content:  # Changelog  ## v1.0.0  ### Added or Changed - Added this changelog :) - Fixed typos in both templates - Back to top links - Added more "Built With" frameworks/libraries - Changed table of contents to start collapsed - Added checkboxes for major features on roadmap  ### Removed  - Some packages/libraries from acknowledgements I no longer use
 INFO: 2023/08/08 18:33:18 config.go:22: Server configuration-> { Addr: 127.0.0.1:3000, StaticDir: static, Mode: Localhost}
 INFO: 2023/08/10 08:27:07 config.go:22: Server configuration-> { Addr: 127.0.0.1:3000, StaticDir: static, Mode: Localhost}
+INFO: 2023/08/12 08:54:09 config.go:22: Server configuration-> { Addr: 127.0.0.1:3000, StaticDir: static, Mode: Localhost}
+INFO: 2023/08/12 08:57:43 config.go:21: Server configuration-> { Addr: 127.0.0.1:3000, Mode: Localhost}
+INFO: 2023/08/14 09:00:57 config.go:21: Server configuration-> { Addr: 127.0.0.1:3000, Mode: Localhost}
+INFO: 2023/08/14 09:32:27 config.go:21: Server configuration-> { Addr: 127.0.0.1:3000, Mode: Localhost}

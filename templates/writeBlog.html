@@ -2,8 +2,25 @@
 <link rel="stylesheet" href="https://unpkg.com/easymde/dist/easymde.min.css">
 <script src="https://unpkg.com/easymde/dist/easymde.min.js"></script>
 <textarea id="blog-content"></textarea>
-<button>Save blog</button>
+<label id="blog-title-label">
+    Blog Title
+    <input type="text" name="blog-title" id="blog-title">
+</label>
+<label id="blog-coverImage-label">
+    Blog Cover Image
+    <input type="url" name="blog-coverImage" id="blog-coverImage">
+</label>
+<button id="save-blog">Save blog</button>
 <script>
     const easyMDE = new EasyMDE({ element: document.getElementById('blog-content'), lineNumbers: true });
+    document.getElementById("save-blog").addEventListener("click", e => {
+        printJSON();
+    });
+
+    async function printJSON() {
+        const response = await fetch("../config.json");
+        const json = await response.json();
+        console.log(json);
+    }
 </script>
 {{ end }}

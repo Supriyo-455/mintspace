@@ -12,7 +12,7 @@ func main() {
 		Handler: router.mux,
 	}
 
-	print("Server config:", config)
+	print("Server config:", *config)
 	err := server.ListenAndServe()
 	if err != nil {
 		LogError().Fatalln(err)

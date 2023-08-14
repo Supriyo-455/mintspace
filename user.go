@@ -1,6 +1,5 @@
 package main
 
-// TODO: Use datecreated
 type User struct {
 	Id                ObjectID `bson:"_id"`
 	Name              string   `bson:"name"`
@@ -12,16 +11,13 @@ type User struct {
 }
 
 type UserLoginRequest struct {
-	Email             string `bson:"email"`
-	EncryptedPassword string `bson:"password"`
+	Email             string
+	EncryptedPassword string
 }
 
 type UserSignupRequest struct {
-	Name              string `bson:"name"`
-	Email             string `bson:"email"`
-	DateOfBirth       string `bson:"dateOfBirth"`
-	EncryptedPassword string `bson:"password"`
+	Name              string
+	Email             string
+	DateOfBirth       string
+	EncryptedPassword string
 }
-
-// User authentications
-// User permissions
