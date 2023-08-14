@@ -12,7 +12,6 @@
     - Remove SampleDB functions
     - Seperate mongo test database and production database
     - Singleton pattern and error handling for mongo database
-    - Use TemplateData struct for data passing between template and golang
     - Admin page
     - Create Blog writing page
     - Remove sampleDb and sampleDbfuncs
