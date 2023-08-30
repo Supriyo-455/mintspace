@@ -36,3 +36,99 @@ INFO: 2023/08/12 08:57:43 config.go:21: Server configuration-> { Addr: 127.0.0.1
 INFO: 2023/08/14 09:00:57 config.go:21: Server configuration-> { Addr: 127.0.0.1:3000, Mode: Localhost}
 INFO: 2023/08/14 09:32:27 config.go:21: Server configuration-> { Addr: 127.0.0.1:3000, Mode: Localhost}
 INFO: 2023/08/14 10:30:02 config.go:21: Server configuration-> { Addr: 127.0.0.1:3000, Mode: Localhost}
+INFO: 2023/08/16 18:24:52 config.go:21: Server configuration-> { Addr: 127.0.0.1:3000, Mode: Localhost}
+INFO: 2023/08/16 18:33:32 config.go:22: Server configuration-> { Addr: 127.0.0.1:3000, Static: static, Mode: Localhost}
+INFO: 2023/08/16 18:46:01 config.go:22: Server configuration-> { Addr: 127.0.0.1:3000, Static: static, Mode: Localhost}
+INFO: 2023/08/16 18:46:05 config.go:22: Server configuration-> { Addr: 127.0.0.1:3000, Static: static, Mode: Localhost}
+INFO: 2023/08/26 09:11:43 config.go:22: Server configuration-> { Addr: 127.0.0.1:3000, Static: static, Mode: Localhost}
+INFO: 2023/08/29 18:59:12 config.go:22: Server configuration-> { Addr: 127.0.0.1:3000, Static: static, Mode: Localhost}
+INFO: 2023/08/29 19:13:02 config.go:22: Server configuration-> { Addr: 127.0.0.1:3000, Static: static, Mode: Localhost}
+INFO: 2023/08/29 22:31:00 config.go:22: Server configuration-> { Addr: 127.0.0.1:3000, Static: static, Mode: Localhost}
+INFO: 2023/08/29 22:44:59 config.go:22: Server configuration-> { Addr: 127.0.0.1:3000, Static: static, Mode: Localhost}
+INFO: 2023/08/29 22:48:41 router.go:110: Details got:  {dsadasd@email.com dsadasd}
+INFO: 2023/08/30 08:17:45 config.go:22: Server configuration-> { Addr: 127.0.0.1:3000, Static: static, Mode: Localhost}
+INFO: 2023/08/30 08:21:52 config.go:22: Server configuration-> { Addr: 127.0.0.1:3000, Static: static, Mode: Localhost}
+INFO: 2023/08/30 08:27:09 config.go:22: Server configuration-> { Addr: 127.0.0.1:3000, Static: static, Mode: Localhost}
+INFO: 2023/08/30 08:34:12 config.go:22: Server configuration-> { Addr: 127.0.0.1:3000, Static: static, Mode: Localhost}
+INFO: 2023/08/30 09:11:39 config.go:22: Server configuration-> { Addr: 127.0.0.1:3000, Static: static, Mode: Localhost}
+INFO: 2023/08/30 17:24:28 config.go:22: Server configuration-> { Addr: 127.0.0.1:3000, Static: static, Mode: Localhost}
+INFO: 2023/08/30 17:32:59 config.go:22: Server configuration-> { Addr: 127.0.0.1:3000, Static: static, Mode: Localhost}
+INFO: 2023/08/30 17:47:07 config.go:22: Server configuration-> { Addr: 127.0.0.1:3000, Static: static, Mode: Localhost}
+INFO: 2023/08/30 17:49:09 config.go:22: Server configuration-> { Addr: 127.0.0.1:3000, Static: static, Mode: Localhost}
+INFO: 2023/08/30 17:52:07 config.go:22: Server configuration-> { Addr: 127.0.0.1:3000, Static: static, Mode: Localhost}
+INFO: 2023/08/30 18:00:43 config.go:22: Server configuration-> { Addr: 127.0.0.1:3000, Static: static, Mode: Localhost}
+INFO: 2023/08/30 18:04:04 config.go:22: Server configuration-> { Addr: 127.0.0.1:3000, Static: static, Mode: Localhost}
+INFO: 2023/08/30 18:04:26 router.go:157: Data received : {dasdasda cacaca # Foobar
+
+Foobar is a Python library for dealing with word pluralization.
+
+## Installation
+
+Use the package manager [pip](https://pip.pypa.io/en/stable/) to install foobar.
+
+```bash
+pip install foobar
+```
+
+## Usage
+
+```python
+import foobar
+
+# returns 'words'
+foobar.pluralize('word')
+
+# returns 'geese'
+foobar.pluralize('goose')
+
+# returns 'phenomenon'
+foobar.singularize('phenomena')
+```
+
+## Contributing
+
+Pull requests are welcome. For major changes, please open an issue first
+to discuss what you would like to change.
+
+Please make sure to update tests as appropriate.
+
+## License
+
+[MIT](https://choosealicense.com/licenses/mit/)}
+INFO: 2023/08/30 18:04:27 router.go:157: Data received : {dasdasda cacaca # Foobar
+
+Foobar is a Python library for dealing with word pluralization.
+
+## Installation
+
+Use the package manager [pip](https://pip.pypa.io/en/stable/) to install foobar.
+
+```bash
+pip install foobar
+```
+
+## Usage
+
+```python
+import foobar
+
+# returns 'words'
+foobar.pluralize('word')
+
+# returns 'geese'
+foobar.pluralize('goose')
+
+# returns 'phenomenon'
+foobar.singularize('phenomena')
+```
+
+## Contributing
+
+Pull requests are welcome. For major changes, please open an issue first
+to discuss what you would like to change.
+
+Please make sure to update tests as appropriate.
+
+## License
+
+[MIT](https://choosealicense.com/licenses/mit/)}

@@ -1,9 +1,10 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
+	"io"
 	"net/http"
-	"path/filepath"
 	"text/template"
 
 	"github.com/julienschmidt/httprouter"
@@ -141,9 +142,18 @@ func getWriteBlogHandle(res http.ResponseWriter, req *http.Request, params httpr
 }
 
 func postWriteBlogHandle(res http.ResponseWriter, req *http.Request, params httprouter.Params) error {
-	blogTitle := req.FormValue("title")
-	blogContent := req.FormValue("content")
+	var blogCreateRequest BlogCreateRequest
 
-	path := filepath.Join("blogs", blogTitle+".md")
-	return WriteToFile(path, blogContent)
+	data, err := io.ReadAll(req.Body)
+	if err != nil {
+		return err
+	}
+
+	err = json.Unmarshal(data, &blogCreateRequest)
+	if err != nil {
+		return err
+	}
+
+	LogInfo().Println("Data received :", blogCreateRequest)
+	return nil
 }

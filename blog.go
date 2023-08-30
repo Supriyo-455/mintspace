@@ -18,3 +18,9 @@ type BlogWithContent struct {
 	Blog    *Blog
 	Content string
 }
+
+type BlogCreateRequest struct {
+	Title    string `json:"title"`
+	ImageURL string `json:"imageurl"`
+	Content  string `json:"content"`
+}

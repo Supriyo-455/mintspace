@@ -1,26 +1,60 @@
 {{ define "content" }}
-<link rel="stylesheet" href="https://unpkg.com/easymde/dist/easymde.min.css">
-<script src="https://unpkg.com/easymde/dist/easymde.min.js"></script>
-<textarea id="blog-content"></textarea>
-<label id="blog-title-label">
-    Blog Title
-    <input type="text" name="blog-title" id="blog-title">
-</label>
-<label id="blog-coverImage-label">
-    Blog Cover Image
-    <input type="url" name="blog-coverImage" id="blog-coverImage">
-</label>
-<button id="save-blog">Save blog</button>
-<script>
-    const easyMDE = new EasyMDE({ element: document.getElementById('blog-content'), lineNumbers: true });
-    document.getElementById("save-blog").addEventListener("click", e => {
-        printJSON();
-    });
 
-    async function printJSON() {
-        const response = await fetch("../config.json");
-        const json = await response.json();
-        console.log(json);
+<div>
+    <div>
+        <label for="blog-title">Blog Title</label>
+        <input type="text" name="blog-title" id="blog-title" />
+    </div>
+
+
+    <div>
+        <label for="blog-coverImage">Blog Cover Image</label>
+        <input type="url" name="blog-coverImage" id="blog-coverImage" />
+    </div>
+
+    <div>
+        <link rel="stylesheet" href="https://unpkg.com/easymde/dist/easymde.min.css">
+        <script src="https://unpkg.com/easymde/dist/easymde.min.js"></script>
+        <textarea id="blog-content"></textarea>
+    </div>
+
+    <div>
+        <button id="save-blog">Save blog</button>
+    </div>
+</div>
+
+<script>
+    // TODO: Send post request to the server
+    const blogTitle = document.getElementById("blog-title");
+    const blogCoverImage = document.getElementById("blog-coverImage");
+    const easyMDE = new EasyMDE({ element: document.getElementById('blog-content'), lineNumbers: true });
+
+    const saveBlog = function (body) {
+        fetch('write', {
+            method: 'POST',
+            body: JSON.stringify(body),
+            headers: {
+                'Content-type': 'application/json',
+            }
+        }).then(res => {
+            if (!res.ok) {
+                throw new Error("Network response was not ok!");
+            }
+            return res.json;
+        }).then(data => {
+            console.log(data.toString);
+        }).catch(error =>
+            console.error(error)
+        );
     }
+
+    document.getElementById("save-blog").addEventListener("click", e => {
+        const body = {
+            "title": blogTitle.value,
+            "imageurl": blogCoverImage.value,
+            "content": easyMDE.value(),
+        };
+        saveBlog(body);
+    });
 </script>
 {{ end }}

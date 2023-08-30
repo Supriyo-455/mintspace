@@ -1,5 +1,13 @@
 [Important]:
-    - Get the post request from blog create page
+    - Right now we are storing the blogs in a particular folder which will change in the future.
+        The blog creation request struct stores blog content, Image url, title which we can store inside the database,
+        so we need to update the blog fetching mechanism again from file based to database based.
+        - Remove blogs folder, update all the dependencies of blogs folder to fetch blogs from mongo database.
+        - Create detailed blog request which will have the followings
+            - Author
+            - Premium status
+            - Date of creation
+        - Store blog with this informations
     - User password encryption using bcrypt
         =ref: https://heynode.com/blog/2020-04/salt-and-hash-passwords-bcrypt/
     - Get user data struct when required
@@ -13,7 +21,7 @@
     - Seperate mongo test database and production database
     - Singleton pattern and error handling for mongo database
     - Admin page
-    - Create Blog writing page
+    - Form validations in blog writting page
     - Remove sampleDb and sampleDbfuncs
 
 
