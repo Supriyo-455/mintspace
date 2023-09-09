@@ -5,6 +5,7 @@ go 1.20
 require github.com/julienschmidt/httprouter v1.3.0
 
 require (
+	github.com/golang-jwt/jwt/v4 v4.5.0
 	github.com/golang/snappy v0.0.1 // indirect
 	github.com/gomarkdown/markdown v0.0.0-20230716120725-531d2d74bc12
 	github.com/klauspost/compress v1.13.6 // indirect

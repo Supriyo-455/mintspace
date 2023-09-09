@@ -28,3 +28,7 @@
 [Future upgrades]:
     - Dockerise the project
     - Cache the parsed markdown file result (Use redis or memcache)
+
+
+[Current Status]:
+    Broken due to changes happening inside router.go

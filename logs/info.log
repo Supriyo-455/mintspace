@@ -132,3 +132,4 @@ Please make sure to update tests as appropriate.
 ## License
 
 [MIT](https://choosealicense.com/licenses/mit/)}
+INFO: 2023/09/04 20:34:19 config.go:22: Server configuration-> { Addr: 127.0.0.1:3000, Static: static, Mode: Localhost}

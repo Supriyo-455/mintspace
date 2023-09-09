@@ -45,7 +45,7 @@ func NewRouter() *Router {
 	router.mux.GET("/write", makeRouterHandleFunc(getWriteBlogHandle))
 
 	router.mux.POST("/login", makeRouterHandleFunc(postLoginHandle))
-	router.mux.POST("/signup", makeRouterHandleFunc(postSignupHandle))
+	router.mux.POST("/signup", withJWTAuth(makeRouterHandleFunc(postSignupHandle), nil))
 	router.mux.POST("/write", makeRouterHandleFunc(postWriteBlogHandle))
 
 	router.mux.NotFound = http.HandlerFunc(handle404)
@@ -104,12 +104,11 @@ func getLoginHandle(res http.ResponseWriter, req *http.Request, params httproute
 }
 
 func postLoginHandle(res http.ResponseWriter, req *http.Request, params httprouter.Params) error {
-	UserLoginRequest := UserLoginRequest{
-		Email:             req.FormValue("email"),
-		EncryptedPassword: req.FormValue("password"),
-	}
+	// UserLoginRequest := UserLoginRequest{
+	// 	Email:             req.FormValue("email"),
+	// 	EncryptedPassword: req.FormValue("password"),
+	// }
 
-	LogInfo().Println("Details got: ", UserLoginRequest)
 	return nil
 }
 
