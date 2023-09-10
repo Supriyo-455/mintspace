@@ -30,27 +30,40 @@ func makeRouterHandleFunc(f routerFunc) httprouter.Handle {
 	}
 }
 
-type Router struct {
+type Server struct {
 	mux *httprouter.Router
 }
 
-func NewRouter() *Router {
-	router := new(Router)
-	router.mux = httprouter.New()
+func NewServer() *Server {
+	server := new(Server)
+	server.mux = httprouter.New()
 
-	router.mux.GET("/blog/", makeRouterHandleFunc(getBlogsHandle))
-	router.mux.GET("/blog/:id", makeRouterHandleFunc(getBlogByIdHandle))
-	router.mux.GET("/login", makeRouterHandleFunc(getLoginHandle))
-	router.mux.GET("/signup", makeRouterHandleFunc(getSignupHandle))
-	router.mux.GET("/write", makeRouterHandleFunc(getWriteBlogHandle))
+	server.mux.GET("/blog/", makeRouterHandleFunc(getBlogsHandle))
+	server.mux.GET("/blog/:id", makeRouterHandleFunc(getBlogByIdHandle))
+	server.mux.GET("/login", makeRouterHandleFunc(getLoginHandle))
+	server.mux.GET("/signup", makeRouterHandleFunc(getSignupHandle))
+	server.mux.GET("/write", makeRouterHandleFunc(getWriteBlogHandle))
 
-	router.mux.POST("/login", makeRouterHandleFunc(postLoginHandle))
-	router.mux.POST("/signup", withJWTAuth(makeRouterHandleFunc(postSignupHandle), nil))
-	router.mux.POST("/write", makeRouterHandleFunc(postWriteBlogHandle))
+	server.mux.POST("/login", makeRouterHandleFunc(postLoginHandle))
+	server.mux.POST("/signup", withJWTAuth(makeRouterHandleFunc(postSignupHandle), nil))
+	server.mux.POST("/write", makeRouterHandleFunc(postWriteBlogHandle))
 
-	router.mux.NotFound = http.HandlerFunc(handle404)
+	server.mux.NotFound = http.HandlerFunc(handle404)
 
-	return router
+	return server
+}
+
+func (server *Server) Run() {
+	httpServer := http.Server{
+		Addr:    config.Address,
+		Handler: server.mux,
+	}
+
+	print("Server config:", *config)
+	err := httpServer.ListenAndServe()
+	if err != nil {
+		LogError().Fatalln(err)
+	}
 }
 
 func handle404(res http.ResponseWriter, req *http.Request) {

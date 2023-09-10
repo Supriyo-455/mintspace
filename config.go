@@ -6,7 +6,6 @@ import (
 
 type Configuration struct {
 	Address string
-	Static  string
 	Mode    string
 }
 
@@ -19,5 +18,5 @@ var config *Configuration = new(Configuration)
 func init() {
 	filename := "config.json"
 	LoadJson(filename, config)
-	LogInfo().Printf("Server configuration-> { Addr: %s, Static: %s, Mode: %s}\n", config.Address, config.Static, config.Mode)
+	LogInfo().Printf("Server configuration-> { Addr: %s, Mode: %s}\n", config.Address, config.Mode)
 }

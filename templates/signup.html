@@ -1,5 +1,6 @@
 {{ define "content" }}
 <form action="/signup" method="POST">
+    <h1>Signup New Account</h1>
     <label id="name">
         Name
         <input type="text" name="name" required />
@@ -18,4 +19,81 @@
     </label>
     <input type="submit" name="signup" value="signup" />
 </form>
+
+<style>
+    /* Center the form both horizontally and vertically */
+    html,
+    body {
+        height: 100%;
+        margin: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #f0f0f0;
+    }
+
+    /* Style the form container */
+    form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        max-width: 20em;
+        padding: 2em;
+        background-color: #fff;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        border-radius: 0.4em;
+    }
+
+    /* Style the heading */
+    h1 {
+        font-size: 1.8em;
+        margin-bottom: 1em;
+        color: #333;
+    }
+
+    /* Style labels */
+    label {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 1em;
+        font-weight: bold;
+        width: 100%;
+        color: #555;
+    }
+
+    /* Style input fields */
+    input[type="text"],
+    input[type="email"],
+    input[type="date"],
+    input[type="password"] {
+        padding: 1em;
+        margin-top: 0.2em;
+        /* Adjusted margin */
+        border: 1px solid #ccc;
+        border-radius: 0.4em;
+        font-size: 1em;
+        width: 100%;
+        box-sizing: border-box;
+        /* Ensure consistent sizing */
+    }
+
+    /* Style the signup button */
+    input[type="submit"] {
+        background-color: #007bff;
+        color: white;
+        padding: 1em 1.5em;
+        border: none;
+        border-radius: 0.4em;
+        font-size: 1.2em;
+        cursor: pointer;
+        transition: background-color 0.3s ease-in-out;
+        width: 100%;
+        /* Make the button width 100% to match input fields */
+    }
+
+    /* Hover effect for the button */
+    input[type="submit"]:hover {
+        background-color: #0056b3;
+    }
+</style>
 {{ end }}

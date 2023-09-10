@@ -1,6 +1,6 @@
 {{ define "content" }}
-<h1>Welcome to mint space</h1>
-<p>
+<h1 class="title">Welcome to mint space</h1>
+<p class="subtitle">
   Here you can find blogs related to popular techonolgies and software
   development
 </p>
@@ -22,4 +22,24 @@
     {{ end }}
   </ul>
 </div>
+
+<style>
+  .title {
+    color: cadetblue;
+    font-size: 3em;
+  }
+
+  .subtitle {
+    color: crimson;
+    font-size: 1.5em;
+    margin-top: 0.2em;
+  }
+
+  .content>h3 {
+    color: cadetblue;
+    font-weight: bold;
+    font-size: 2em;
+    margin-top: 0.7em;
+  }
+</style>
 {{ end }}
