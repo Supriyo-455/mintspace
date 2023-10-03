@@ -1,23 +1,22 @@
 package main
 
 type User struct {
-	Id                ObjectID `bson:"_id"`
-	Name              string   `bson:"name"`
-	Email             string   `bson:"email"`
-	EncryptedPassword string   `bson:"password"`
-	Admin             bool     `bson:"admin"`
-	DateOfBirth       string   `bson:"dateOfBirth"`
-	DateCreated       string   `bson:"datecreated"`
+	Name              string `json:"name"`
+	Email             string `json:"email"`
+	EncryptedPassword string `json:"password"`
+	Admin             bool   `json:"admin"`
+	DateOfBirth       string `json:"dateOfBirth"`
+	DateCreated       string `json:"datecreated"`
 }
 
 type UserLoginRequest struct {
-	Email             string
-	EncryptedPassword string
+	Email    string
+	Password string
 }
 
 type UserSignupRequest struct {
-	Name              string
-	Email             string
-	DateOfBirth       string
-	EncryptedPassword string
+	Name        string
+	Email       string
+	DateOfBirth string
+	Password    string
 }

@@ -1,4 +1,6 @@
 [Important]:
+    - Login page not showing. (FIX THIS)
+    - User created by the test function not showing inside database but the test is passing? (FIX THIS)
     - Right now we are storing the blogs in a particular folder which will change in the future.
         The blog creation request struct stores blog content, Image url, title which we can store inside the database,
         so we need to update the blog fetching mechanism again from file based to database based.

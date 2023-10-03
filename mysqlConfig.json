@@ -1,0 +1,6 @@
+{
+    "driver": "mysql",
+    "user": "root",
+    "database": "tcp(127.0.0.1:3306)/goblog",
+    "password": "1124"
+}

@@ -148,3 +148,34 @@ INFO: 2023/09/10 08:29:19 config.go:22: Server configuration-> { Addr: 127.0.0.1
 INFO: 2023/09/10 08:34:23 config.go:22: Server configuration-> { Addr: 127.0.0.1:3000, Static: static, Mode: Localhost}
 INFO: 2023/09/10 08:35:45 config.go:22: Server configuration-> { Addr: 127.0.0.1:3000, Static: static, Mode: Localhost}
 INFO: 2023/09/10 09:09:34 config.go:21: Server configuration-> { Addr: 127.0.0.1:3000, Mode: Localhost}
+INFO: 2023/09/16 21:06:10 config.go:21: Server configuration-> { Addr: 127.0.0.1:3000, Mode: Localhost}
+INFO: 2023/09/16 22:07:15 config.go:21: Server configuration-> { Addr: 127.0.0.1:3000, Mode: Localhost}
+INFO: 2023/09/17 08:42:15 config.go:21: Server configuration-> { Addr: 127.0.0.1:3000, Mode: Localhost}
+INFO: 2023/09/17 08:42:58 config.go:21: Server configuration-> { Addr: 127.0.0.1:3000, Mode: Localhost}
+INFO: 2023/09/17 08:43:22 config.go:21: Server configuration-> { Addr: 127.0.0.1:3000, Mode: Localhost}
+INFO: 2023/09/17 08:52:25 config.go:21: Server configuration-> { Addr: 127.0.0.1:3000, Mode: Localhost}
+INFO: 2023/09/17 08:53:22 config.go:21: Server configuration-> { Addr: 127.0.0.1:3000, Mode: Localhost}
+INFO: 2023/09/17 08:54:34 config.go:21: Server configuration-> { Addr: 127.0.0.1:3000, Mode: Localhost}
+INFO: 2023/09/17 08:56:31 config.go:21: Server configuration-> { Addr: 127.0.0.1:3000, Mode: Localhost}
+INFO: 2023/09/17 08:57:07 config.go:21: Server configuration-> { Addr: 127.0.0.1:3000, Mode: Localhost}
+INFO: 2023/09/17 09:00:17 config.go:21: Server configuration-> { Addr: 127.0.0.1:3000, Mode: Localhost}
+INFO: 2023/09/17 09:00:39 config.go:21: Server configuration-> { Addr: 127.0.0.1:3000, Mode: Localhost}
+INFO: 2023/09/17 09:00:49 config.go:21: Server configuration-> { Addr: 127.0.0.1:3000, Mode: Localhost}
+INFO: 2023/09/17 09:07:10 config.go:21: Server configuration-> { Addr: 127.0.0.1:3000, Mode: Localhost}
+INFO: 2023/09/17 09:09:39 config.go:21: Server configuration-> { Addr: 127.0.0.1:3000, Mode: Localhost}
+INFO: 2023/09/17 19:01:22 config.go:21: Server configuration-> { Addr: 127.0.0.1:3000, Mode: Localhost}
+INFO: 2023/09/17 19:01:30 config.go:21: Server configuration-> { Addr: 127.0.0.1:3000, Mode: Localhost}
+INFO: 2023/10/03 09:22:40 config.go:21: Server configuration-> { Addr: 127.0.0.1:3000, Mode: Localhost}
+INFO: 2023/10/03 09:24:21 config.go:21: Server configuration-> { Addr: 127.0.0.1:3000, Mode: Localhost}
+INFO: 2023/10/03 09:27:23 config.go:21: Server configuration-> { Addr: 127.0.0.1:3000, Mode: Localhost}
+INFO: 2023/10/03 09:28:54 config.go:21: Server configuration-> { Addr: 127.0.0.1:3000, Mode: Localhost}
+INFO: 2023/10/03 09:31:09 config.go:21: Server configuration-> { Addr: 127.0.0.1:3000, Mode: Localhost}
+INFO: 2023/10/03 09:37:01 config.go:21: Server configuration-> { Addr: 127.0.0.1:3000, Mode: Localhost}
+INFO: 2023/10/03 09:41:09 config.go:21: Server configuration-> { Addr: 127.0.0.1:3000, Mode: Localhost}
+INFO: 2023/10/03 09:41:16 config.go:21: Server configuration-> { Addr: 127.0.0.1:3000, Mode: Localhost}
+INFO: 2023/10/03 09:41:23 config.go:21: Server configuration-> { Addr: 127.0.0.1:3000, Mode: Localhost}
+INFO: 2023/10/03 09:51:33 config.go:21: Server configuration-> { Addr: 127.0.0.1:3000, Mode: Localhost}
+INFO: 2023/10/03 09:52:03 config.go:21: Server configuration-> { Addr: 127.0.0.1:3000, Mode: Localhost}
+INFO: 2023/10/03 09:57:10 config.go:21: Server configuration-> { Addr: 127.0.0.1:3000, Mode: Localhost}
+INFO: 2023/10/03 09:57:45 config.go:21: Server configuration-> { Addr: 127.0.0.1:3000, Mode: Localhost}
+INFO: 2023/10/03 10:04:23 config.go:21: Server configuration-> { Addr: 127.0.0.1:3000, Mode: Localhost}

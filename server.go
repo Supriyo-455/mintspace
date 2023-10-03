@@ -75,13 +75,13 @@ func handle404(res http.ResponseWriter, req *http.Request) {
 }
 
 func getBlogsHandle(res http.ResponseWriter, req *http.Request, _ httprouter.Params) error {
-	blogs := getSampleBlogs()
+	blogs := make([]Blog, 0)
 	templ, err := template.ParseFiles("templates/layout.html", "templates/bloglist.html")
 	if err != nil {
 		return err
 	}
 
-	return templ.ExecuteTemplate(res, "layout", MakeTemplateData("Blogs", blogs.Array))
+	return templ.ExecuteTemplate(res, "layout", MakeTemplateData("Blogs", blogs))
 }
 
 func getBlogByIdHandle(res http.ResponseWriter, req *http.Request, params httprouter.Params) error {
@@ -90,19 +90,17 @@ func getBlogByIdHandle(res http.ResponseWriter, req *http.Request, params httpro
 		return err
 	}
 
-	id := params.ByName("id")
-
-	blog, err := getSampleBlogById(ObjectID(id))
+	blog, err := Blog{}, nil
 	if err != nil {
 		return err
 	}
 
-	path := fmt.Sprintf("blogs/%s.md", blog.Id)
+	path := fmt.Sprintf("blogs/%s.md", "nil")
 	blogContent := ReadFile(path)
 	blogContentHtml := MdToHTML(blogContent)
 
 	blogWithContent := new(BlogWithContent)
-	blogWithContent.Blog = blog
+	blogWithContent.Blog = &blog
 	blogWithContent.Content = string(blogContentHtml)
 
 	return templ.ExecuteTemplate(res, "layout", MakeTemplateData(blog.Title, blogWithContent))
@@ -113,6 +111,12 @@ func getLoginHandle(res http.ResponseWriter, req *http.Request, params httproute
 	if err != nil {
 		return err
 	}
+
+	var loginRequest UserLoginRequest
+	if err := json.NewDecoder(req.Body).Decode(&loginRequest); err != nil {
+		return err
+	}
+
 	return templ.ExecuteTemplate(res, "layout", MakeTemplateData("login", nil))
 }
 
@@ -135,10 +139,10 @@ func getSignupHandle(res http.ResponseWriter, req *http.Request, params httprout
 
 func postSignupHandle(res http.ResponseWriter, req *http.Request, params httprouter.Params) error {
 	userSignupRequest := UserSignupRequest{
-		Name:              req.FormValue("name"),
-		Email:             req.FormValue("email"),
-		DateOfBirth:       req.FormValue("dob"),
-		EncryptedPassword: req.FormValue("password"),
+		Name:        req.FormValue("name"),
+		Email:       req.FormValue("email"),
+		DateOfBirth: req.FormValue("dob"),
+		Password:    req.FormValue("password"),
 	}
 
 	LogInfo().Println("Details got: ", userSignupRequest)

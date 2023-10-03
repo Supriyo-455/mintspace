@@ -1,17 +1,17 @@
 package main
 
 type Blog struct {
-	Id            ObjectID `bson:"_id"`
-	Author        *User    `bson:"author"`
-	Title         string   `bson:"title"`
-	CoverImageURL string   `bson:"coverImageURL"`
-	Premium       bool     `bson:"premium"`
-	DateCreated   string   `bson:"datecreated"`
+	Id            int64  `json:"_id"`
+	Author        *User  `json:"author"`
+	Title         string `json:"title"`
+	CoverImageURL string `json:"coverImageURL"`
+	Premium       bool   `json:"premium"`
+	DateCreated   string `json:"datecreated"`
 }
 
 type Blogs struct {
-	Length int    `bson:"length"`
-	Array  []Blog `bson:"array"`
+	Length int    `json:"length"`
+	Array  []Blog `json:"array"`
 }
 
 type BlogWithContent struct {

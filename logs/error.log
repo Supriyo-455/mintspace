@@ -15,3 +15,9 @@ ERROR: 2023/08/30 17:52:19 router.go:18: invalid character 'o' looking for begin
 ERROR: 2023/08/30 17:52:28 router.go:18: invalid character 'o' looking for beginning of value
 ERROR: 2023/08/30 17:54:38 router.go:18: invalid character 'o' looking for beginning of value
 ERROR: 2023/08/30 17:54:54 router.go:18: invalid character 'o' looking for beginning of value
+ERROR: 2023/09/16 22:07:22 server.go:18: EOF
+ERROR: 2023/09/16 22:07:24 server.go:18: EOF
+ERROR: 2023/10/03 10:04:42 server.go:18: EOF
+ERROR: 2023/10/03 10:04:46 server.go:18: EOF
+ERROR: 2023/10/03 10:04:47 server.go:18: EOF
+ERROR: 2023/10/03 10:05:01 server.go:18: EOF
