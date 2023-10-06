@@ -5,17 +5,19 @@ import "testing"
 func TestMySqlStorageConnect(t *testing.T) {
 	s := NewMySqlStorage()
 
-	err := Connect(s)
+	err := s.Connect()
 
 	if err != nil {
 		t.Errorf("Cant connect to the mysql database, %s", err.Error())
 	}
 
-	Disconnect(s)
+	defer s.Disconnect()
 }
 
 func TestCreateUser(t *testing.T) {
 	storage := NewMySqlStorage()
+
+	storage.Connect()
 
 	user := new(User)
 	user.Name = "test user"
@@ -23,7 +25,7 @@ func TestCreateUser(t *testing.T) {
 	user.EncryptedPassword = "abcd1234"
 	user.Admin = false
 	user.DateOfBirth = "2001-06-24"
-	user.DateCreated = "17-06-2023"
+	user.DateCreated = "2001-06-24"
 
 	err := storage.CheckUserTable()
 	if err != nil {
@@ -34,4 +36,6 @@ func TestCreateUser(t *testing.T) {
 	if err != nil {
 		t.Errorf("Can't create user, %s", err.Error())
 	}
+
+	defer storage.Disconnect()
 }

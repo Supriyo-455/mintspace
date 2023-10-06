@@ -6,6 +6,7 @@ import (
 	"io"
 	"net/http"
 	"text/template"
+	"time"
 
 	"github.com/julienschmidt/httprouter"
 )
@@ -31,29 +32,33 @@ func makeRouterHandleFunc(f routerFunc) httprouter.Handle {
 }
 
 type Server struct {
-	mux *httprouter.Router
+	mux     *httprouter.Router
+	storage Storage
 }
 
 func NewServer() *Server {
 	server := new(Server)
 	server.mux = httprouter.New()
+	server.storage = NewMySqlStorage()
 
-	server.mux.GET("/blog/", makeRouterHandleFunc(getBlogsHandle))
-	server.mux.GET("/blog/:id", makeRouterHandleFunc(getBlogByIdHandle))
-	server.mux.GET("/login", makeRouterHandleFunc(getLoginHandle))
-	server.mux.GET("/signup", makeRouterHandleFunc(getSignupHandle))
-	server.mux.GET("/write", makeRouterHandleFunc(getWriteBlogHandle))
+	server.mux.GET("/blog/", makeRouterHandleFunc(server.getBlogsHandle))
+	server.mux.GET("/blog/:id", makeRouterHandleFunc(server.getBlogByIdHandle))
+	server.mux.GET("/login", makeRouterHandleFunc(server.getLoginHandle))
+	server.mux.GET("/signup", makeRouterHandleFunc(server.getSignupHandle))
+	server.mux.GET("/write", makeRouterHandleFunc(server.getWriteBlogHandle))
 
-	server.mux.POST("/login", makeRouterHandleFunc(postLoginHandle))
-	server.mux.POST("/signup", withJWTAuth(makeRouterHandleFunc(postSignupHandle), nil))
-	server.mux.POST("/write", makeRouterHandleFunc(postWriteBlogHandle))
+	server.mux.POST("/login", makeRouterHandleFunc(server.postLoginHandle))
+	server.mux.POST("/signup", makeRouterHandleFunc(server.postSignupHandle))
+	server.mux.POST("/write", makeRouterHandleFunc(server.postWriteBlogHandle))
 
-	server.mux.NotFound = http.HandlerFunc(handle404)
+	server.mux.NotFound = http.HandlerFunc(server.handle404)
 
 	return server
 }
 
 func (server *Server) Run() {
+	server.storage.Connect()
+
 	httpServer := http.Server{
 		Addr:    config.Address,
 		Handler: server.mux,
@@ -64,9 +69,11 @@ func (server *Server) Run() {
 	if err != nil {
 		LogError().Fatalln(err)
 	}
+
+	defer server.storage.Disconnect()
 }
 
-func handle404(res http.ResponseWriter, req *http.Request) {
+func (server *Server) handle404(res http.ResponseWriter, req *http.Request) {
 	temp, err := template.ParseFiles("templates/layout.html", "templates/404.html")
 	if err != nil {
 		LogError().Fatalln(err)
@@ -74,7 +81,7 @@ func handle404(res http.ResponseWriter, req *http.Request) {
 	temp.ExecuteTemplate(res, "layout", MakeTemplateData("NotFound", nil))
 }
 
-func getBlogsHandle(res http.ResponseWriter, req *http.Request, _ httprouter.Params) error {
+func (server *Server) getBlogsHandle(res http.ResponseWriter, req *http.Request, _ httprouter.Params) error {
 	blogs := make([]Blog, 0)
 	templ, err := template.ParseFiles("templates/layout.html", "templates/bloglist.html")
 	if err != nil {
@@ -84,7 +91,7 @@ func getBlogsHandle(res http.ResponseWriter, req *http.Request, _ httprouter.Par
 	return templ.ExecuteTemplate(res, "layout", MakeTemplateData("Blogs", blogs))
 }
 
-func getBlogByIdHandle(res http.ResponseWriter, req *http.Request, params httprouter.Params) error {
+func (server *Server) getBlogByIdHandle(res http.ResponseWriter, req *http.Request, params httprouter.Params) error {
 	templ, err := template.ParseFiles("templates/layout.html", "templates/blog.html", "templates/blogcontent.html")
 	if err != nil {
 		return err
@@ -106,30 +113,35 @@ func getBlogByIdHandle(res http.ResponseWriter, req *http.Request, params httpro
 	return templ.ExecuteTemplate(res, "layout", MakeTemplateData(blog.Title, blogWithContent))
 }
 
-func getLoginHandle(res http.ResponseWriter, req *http.Request, params httprouter.Params) error {
+func (server *Server) getLoginHandle(res http.ResponseWriter, req *http.Request, params httprouter.Params) error {
 	templ, err := template.ParseFiles("templates/layout.html", "templates/login.html")
 	if err != nil {
-		return err
-	}
-
-	var loginRequest UserLoginRequest
-	if err := json.NewDecoder(req.Body).Decode(&loginRequest); err != nil {
 		return err
 	}
 
 	return templ.ExecuteTemplate(res, "layout", MakeTemplateData("login", nil))
 }
 
-func postLoginHandle(res http.ResponseWriter, req *http.Request, params httprouter.Params) error {
-	// UserLoginRequest := UserLoginRequest{
-	// 	Email:             req.FormValue("email"),
-	// 	EncryptedPassword: req.FormValue("password"),
-	// }
+func (server *Server) postLoginHandle(res http.ResponseWriter, req *http.Request, params httprouter.Params) error {
+	userLoginRequest := UserLoginRequest{
+		Email:    req.FormValue("email"),
+		Password: req.FormValue("password"),
+	}
+
+	LogInfo().Println("Details got: ", userLoginRequest)
+
+	// Check entries in the database to find a match
+
+	// If match found generate a jwt token
+
+	// store the jwt token inside the browser cookie
+
+	// login the user
 
 	return nil
 }
 
-func getSignupHandle(res http.ResponseWriter, req *http.Request, params httprouter.Params) error {
+func (server *Server) getSignupHandle(res http.ResponseWriter, req *http.Request, params httprouter.Params) error {
 	templ, err := template.ParseFiles("templates/layout.html", "templates/signup.html")
 	if err != nil {
 		return err
@@ -137,7 +149,7 @@ func getSignupHandle(res http.ResponseWriter, req *http.Request, params httprout
 	return templ.ExecuteTemplate(res, "layout", MakeTemplateData("signup", nil))
 }
 
-func postSignupHandle(res http.ResponseWriter, req *http.Request, params httprouter.Params) error {
+func (server *Server) postSignupHandle(res http.ResponseWriter, req *http.Request, params httprouter.Params) error {
 	userSignupRequest := UserSignupRequest{
 		Name:        req.FormValue("name"),
 		Email:       req.FormValue("email"),
@@ -145,11 +157,34 @@ func postSignupHandle(res http.ResponseWriter, req *http.Request, params httprou
 		Password:    req.FormValue("password"),
 	}
 
+	// hash the password
+	hashPassword, err := HashPassword(userSignupRequest.Password)
+	if err != nil {
+		return err
+	}
+
+	// create user Struct
+	user := User{
+		Name:              userSignupRequest.Name,
+		EncryptedPassword: hashPassword,
+		Email:             userSignupRequest.Email,
+		Admin:             false,
+		DateOfBirth:       userSignupRequest.DateOfBirth,
+		DateCreated:       time.Now().Format("2006-01-02"),
+	}
+
+	// Save the user in the database
+	err = server.storage.CreateUser(&user)
+	if err != nil {
+		return err
+	}
+
+	// Redirect user to login page
 	LogInfo().Println("Details got: ", userSignupRequest)
 	return nil
 }
 
-func getWriteBlogHandle(res http.ResponseWriter, req *http.Request, params httprouter.Params) error {
+func (server *Server) getWriteBlogHandle(res http.ResponseWriter, req *http.Request, params httprouter.Params) error {
 	templ, err := template.ParseFiles("templates/layout.html", "templates/writeBlog.html")
 	if err != nil {
 		return err
@@ -157,7 +192,7 @@ func getWriteBlogHandle(res http.ResponseWriter, req *http.Request, params httpr
 	return templ.ExecuteTemplate(res, "layout", MakeTemplateData("write blog", nil))
 }
 
-func postWriteBlogHandle(res http.ResponseWriter, req *http.Request, params httprouter.Params) error {
+func (server *Server) postWriteBlogHandle(res http.ResponseWriter, req *http.Request, params httprouter.Params) error {
 	var blogCreateRequest BlogCreateRequest
 
 	data, err := io.ReadAll(req.Body)

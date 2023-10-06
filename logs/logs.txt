@@ -1,0 +1,27 @@
+INFO: 2023/10/05 20:29:00 config.go:21: Server configuration-> { Addr: 127.0.0.1:3000, Mode: Localhost}
+INFO: 2023/10/05 20:30:37 config.go:21: Server configuration-> { Addr: 127.0.0.1:3000, Mode: Localhost}
+INFO: 2023/10/05 20:30:53 server.go:124: Details got:  {paulsupriyo64nk@gmail.com dsdafsdfs}
+INFO: 2023/10/05 20:31:13 jwtAuth.go:39: Calling jwt middleware..
+ERROR: 2023/10/05 20:31:13 jwtAuth.go:44: Permisson denied!
+INFO: 2023/10/05 20:32:00 config.go:21: Server configuration-> { Addr: 127.0.0.1:3000, Mode: Localhost}
+INFO: 2023/10/05 20:32:06 server.go:153: Details got:  {Supriyo Paul paulsupriyo64nk@gmail.com 2023-10-20 dsadasdas}
+INFO: 2023/10/05 21:17:21 config.go:21: Server configuration-> { Addr: 127.0.0.1:3000, Mode: Localhost}
+ERROR: 2023/10/05 21:17:30 server.go:19: sql: database is closed
+INFO: 2023/10/06 08:14:21 config.go:21: Server configuration-> { Addr: 127.0.0.1:3000, Mode: Localhost}
+INFO: 2023/10/06 08:14:53 server.go:183: Details got:  {Supriyo Paul paulsupriyo64nk@gmail.com 2023-10-19 dasdwlkxclzckxz}
+ERROR: 2023/10/06 08:21:46 server.go:19: Error 1146 (42S02): Table 'goblog.user' doesn't exist
+INFO: 2023/10/06 08:23:38 config.go:21: Server configuration-> { Addr: 127.0.0.1:3000, Mode: Localhost}
+INFO: 2023/10/06 08:23:43 config.go:21: Server configuration-> { Addr: 127.0.0.1:3000, Mode: Localhost}
+INFO: 2023/10/06 08:26:01 config.go:21: Server configuration-> { Addr: 127.0.0.1:3000, Mode: Localhost}
+INFO: 2023/10/06 08:49:10 config.go:21: Server configuration-> { Addr: 127.0.0.1:3000, Mode: Localhost}
+INFO: 2023/10/06 09:08:49 config.go:21: Server configuration-> { Addr: 127.0.0.1:3000, Mode: Localhost}
+INFO: 2023/10/06 09:10:36 config.go:21: Server configuration-> { Addr: 127.0.0.1:3000, Mode: Localhost}
+INFO: 2023/10/06 09:10:57 config.go:21: Server configuration-> { Addr: 127.0.0.1:3000, Mode: Localhost}
+INFO: 2023/10/06 09:11:01 config.go:21: Server configuration-> { Addr: 127.0.0.1:3000, Mode: Localhost}
+INFO: 2023/10/06 09:13:32 config.go:21: Server configuration-> { Addr: 127.0.0.1:3000, Mode: Localhost}
+INFO: 2023/10/06 09:13:52 config.go:21: Server configuration-> { Addr: 127.0.0.1:3000, Mode: Localhost}
+INFO: 2023/10/06 09:15:37 config.go:21: Server configuration-> { Addr: 127.0.0.1:3000, Mode: Localhost}
+INFO: 2023/10/06 09:15:37 mysql_storage.go:72: Rows affected:  1
+INFO: 2023/10/06 09:15:56 config.go:21: Server configuration-> { Addr: 127.0.0.1:3000, Mode: Localhost}
+INFO: 2023/10/06 09:16:07 mysql_storage.go:72: Rows affected:  1
+INFO: 2023/10/06 09:16:07 server.go:183: Details got:  {Supriyo Paul paulsupriyo64nk@gmail.com 2023-10-19 dasdasdq}

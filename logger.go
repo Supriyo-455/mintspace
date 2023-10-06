@@ -7,9 +7,9 @@ import (
 
 const (
 	LogsDirpath = "logs"
-	LogsError   = "error.log"
-	LogsInfo    = "info.log"
-	LogsWarn    = "warn.log"
+	LogsError   = "logs.txt"
+	LogsInfo    = "logs.txt"
+	LogsWarn    = "logs.txt"
 )
 
 func getLogfilePath(logType string) string {

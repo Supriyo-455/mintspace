@@ -28,7 +28,7 @@ func NewMySqlStorage() *MySqlStorage {
 	return storage
 }
 
-func Connect(s *MySqlStorage) error {
+func (s *MySqlStorage) Connect() error {
 	db, err := sql.Open(s.config.Driver, s.config.User+":"+s.config.Password+"@"+s.config.Database)
 	if err != nil {
 		return err
@@ -38,51 +38,47 @@ func Connect(s *MySqlStorage) error {
 	return nil
 }
 
-func Disconnect(s *MySqlStorage) {
+func (s *MySqlStorage) Disconnect() {
 	s.db.Close()
 }
 
 func (s *MySqlStorage) CheckUserTable() error {
-	err := Connect(s)
-	if err != nil {
-		return err
-	}
-
-	defer Disconnect(s)
-
 	query, err := s.db.Prepare("create table if not exists user (name varchar(50) not null, email varchar(50) not null unique, password varchar(256) not null, admin bool not null, dateOfBirth date not null, datecreated date not null, primary key(email))")
 	if err != nil {
 		return err
 	}
 
 	query.Exec()
+	query.Close()
 	return nil
 }
 
 func (s *MySqlStorage) CreateUser(user *User) error {
-	err := Connect(s)
+	err := s.CheckUserTable()
 	if err != nil {
 		return err
 	}
 
-	defer Disconnect(s)
-
-	query, err := s.db.Prepare("insert into user (name, email, password, admin, dateOfBirth, dateCreated) values(?, ?, ?, ?, ?, ?)")
+	queryString := "insert into user (name, email, password, admin, dateOfBirth, dateCreated) values(?, ?, ?, ?, ?, ?)"
+	res, err := s.db.Exec(queryString, user.Name, user.Email, user.EncryptedPassword, user.Admin, user.DateOfBirth, user.DateCreated)
 	if err != nil {
 		return err
 	}
-	query.Exec(user.Name, user.Email, user.EncryptedPassword, user.Admin, user.DateOfBirth, user.DateCreated)
+
+	rowCnt, err := res.RowsAffected()
+	if err != nil {
+		return err
+	}
+	LogInfo().Println("Rows affected: ", rowCnt)
 
 	return nil
 }
 
 func (s *MySqlStorage) GetUserByEmail(email string) (*User, error) {
-	err := Connect(s)
+	err := s.CheckUserTable()
 	if err != nil {
 		return nil, err
 	}
-
-	defer Disconnect(s)
 
 	rows, err := s.db.Query("select * from user where email=?", email)
 	if err != nil {
@@ -101,18 +97,17 @@ func (s *MySqlStorage) GetUserByEmail(email string) (*User, error) {
 }
 
 func (s *MySqlStorage) CreateBlog(blog *Blog) error {
-	err := Connect(s)
+	queryString := "insert into blog (id, author, title, imageurl, premium, dateCreated) values(?, ?, ?, ?, ?, ?)"
+	res, err := s.db.Exec(queryString, blog.Id, blog.Author, blog.Title, blog.CoverImageURL, blog.Premium, blog.DateCreated)
 	if err != nil {
 		return err
 	}
 
-	defer Disconnect(s)
-
-	query, err := s.db.Prepare("insert into blog (id, author, title, imageurl, premium, dateCreated) values(?, ?, ?, ?, ?, ?)")
+	rowCnt, err := res.RowsAffected()
 	if err != nil {
 		return err
 	}
-	query.Exec(blog.Id, blog.Author, blog.Title, blog.CoverImageURL, blog.Premium, blog.DateCreated)
+	LogInfo().Println("Rows affected: ", rowCnt)
 
 	return nil
 }

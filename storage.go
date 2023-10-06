@@ -10,6 +10,9 @@ package main
 */
 
 type Storage interface {
+	Connect() error
+	Disconnect()
+	CheckUserTable() error
 	CreateUser(user *User) error
 	GetUserByEmail(email string) (*User, error)
 	CreateBlog(blog *Blog) error

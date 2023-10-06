@@ -1,5 +1,7 @@
 [Important]:
-    - Login page not showing. (FIX THIS)
+    - Close database connection after closing the app
+    - remove secret from jwtAuth.go to a hidden file
+    - Seperate mysql test database and prod database
     - User created by the test function not showing inside database but the test is passing? (FIX THIS)
     - Right now we are storing the blogs in a particular folder which will change in the future.
         The blog creation request struct stores blog content, Image url, title which we can store inside the database,
@@ -19,8 +21,6 @@
     - MVC architecture
     - Create a mechanism to create appropiate markdown file when creating blogs
     - Use Bluemonday for sanitizing unsafeHTML (XSS Attack prevention)
-    - Remove SampleDB functions
-    - Seperate mongo test database and production database
     - Singleton pattern and error handling for mongo database
     - Admin page
     - Form validations in blog writting page
@@ -34,3 +34,8 @@
 
 [Current Status]:
     Broken due to changes happening inside router.go
+
+
+[Fixed things]:
+    - Login page not showing. (FIX THIS) Date: 04-10-2023
+    - Remove SampleDB functions. Date: 04-10-2023
