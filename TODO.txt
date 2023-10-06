@@ -1,8 +1,8 @@
 [Important]:
-    - Close database connection after closing the app
+    - Move to gin.
+    - Create error page for displaying the errors
     - remove secret from jwtAuth.go to a hidden file
     - Seperate mysql test database and prod database
-    - User created by the test function not showing inside database but the test is passing? (FIX THIS)
     - Right now we are storing the blogs in a particular folder which will change in the future.
         The blog creation request struct stores blog content, Image url, title which we can store inside the database,
         so we need to update the blog fetching mechanism again from file based to database based.
@@ -12,8 +12,6 @@
             - Premium status
             - Date of creation
         - Store blog with this informations
-    - User password encryption using bcrypt
-        =ref: https://heynode.com/blog/2020-04/salt-and-hash-passwords-bcrypt/
     - Get user data struct when required
         -ref: https://stackoverflow.com/questions/46130446/fetching-logged-in-user-info-for-display
     - Session based authentication for user
@@ -24,7 +22,8 @@
     - Singleton pattern and error handling for mongo database
     - Admin page
     - Form validations in blog writting page
-    - Remove sampleDb and sampleDbfuncs
+    - Improve variable scanning inside mysql_storage.go to be more compact
+    
 
 
 [Future upgrades]:
@@ -33,9 +32,13 @@
 
 
 [Current Status]:
-    Broken due to changes happening inside router.go
+    Working but blogs and accounts are not yet linked, also blog need to be stored inside db.
 
 
 [Fixed things]:
     - Login page not showing. (FIX THIS) Date: 04-10-2023
-    - Remove SampleDB functions. Date: 04-10-2023
+    - Close database connection after closing the app
+    - User created by the test function not showing inside database but the test is passing? (FIX THIS)
+    - Redirect signup page to login page after successful user creation.
+    - User password encryption using bcrypt
+    - Remove sampleDb and sampleDbfuncs

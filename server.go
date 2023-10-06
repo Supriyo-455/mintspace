@@ -131,14 +131,26 @@ func (server *Server) postLoginHandle(res http.ResponseWriter, req *http.Request
 	LogInfo().Println("Details got: ", userLoginRequest)
 
 	// Check entries in the database to find a match
+	entry, err := server.storage.GetUserByEmail(userLoginRequest.Email)
+	if err != nil {
+		// Display some information for login error
+		return err
+	}
 
-	// If match found generate a jwt token
+	if CheckPasswordHash(userLoginRequest.Password, entry.EncryptedPassword) {
+		// Password matched and
+		LogInfo().Println("User logged in!")
 
-	// store the jwt token inside the browser cookie
+		// If match found generate a jwt token
 
-	// login the user
+		// store the jwt token inside the browser cookie
 
-	return nil
+		// login the user
+		return nil
+	} else {
+		// Display some information for login error
+		return fmt.Errorf("error occured! wrong password or email")
+	}
 }
 
 func (server *Server) getSignupHandle(res http.ResponseWriter, req *http.Request, params httprouter.Params) error {
@@ -180,7 +192,7 @@ func (server *Server) postSignupHandle(res http.ResponseWriter, req *http.Reques
 	}
 
 	// Redirect user to login page
-	LogInfo().Println("Details got: ", userSignupRequest)
+	http.Redirect(res, req, "/login", http.StatusSeeOther)
 	return nil
 }
 
