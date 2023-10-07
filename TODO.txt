@@ -1,25 +1,15 @@
 [Important]:
-    - Create a method to get the blog id from database by passing certain filtering conditions
+    - After login the home page is appearing blank
     - Create error page for displaying the errors
+    - Create a method to get the blog id from database by passing certain filtering conditions
     - remove secret from jwtAuth.go to a hidden file
     - Seperate mysql test database and prod database
-    - Right now we are storing the blogs in a particular folder which will change in the future.
-        The blog creation request struct stores blog content, Image url, title which we can store inside the database,
-        so we need to update the blog fetching mechanism again from file based to database based.
-        - Remove blogs folder, update all the dependencies of blogs folder to fetch blogs from mongo database.
-        - Create detailed blog request which will have the followings
-            - Author
-            - Premium status
-            - Date of creation
-        - Store blog with this informations
     - Get user data struct when required
         -ref: https://stackoverflow.com/questions/46130446/fetching-logged-in-user-info-for-display
-    - Session based authentication for user
-        -ref: https://dev.to/theghostmac/understanding-and-building-authentication-sessions-in-golang-1c9k 
     - MVC architecture
     - Create a mechanism to create appropiate markdown file when creating blogs
     - Use Bluemonday for sanitizing unsafeHTML (XSS Attack prevention)
-    - Singleton pattern and error handling for mongo database
+    - Singleton pattern and error handling for mysql database
     - Admin page
     - Form validations in blog writting page
     - Improve variable scanning inside mysql_storage.go to be more compact
@@ -42,3 +32,13 @@
     - Redirect signup page to login page after successful user creation.
     - User password encryption using bcrypt
     - Remove sampleDb and sampleDbfuncs
+    - Right now we are storing the blogs in a particular folder which will change in the future.
+        The blog creation request struct stores blog content, Image url, title which we can store inside the database,
+        so we need to update the blog fetching mechanism again from file based to database based.
+        - Remove blogs folder, update all the dependencies of blogs folder to fetch blogs from mongo database.
+        - Create detailed blog request which will have the followings
+            - Author
+            - Premium status
+            - Date of creation
+        - Store blog with this informations
+    - jwt authentication for login and cookie storage for token

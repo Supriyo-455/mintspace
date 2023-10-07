@@ -114,3 +114,41 @@ INFO: 2023/10/07 18:01:39 mysql_storage.go:136: Blog table created!
 INFO: 2023/10/07 18:01:39 mysql_storage.go:161: Rows affected:  1
 INFO: 2023/10/07 18:01:39 mysql_storage.go:136: Blog table created!
 INFO: 2023/10/07 18:01:39 mysql_storage.go:178: Deletion successful of blog with id:  5
+INFO: 2023/10/07 20:34:44 config.go:21: Server configuration-> { Addr: 127.0.0.1:3000, Mode: Localhost}
+INFO: 2023/10/07 20:34:55 jwtAuth.go:40: Calling jwt middleware..
+ERROR: 2023/10/07 20:34:55 server.go:19: http: named cookie not present
+INFO: 2023/10/07 20:36:27 jwtAuth.go:40: Calling jwt middleware..
+ERROR: 2023/10/07 20:36:27 server.go:19: http: named cookie not present
+INFO: 2023/10/07 20:36:28 jwtAuth.go:40: Calling jwt middleware..
+ERROR: 2023/10/07 20:36:28 server.go:19: http: named cookie not present
+INFO: 2023/10/07 20:37:38 config.go:21: Server configuration-> { Addr: 127.0.0.1:3000, Mode: Localhost}
+INFO: 2023/10/07 20:37:42 jwtAuth.go:40: Calling jwt middleware..
+ERROR: 2023/10/07 20:37:42 server.go:19: http: named cookie not present
+ERROR: 2023/10/07 20:38:08 server.go:19: Error 1062 (23000): Duplicate entry 'paulsupriyo64nk@gmail.com' for key 'user.PRIMARY'
+INFO: 2023/10/07 20:39:50 mysql_storage.go:72: Rows affected:  1
+INFO: 2023/10/07 20:39:54 server.go:131: Details got:  {paulsupriyo64nk@gmail.com 12345}
+INFO: 2023/10/07 20:39:56 server.go:142: User logged in!
+INFO: 2023/10/07 20:39:56 jwtAuth.go:40: Calling jwt middleware..
+INFO: 2023/10/07 20:41:37 jwtAuth.go:40: Calling jwt middleware..
+INFO: 2023/10/07 20:41:42 jwtAuth.go:40: Calling jwt middleware..
+INFO: 2023/10/07 20:41:54 jwtAuth.go:40: Calling jwt middleware..
+INFO: 2023/10/07 20:43:23 config.go:21: Server configuration-> { Addr: 127.0.0.1:3000, Mode: Localhost}
+INFO: 2023/10/07 20:43:26 jwtAuth.go:40: Calling jwt middleware..
+INFO: 2023/10/07 20:43:30 jwtAuth.go:40: Calling jwt middleware..
+INFO: 2023/10/07 20:48:25 config.go:21: Server configuration-> { Addr: 127.0.0.1:3000, Mode: Localhost}
+INFO: 2023/10/07 20:48:29 jwtAuth.go:40: Calling jwt middleware..
+INFO: 2023/10/07 20:48:50 server.go:131: Details got:  {paulsupriyo64nk@gmail.com 12345}
+INFO: 2023/10/07 20:48:52 server.go:142: User logged in!
+INFO: 2023/10/07 20:48:52 jwtAuth.go:40: Calling jwt middleware..
+INFO: 2023/10/07 20:50:11 config.go:21: Server configuration-> { Addr: 127.0.0.1:3000, Mode: Localhost}
+INFO: 2023/10/07 20:50:16 server.go:131: Details got:  {paulsupriyo64nk@gmail.com 12345}
+INFO: 2023/10/07 20:50:18 server.go:142: User logged in!
+INFO: 2023/10/07 20:50:18 server.go:131: Details got:  {paulsupriyo64nk@gmail.com 12345}
+INFO: 2023/10/07 20:50:19 server.go:142: User logged in!
+INFO: 2023/10/07 20:51:30 jwtAuth.go:40: Calling jwt middleware..
+INFO: 2023/10/07 20:51:50 jwtAuth.go:40: Calling jwt middleware..
+INFO: 2023/10/07 20:51:52 jwtAuth.go:40: Calling jwt middleware..
+INFO: 2023/10/07 20:51:53 jwtAuth.go:40: Calling jwt middleware..
+INFO: 2023/10/07 20:51:53 jwtAuth.go:40: Calling jwt middleware..
+INFO: 2023/10/07 20:51:55 jwtAuth.go:40: Calling jwt middleware..
+INFO: 2023/10/07 20:51:55 jwtAuth.go:40: Calling jwt middleware..

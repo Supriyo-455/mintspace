@@ -41,7 +41,7 @@ func NewServer() *Server {
 	server.mux = httprouter.New()
 	server.storage = NewMySqlStorage()
 
-	server.mux.GET("/blog/", makeRouterHandleFunc(server.getBlogsHandle))
+	server.mux.GET("/blog/", withJWTAuth(makeRouterHandleFunc(server.getBlogsHandle)))
 	server.mux.GET("/blog/:id", makeRouterHandleFunc(server.getBlogByIdHandle))
 	server.mux.GET("/login", makeRouterHandleFunc(server.getLoginHandle))
 	server.mux.GET("/signup", makeRouterHandleFunc(server.getSignupHandle))
@@ -142,10 +142,23 @@ func (server *Server) postLoginHandle(res http.ResponseWriter, req *http.Request
 		LogInfo().Println("User logged in!")
 
 		// If match found generate a jwt token
+		token, err := createJWT(&userLoginRequest)
+		if err != nil {
+			return err
+		}
+
+		// create http cookie with token value
+		cookie := http.Cookie{
+			Name:    "Auth",
+			Value:   token,
+			Expires: time.Now().Add(time.Hour * 24 * 30),
+		}
 
 		// store the jwt token inside the browser cookie
+		http.SetCookie(res, &cookie)
 
-		// login the user
+		// redirect to home page
+		http.Redirect(res, req, "/blog", http.StatusSeeOther)
 		return nil
 	} else {
 		// Display some information for login error
