@@ -74,6 +74,22 @@ func (s *MySqlStorage) CreateUser(user *User) error {
 	return nil
 }
 
+func (s *MySqlStorage) DeleteUser(email string) error {
+	err := s.CheckUserTable()
+	if err != nil {
+		return err
+	}
+
+	queryString := "delete from user where email=?"
+	_, err = s.db.Exec(queryString, email)
+	if err != nil {
+		return err
+	}
+
+	LogInfo().Println("Deletion sucessful for email id: ", email)
+	return nil
+}
+
 func (s *MySqlStorage) GetUserByEmail(email string) (*User, error) {
 	err := s.CheckUserTable()
 	if err != nil {
@@ -110,18 +126,55 @@ func (s *MySqlStorage) GetUserByEmail(email string) (*User, error) {
 	return user, nil
 }
 
-func (s *MySqlStorage) CreateBlog(blog *Blog) error {
-	queryString := "insert into blog (id, author, title, imageurl, premium, dateCreated) values(?, ?, ?, ?, ?, ?)"
-	res, err := s.db.Exec(queryString, blog.Id, blog.Author, blog.Title, blog.CoverImageURL, blog.Premium, blog.DateCreated)
+func (s *MySqlStorage) CheckBlogTable() error {
+	queryString := "create table if not exists blog (id integer not null auto_increment, authorEmail varchar(156) not null, title varchar(156) not null, coverImageURL text, content text, premium bool not null, dateCreated date not null, primary key(id))"
+	_, err := s.db.Exec(queryString)
 	if err != nil {
 		return err
+	}
+
+	LogInfo().Println("Blog table created!")
+	return nil
+}
+
+func (s *MySqlStorage) CreateBlog(blog *Blog) (int64, error) {
+	err := s.CheckBlogTable()
+	if err != nil {
+		return 0, err
+	}
+
+	queryString := "insert into blog (authorEmail, title, coverImageURL, content, premium, dateCreated) values(?, ?, ?, ?, ?, ?)"
+	res, err := s.db.Exec(queryString, blog.AuthorEmail, blog.Title, blog.CoverImageURL, blog.Content, blog.Premium, blog.DateCreated)
+	if err != nil {
+		return 0, err
+	}
+
+	blogId, err := res.LastInsertId()
+	if err != nil {
+		return 0, err
 	}
 
 	rowCnt, err := res.RowsAffected()
 	if err != nil {
-		return err
+		return 0, err
 	}
 	LogInfo().Println("Rows affected: ", rowCnt)
 
+	return blogId, nil
+}
+
+func (s *MySqlStorage) DeleteBlog(id int64) error {
+	err := s.CheckBlogTable()
+	if err != nil {
+		return err
+	}
+
+	queryString := "delete from blog where id=?"
+	_, err = s.db.Exec(queryString, id)
+	if err != nil {
+		return err
+	}
+
+	LogInfo().Println("Deletion successful of blog with id: ", id)
 	return nil
 }

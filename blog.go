@@ -2,11 +2,12 @@ package main
 
 type Blog struct {
 	Id            int64  `json:"_id"`
-	Author        *User  `json:"author"`
+	AuthorEmail   string `json:"authorEmail"`
 	Title         string `json:"title"`
 	CoverImageURL string `json:"coverImageURL"`
+	Content       string `json:"content"`
 	Premium       bool   `json:"premium"`
-	DateCreated   string `json:"datecreated"`
+	DateCreated   string `json:"dateCreated"`
 }
 
 type Blogs struct {

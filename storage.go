@@ -14,8 +14,10 @@ type Storage interface {
 	Disconnect()
 	CheckUserTable() error
 	CreateUser(user *User) error
+	DeleteUser(email string) error
 	GetUserByEmail(email string) (*User, error)
-	CreateBlog(blog *Blog) error
+	CreateBlog(blog *Blog) (int64, error)
+	DeleteBlog(id int64) error
 	// GetBlogsByTitle(title string) (Blogs, error)
 	// GetBlogsByAuthorName(authorName string) (Blogs, error)
 	// GetAllBlogs() (Blogs, error)
