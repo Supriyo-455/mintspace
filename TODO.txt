@@ -1,8 +1,9 @@
 [Important]:
-    - After login the home page is appearing blank
+    - Move mysql password and user credentials to a hidden file?
+    - Create methods to fetch blog list from mysql_storage and display list of blog in the main page
     - Create error page for displaying the errors
     - Create a method to get the blog id from database by passing certain filtering conditions
-    - remove secret from jwtAuth.go to a hidden file
+    - Make login required for premium contents and not for normal contents
     - Seperate mysql test database and prod database
     - Get user data struct when required
         -ref: https://stackoverflow.com/questions/46130446/fetching-logged-in-user-info-for-display
@@ -42,3 +43,5 @@
             - Date of creation
         - Store blog with this informations
     - jwt authentication for login and cookie storage for token
+    - After login the home page is appearing blank
+    - remove secret from jwtAuth.go to a hidden file

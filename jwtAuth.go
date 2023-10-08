@@ -3,14 +3,14 @@ package main
 import (
 	"fmt"
 	"net/http"
+	"os"
 	"time"
 
 	jwt "github.com/golang-jwt/jwt/v4"
 	"github.com/julienschmidt/httprouter"
 )
 
-// TODO: remove secret from here
-var secret = "MY_SECRET"
+var secret = os.Getenv("secret")
 
 func createJWT(userLoginRequest *UserLoginRequest) (string, error) {
 	claims := &jwt.MapClaims{
@@ -41,21 +41,19 @@ func withJWTAuth(handle httprouter.Handle) httprouter.Handle {
 
 		cookie, err := req.Cookie("Auth")
 		if err != nil {
-			// redirect to the login page
 			http.Redirect(res, req, "/login", http.StatusSeeOther)
 
 			if err == http.ErrNoCookie {
-				// If the cookie is not set, return an unauthorized status
 				res.WriteHeader(http.StatusUnauthorized)
 			}
-			// For any other type of error, return a bad request status
 			res.WriteHeader(http.StatusBadRequest)
 		}
 
 		token, err := validateJWT(cookie.Value)
 		if err != nil || !token.Valid {
-			// redirect to the login page
 			http.Redirect(res, req, "/login", http.StatusSeeOther)
 		}
+
+		handle(res, req, params)
 	}
 }

@@ -41,15 +41,15 @@ func NewServer() *Server {
 	server.mux = httprouter.New()
 	server.storage = NewMySqlStorage()
 
-	server.mux.GET("/blog/", withJWTAuth(makeRouterHandleFunc(server.getBlogsHandle)))
-	server.mux.GET("/blog/:id", makeRouterHandleFunc(server.getBlogByIdHandle))
+	server.mux.GET("/blog", withJWTAuth(makeRouterHandleFunc(server.getBlogsHandle)))
+	server.mux.GET("/blog/:id", withJWTAuth((makeRouterHandleFunc(server.getBlogByIdHandle))))
 	server.mux.GET("/login", makeRouterHandleFunc(server.getLoginHandle))
 	server.mux.GET("/signup", makeRouterHandleFunc(server.getSignupHandle))
-	server.mux.GET("/write", makeRouterHandleFunc(server.getWriteBlogHandle))
+	server.mux.GET("/write", withJWTAuth(makeRouterHandleFunc(server.getWriteBlogHandle)))
 
 	server.mux.POST("/login", makeRouterHandleFunc(server.postLoginHandle))
 	server.mux.POST("/signup", makeRouterHandleFunc(server.postSignupHandle))
-	server.mux.POST("/write", makeRouterHandleFunc(server.postWriteBlogHandle))
+	server.mux.POST("/write", withJWTAuth(makeRouterHandleFunc(server.postWriteBlogHandle)))
 
 	server.mux.NotFound = http.HandlerFunc(server.handle404)
 
@@ -130,40 +130,32 @@ func (server *Server) postLoginHandle(res http.ResponseWriter, req *http.Request
 
 	LogInfo().Println("Details got: ", userLoginRequest)
 
-	// Check entries in the database to find a match
 	entry, err := server.storage.GetUserByEmail(userLoginRequest.Email)
 	if err != nil {
-		// Display some information for login error
 		return err
 	}
 
-	if CheckPasswordHash(userLoginRequest.Password, entry.EncryptedPassword) {
-		// Password matched and
-		LogInfo().Println("User logged in!")
-
-		// If match found generate a jwt token
-		token, err := createJWT(&userLoginRequest)
-		if err != nil {
-			return err
-		}
-
-		// create http cookie with token value
-		cookie := http.Cookie{
-			Name:    "Auth",
-			Value:   token,
-			Expires: time.Now().Add(time.Hour * 24 * 30),
-		}
-
-		// store the jwt token inside the browser cookie
-		http.SetCookie(res, &cookie)
-
-		// redirect to home page
-		http.Redirect(res, req, "/blog", http.StatusSeeOther)
-		return nil
-	} else {
-		// Display some information for login error
+	if !CheckPasswordHash(userLoginRequest.Password, entry.EncryptedPassword) {
 		return fmt.Errorf("error occured! wrong password or email")
 	}
+
+	token, err := createJWT(&userLoginRequest)
+	if err != nil {
+		return err
+	}
+
+	cookie := http.Cookie{
+		Name:    "Auth",
+		Value:   token,
+		Expires: time.Now().Add(time.Hour * 24 * 30),
+	}
+
+	LogInfo().Println("User logged in!")
+
+	http.SetCookie(res, &cookie)
+
+	http.Redirect(res, req, "/blog", http.StatusSeeOther)
+	return nil
 }
 
 func (server *Server) getSignupHandle(res http.ResponseWriter, req *http.Request, params httprouter.Params) error {
@@ -182,13 +174,11 @@ func (server *Server) postSignupHandle(res http.ResponseWriter, req *http.Reques
 		Password:    req.FormValue("password"),
 	}
 
-	// hash the password
 	hashPassword, err := HashPassword(userSignupRequest.Password)
 	if err != nil {
 		return err
 	}
 
-	// create user Struct
 	user := User{
 		Name:              userSignupRequest.Name,
 		EncryptedPassword: hashPassword,
@@ -198,13 +188,11 @@ func (server *Server) postSignupHandle(res http.ResponseWriter, req *http.Reques
 		DateCreated:       time.Now().Format("2006-01-02"),
 	}
 
-	// Save the user in the database
 	err = server.storage.CreateUser(&user)
 	if err != nil {
 		return err
 	}
 
-	// Redirect user to login page
 	http.Redirect(res, req, "/login", http.StatusSeeOther)
 	return nil
 }
