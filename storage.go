@@ -16,6 +16,7 @@ type Storage interface {
 	CreateUser(user *User) error
 	DeleteUser(email string) error
 	GetUserByEmail(email string) (*User, error)
+	GetAllBlogs() (*Blogs, error)
 	CreateBlog(blog *Blog) (int64, error)
 	DeleteBlog(id int64) error
 	// GetBlogsByTitle(title string) (Blogs, error)

@@ -178,3 +178,32 @@ func (s *MySqlStorage) DeleteBlog(id int64) error {
 	LogInfo().Println("Deletion successful of blog with id: ", id)
 	return nil
 }
+
+func (s *MySqlStorage) GetAllBlogs() (*Blogs, error) {
+	err := s.CheckBlogTable()
+	if err != nil {
+		return nil, err
+	}
+
+	rows, err := s.db.Query("select * from blog")
+	if err != nil {
+		return nil, err
+	}
+
+	defer rows.Close()
+
+	blogs := new(Blogs)
+
+	for rows.Next() {
+		var blog Blog
+		if err := rows.Scan(&blog.Id, &blog.AuthorEmail, &blog.Title, &blog.CoverImageURL, &blog.Content, &blog.Premium, &blog.DateCreated); err != nil {
+			return blogs, err
+		}
+		blogs.Array = append(blogs.Array, blog)
+	}
+
+	if err = rows.Err(); err != nil {
+		return blogs, err
+	}
+	return blogs, err
+}

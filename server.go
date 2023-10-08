@@ -46,6 +46,7 @@ func NewServer() *Server {
 	server.mux.GET("/login", makeRouterHandleFunc(server.getLoginHandle))
 	server.mux.GET("/signup", makeRouterHandleFunc(server.getSignupHandle))
 	server.mux.GET("/write", withJWTAuth(makeRouterHandleFunc(server.getWriteBlogHandle)))
+	server.mux.GET("/profile", withJWTAuth(makeRouterHandleFunc(server.getProfileHandle)))
 
 	server.mux.POST("/login", makeRouterHandleFunc(server.postLoginHandle))
 	server.mux.POST("/signup", makeRouterHandleFunc(server.postSignupHandle))
@@ -79,6 +80,25 @@ func (server *Server) handle404(res http.ResponseWriter, req *http.Request) {
 		LogError().Fatalln(err)
 	}
 	temp.ExecuteTemplate(res, "layout", MakeTemplateData("NotFound", nil))
+}
+
+func (server *Server) getProfileHandle(res http.ResponseWriter, req *http.Request, _ httprouter.Params) error {
+	templ, err := template.ParseFiles("templates/layout.html", "templates/profile.html")
+	if err != nil {
+		return err
+	}
+
+	cookie, err := req.Cookie("user")
+	if err != nil {
+		return err
+	}
+
+	user, err := server.storage.GetUserByEmail(cookie.Value)
+	if err != nil {
+		return err
+	}
+
+	return templ.ExecuteTemplate(res, "layout", MakeTemplateData("profile", user))
 }
 
 func (server *Server) getBlogsHandle(res http.ResponseWriter, req *http.Request, _ httprouter.Params) error {
@@ -144,15 +164,22 @@ func (server *Server) postLoginHandle(res http.ResponseWriter, req *http.Request
 		return err
 	}
 
-	cookie := http.Cookie{
+	cookie1 := http.Cookie{
 		Name:    "Auth",
 		Value:   token,
 		Expires: time.Now().Add(time.Hour * 24 * 30),
 	}
 
+	cookie2 := http.Cookie{
+		Name:    "user",
+		Value:   userLoginRequest.Email,
+		Expires: time.Now().Add(time.Hour * 24 * 30),
+	}
+
 	LogInfo().Println("User logged in!")
 
-	http.SetCookie(res, &cookie)
+	http.SetCookie(res, &cookie1)
+	http.SetCookie(res, &cookie2)
 
 	http.Redirect(res, req, "/blog", http.StatusSeeOther)
 	return nil

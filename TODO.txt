@@ -1,4 +1,5 @@
 [Important]:
+    - Use context for routes and database
     - Move mysql password and user credentials to a hidden file?
     - Create methods to fetch blog list from mysql_storage and display list of blog in the main page
     - Create error page for displaying the errors
@@ -45,3 +46,4 @@
     - jwt authentication for login and cookie storage for token
     - After login the home page is appearing blank
     - remove secret from jwtAuth.go to a hidden file
+    - User profile page
