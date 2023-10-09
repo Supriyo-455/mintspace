@@ -239,3 +239,7 @@ INFO: 2023/10/09 08:50:43 mysql_storage.go:136: Blog table created!
 INFO: 2023/10/09 08:50:49 jwtAuth.go:40: Calling jwt middleware..
 INFO: 2023/10/09 08:50:49 mysql_storage.go:136: Blog table created!
 INFO: 2023/10/09 08:50:55 jwtAuth.go:40: Calling jwt middleware..
+INFO: 2023/10/09 08:51:44 config.go:21: Server configuration-> { Addr: 127.0.0.1:3000, Mode: Localhost}
+INFO: 2023/10/09 08:51:46 jwtAuth.go:40: Calling jwt middleware..
+INFO: 2023/10/09 08:52:03 jwtAuth.go:40: Calling jwt middleware..
+INFO: 2023/10/09 08:52:23 jwtAuth.go:40: Calling jwt middleware..
