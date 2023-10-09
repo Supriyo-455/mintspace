@@ -101,29 +101,16 @@ func (s *MySqlStorage) GetUserByEmail(email string) (*User, error) {
 		return nil, err
 	}
 
-	user := new(User)
+	var user User
 	// Improve this variable scanning?
 	if rows.Next() {
-		var name string
-		var email string
-		var passwordHash string
-		var admin bool
-		var dateOfBirth string
-		var dateCreated string
-		err = rows.Scan(&name, &email, &passwordHash, &admin, &dateOfBirth, &dateCreated)
+		err = rows.Scan(&user.Name, &user.Email, &user.EncryptedPassword, &user.Admin, &user.DateOfBirth, &user.DateCreated)
 		if err != nil {
 			return nil, err
 		}
-
-		user.Name = name
-		user.Email = email
-		user.EncryptedPassword = passwordHash
-		user.Admin = admin
-		user.DateOfBirth = dateOfBirth
-		user.DateCreated = dateCreated
 	}
 
-	return user, nil
+	return &user, nil
 }
 
 func (s *MySqlStorage) CheckBlogTable() error {

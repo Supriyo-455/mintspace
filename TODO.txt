@@ -1,4 +1,5 @@
 [Important]:
+    - Secure the jwt token or use something to secure the login functionality
     - Redirect login page to home page if already authenticated
     - Use context for routes and database
     - Move mysql password and user credentials to a hidden file?

@@ -243,3 +243,32 @@ INFO: 2023/10/09 08:51:44 config.go:21: Server configuration-> { Addr: 127.0.0.1
 INFO: 2023/10/09 08:51:46 jwtAuth.go:40: Calling jwt middleware..
 INFO: 2023/10/09 08:52:03 jwtAuth.go:40: Calling jwt middleware..
 INFO: 2023/10/09 08:52:23 jwtAuth.go:40: Calling jwt middleware..
+INFO: 2023/10/09 08:55:29 config.go:21: Server configuration-> { Addr: 127.0.0.1:3000, Mode: Localhost}
+INFO: 2023/10/09 08:55:35 jwtAuth.go:40: Calling jwt middleware..
+INFO: 2023/10/09 08:55:36 jwtAuth.go:40: Calling jwt middleware..
+INFO: 2023/10/09 08:55:37 jwtAuth.go:40: Calling jwt middleware..
+INFO: 2023/10/09 08:55:40 jwtAuth.go:40: Calling jwt middleware..
+INFO: 2023/10/09 08:55:46 jwtAuth.go:40: Calling jwt middleware..
+INFO: 2023/10/09 12:23:51 config.go:21: Server configuration-> { Addr: 127.0.0.1:3000, Mode: Localhost}
+INFO: 2023/10/09 12:23:51 mysql_storage.go:72: Rows affected:  1
+INFO: 2023/10/09 12:23:51 mysql_storage.go:89: Deletion sucessful for email id:  test@email.com
+INFO: 2023/10/09 12:23:51 mysql_storage.go:146: Rows affected:  1
+INFO: 2023/10/09 12:23:51 mysql_storage.go:163: Deletion successful of blog with id:  9
+INFO: 2023/10/09 12:24:39 config.go:21: Server configuration-> { Addr: 127.0.0.1:3000, Mode: Localhost}
+INFO: 2023/10/09 12:24:47 jwtAuth.go:40: Calling jwt middleware..
+INFO: 2023/10/09 12:25:03 jwtAuth.go:40: Calling jwt middleware..
+INFO: 2023/10/09 12:25:06 jwtAuth.go:40: Calling jwt middleware..
+INFO: 2023/10/09 12:25:09 jwtAuth.go:40: Calling jwt middleware..
+INFO: 2023/10/09 12:25:13 jwtAuth.go:40: Calling jwt middleware..
+INFO: 2023/10/09 12:25:19 jwtAuth.go:40: Calling jwt middleware..
+INFO: 2023/10/09 12:25:32 jwtAuth.go:40: Calling jwt middleware..
+INFO: 2023/10/09 12:25:41 jwtAuth.go:40: Calling jwt middleware..
+INFO: 2023/10/09 12:25:47 jwtAuth.go:40: Calling jwt middleware..
+INFO: 2023/10/09 12:25:57 jwtAuth.go:40: Calling jwt middleware..
+INFO: 2023/10/09 12:26:36 jwtAuth.go:40: Calling jwt middleware..
+INFO: 2023/10/09 12:26:53 jwtAuth.go:40: Calling jwt middleware..
+INFO: 2023/10/09 12:29:10 jwtAuth.go:40: Calling jwt middleware..
+INFO: 2023/10/09 12:29:23 jwtAuth.go:40: Calling jwt middleware..
+INFO: 2023/10/09 12:32:17 jwtAuth.go:40: Calling jwt middleware..
+INFO: 2023/10/09 12:33:11 jwtAuth.go:40: Calling jwt middleware..
+ERROR: 2023/10/09 12:33:11 server.go:20: strconv.Atoi: parsing "profile": invalid syntax
