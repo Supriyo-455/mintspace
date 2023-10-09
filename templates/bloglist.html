@@ -5,13 +5,14 @@
   development
 </p>
 <div class="content">
+  <h2>Total blogs found: {{ .Length }}</h2>
   <h3>Blogs list</h3>
   <ul>
-    {{ range . }}
+    {{ range .Array }}
     <li>
       <div>
         <h4>Name: {{ .Title }}</h4>
-        <h5>Author: {{ .Author.Name }}</h5>
+        <h5>Author: {{ .AuthorEmail }}</h5>
         <p>
           Type: {{ if .Premium }} Premium content {{ else }} Regular content {{
           end }}

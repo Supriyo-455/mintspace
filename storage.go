@@ -19,7 +19,7 @@ type Storage interface {
 	GetAllBlogs() (*Blogs, error)
 	CreateBlog(blog *Blog) (int64, error)
 	DeleteBlog(id int64) error
+	GetBlogById(id int64) (*Blog, error)
 	// GetBlogsByTitle(title string) (Blogs, error)
 	// GetBlogsByAuthorName(authorName string) (Blogs, error)
-	// GetAllBlogs() (Blogs, error)
 }

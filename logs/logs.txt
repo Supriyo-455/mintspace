@@ -188,3 +188,54 @@ INFO: 2023/10/08 09:36:44 server.go:142: User logged in!
 INFO: 2023/10/08 09:36:44 jwtAuth.go:40: Calling jwt middleware..
 INFO: 2023/10/08 09:38:03 config.go:21: Server configuration-> { Addr: 127.0.0.1:3000, Mode: Localhost}
 INFO: 2023/10/08 09:38:05 jwtAuth.go:40: Calling jwt middleware..
+INFO: 2023/10/08 18:41:18 config.go:21: Server configuration-> { Addr: 127.0.0.1:3000, Mode: Localhost}
+INFO: 2023/10/08 18:41:35 server.go:151: Details got:  {paulsupriyo64nk@gmail.com 12345}
+INFO: 2023/10/08 18:41:37 server.go:179: User logged in!
+INFO: 2023/10/08 18:41:37 jwtAuth.go:40: Calling jwt middleware..
+INFO: 2023/10/08 18:41:42 jwtAuth.go:40: Calling jwt middleware..
+INFO: 2023/10/08 18:46:25 jwtAuth.go:40: Calling jwt middleware..
+ERROR: 2023/10/08 18:46:25 server.go:19: template: profile.html:3:18: executing "content" at <.User.Name>: can't evaluate field User in type *main.User
+INFO: 2023/10/08 18:46:27 jwtAuth.go:40: Calling jwt middleware..
+ERROR: 2023/10/08 18:46:27 server.go:19: template: profile.html:3:18: executing "content" at <.User.Name>: can't evaluate field User in type *main.User
+INFO: 2023/10/08 18:46:47 jwtAuth.go:40: Calling jwt middleware..
+ERROR: 2023/10/08 18:46:47 server.go:19: template: profile.html:7:23: executing "content" at <.Premium>: can't evaluate field Premium in type *main.User
+INFO: 2023/10/08 18:47:09 jwtAuth.go:40: Calling jwt middleware..
+INFO: 2023/10/09 08:24:00 config.go:21: Server configuration-> { Addr: 127.0.0.1:3000, Mode: Localhost}
+INFO: 2023/10/09 08:26:18 jwtAuth.go:40: Calling jwt middleware..
+INFO: 2023/10/09 08:26:39 jwtAuth.go:40: Calling jwt middleware..
+INFO: 2023/10/09 08:26:39 mysql_storage.go:136: Blog table created!
+INFO: 2023/10/09 08:26:39 mysql_storage.go:161: Rows affected:  1
+INFO: 2023/10/09 08:26:39 server.go:267: Create new blog with id:  6
+INFO: 2023/10/09 08:26:44 jwtAuth.go:40: Calling jwt middleware..
+INFO: 2023/10/09 08:26:44 mysql_storage.go:136: Blog table created!
+INFO: 2023/10/09 08:26:44 mysql_storage.go:161: Rows affected:  1
+INFO: 2023/10/09 08:26:44 server.go:267: Create new blog with id:  7
+INFO: 2023/10/09 08:26:44 jwtAuth.go:40: Calling jwt middleware..
+INFO: 2023/10/09 08:26:44 mysql_storage.go:136: Blog table created!
+INFO: 2023/10/09 08:26:44 mysql_storage.go:161: Rows affected:  1
+INFO: 2023/10/09 08:26:44 server.go:267: Create new blog with id:  8
+INFO: 2023/10/09 08:27:09 jwtAuth.go:40: Calling jwt middleware..
+INFO: 2023/10/09 08:27:12 jwtAuth.go:40: Calling jwt middleware..
+INFO: 2023/10/09 08:30:06 config.go:21: Server configuration-> { Addr: 127.0.0.1:3000, Mode: Localhost}
+INFO: 2023/10/09 08:30:21 jwtAuth.go:40: Calling jwt middleware..
+INFO: 2023/10/09 08:30:21 mysql_storage.go:136: Blog table created!
+ERROR: 2023/10/09 08:30:21 server.go:19: template: bloglist.html:15:30: executing "content" at <.Author.Name>: can't evaluate field Author in type main.Blog
+INFO: 2023/10/09 08:32:13 jwtAuth.go:40: Calling jwt middleware..
+INFO: 2023/10/09 08:32:13 mysql_storage.go:136: Blog table created!
+INFO: 2023/10/09 08:32:20 jwtAuth.go:40: Calling jwt middleware..
+ERROR: 2023/10/09 08:32:20 fileutils.go:27: open blogs/nil.md: The system cannot find the path specified.
+INFO: 2023/10/09 08:48:14 config.go:21: Server configuration-> { Addr: 127.0.0.1:3000, Mode: Localhost}
+INFO: 2023/10/09 08:48:17 jwtAuth.go:40: Calling jwt middleware..
+INFO: 2023/10/09 08:48:17 mysql_storage.go:136: Blog table created!
+INFO: 2023/10/09 08:48:19 jwtAuth.go:40: Calling jwt middleware..
+INFO: 2023/10/09 08:48:19 mysql_storage.go:136: Blog table created!
+ERROR: 2023/10/09 08:48:19 server.go:20: template: blog.html:2:12: executing "content" at <.Blog.Title>: can't evaluate field Blog in type *main.Blog
+INFO: 2023/10/09 08:50:13 config.go:21: Server configuration-> { Addr: 127.0.0.1:3000, Mode: Localhost}
+INFO: 2023/10/09 08:50:31 config.go:21: Server configuration-> { Addr: 127.0.0.1:3000, Mode: Localhost}
+INFO: 2023/10/09 08:50:37 jwtAuth.go:40: Calling jwt middleware..
+INFO: 2023/10/09 08:50:37 mysql_storage.go:136: Blog table created!
+INFO: 2023/10/09 08:50:43 jwtAuth.go:40: Calling jwt middleware..
+INFO: 2023/10/09 08:50:43 mysql_storage.go:136: Blog table created!
+INFO: 2023/10/09 08:50:49 jwtAuth.go:40: Calling jwt middleware..
+INFO: 2023/10/09 08:50:49 mysql_storage.go:136: Blog table created!
+INFO: 2023/10/09 08:50:55 jwtAuth.go:40: Calling jwt middleware..

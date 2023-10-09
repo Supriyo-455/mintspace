@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"strconv"
 	"text/template"
 	"time"
 
@@ -102,7 +103,10 @@ func (server *Server) getProfileHandle(res http.ResponseWriter, req *http.Reques
 }
 
 func (server *Server) getBlogsHandle(res http.ResponseWriter, req *http.Request, _ httprouter.Params) error {
-	blogs := make([]Blog, 0)
+	blogs, err := server.storage.GetAllBlogs()
+	if err != nil {
+		return err
+	}
 	templ, err := template.ParseFiles("templates/layout.html", "templates/bloglist.html")
 	if err != nil {
 		return err
@@ -117,17 +121,19 @@ func (server *Server) getBlogByIdHandle(res http.ResponseWriter, req *http.Reque
 		return err
 	}
 
-	blog, err := Blog{}, nil
+	id, err := strconv.Atoi(params.ByName("id"))
 	if err != nil {
 		return err
 	}
 
-	path := fmt.Sprintf("blogs/%s.md", "nil")
-	blogContent := ReadFile(path)
-	blogContentHtml := MdToHTML(blogContent)
+	blog, err := server.storage.GetBlogById(int64(id))
+	if err != nil {
+		return err
+	}
 
 	blogWithContent := new(BlogWithContent)
-	blogWithContent.Blog = &blog
+	blogWithContent.Blog = blog
+	blogContentHtml := MdToHTML([]byte(blog.Content))
 	blogWithContent.Content = string(blogContentHtml)
 
 	return templ.ExecuteTemplate(res, "layout", MakeTemplateData(blog.Title, blogWithContent))
@@ -245,6 +251,26 @@ func (server *Server) postWriteBlogHandle(res http.ResponseWriter, req *http.Req
 		return err
 	}
 
-	LogInfo().Println("Data received :", blogCreateRequest)
+	cookie, err := req.Cookie("user")
+	if err != nil {
+		return err
+	}
+
+	blog := Blog{
+		AuthorEmail:   cookie.Value,
+		Title:         blogCreateRequest.Title,
+		CoverImageURL: blogCreateRequest.ImageURL,
+		Content:       blogCreateRequest.Content,
+		Premium:       false,
+		DateCreated:   time.Now().Format("2006-01-02"),
+	}
+
+	id, err := server.storage.CreateBlog(&blog)
+	if err != nil {
+		return err
+	}
+
+	LogInfo().Println("Create new blog with id: ", id)
+
 	return nil
 }

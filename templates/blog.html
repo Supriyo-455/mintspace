@@ -1,6 +1,6 @@
 {{ define "content" }}
 <h1>{{ .Blog.Title }}</h1>
-<h3>Author: {{ .Blog.Author.Name }}</h3>
+<h3>Author: {{ .Blog.AuthorEmail }}</h3>
 <p>ImageURL: {{ .Blog.CoverImageURL }}</p>
 <p>
   Type: {{ if .Blog.Premium }} Premium Content {{ else }} Regular Content {{ end

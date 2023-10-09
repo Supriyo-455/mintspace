@@ -132,8 +132,6 @@ func (s *MySqlStorage) CheckBlogTable() error {
 	if err != nil {
 		return err
 	}
-
-	LogInfo().Println("Blog table created!")
 	return nil
 }
 
@@ -179,6 +177,33 @@ func (s *MySqlStorage) DeleteBlog(id int64) error {
 	return nil
 }
 
+func (s *MySqlStorage) GetBlogById(id int64) (*Blog, error) {
+	err := s.CheckBlogTable()
+	if err != nil {
+		return nil, err
+	}
+
+	row, err := s.db.Query("select * from blog where id=?", id)
+	if err != nil {
+		return nil, err
+	}
+
+	defer row.Close()
+
+	var blog Blog
+	if row.Next() {
+		if err = row.Scan(&blog.Id, &blog.AuthorEmail, &blog.Title, &blog.CoverImageURL, &blog.Content, &blog.Premium, &blog.DateCreated); err != nil {
+			return &blog, err
+		}
+	}
+
+	if row.Err() != nil {
+		return &blog, row.Err()
+	}
+
+	return &blog, nil
+}
+
 func (s *MySqlStorage) GetAllBlogs() (*Blogs, error) {
 	err := s.CheckBlogTable()
 	if err != nil {
@@ -200,6 +225,7 @@ func (s *MySqlStorage) GetAllBlogs() (*Blogs, error) {
 			return blogs, err
 		}
 		blogs.Array = append(blogs.Array, blog)
+		blogs.Length += 1
 	}
 
 	if err = rows.Err(); err != nil {
