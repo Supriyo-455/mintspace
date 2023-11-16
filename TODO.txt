@@ -1,9 +1,13 @@
 [Important]:
+    - Create error page for displaying the errors
+    - Protection against database not found
+    - Make a search functionality
+        - Use database indexing
+        - Use memcached and elastic search
+    - Use Object Relational Mapper for Database?
     - Secure the jwt token or use something to secure the login functionality
-    - Redirect login page to home page if already authenticated
     - Use context for routes and database
     - Move mysql password and user credentials to a hidden file?
-    - Create error page for displaying the errors
     - Create a method to get the blog id from database by passing certain filtering conditions
     - Make login required for premium contents and not for normal contents
     - Seperate mysql test database and prod database
@@ -15,7 +19,7 @@
     - Singleton pattern and error handling for mysql database
     - Admin page
     - Form validations in blog writting page
-    - Improve variable scanning inside mysql_storage.go to be more compact
+    
     
 
 [Future upgrades]:
@@ -49,3 +53,6 @@
     - remove secret from jwtAuth.go to a hidden file
     - User profile page
     - Create methods to fetch blog list from mysql_storage and display list of blog in the main page
+    - App crashing when entering wrong credentials. (FIX THIS) **VVIP
+    - Redirect login page to home page if already authenticated
+    - Improve variable scanning inside mysql_storage.go to be more compact

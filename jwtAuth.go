@@ -35,7 +35,7 @@ func validateJWT(tokenString string) (*jwt.Token, error) {
 	})
 }
 
-func withJWTAuth(handle httprouter.Handle) httprouter.Handle {
+func withJWTAuthMiddleware(handle httprouter.Handle) httprouter.Handle {
 	return func(res http.ResponseWriter, req *http.Request, params httprouter.Params) {
 		LogInfo().Println("Calling jwt middleware..")
 

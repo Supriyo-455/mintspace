@@ -17,16 +17,16 @@ type routerFunc func(res http.ResponseWriter, req *http.Request, params httprout
 func makeRouterHandleFunc(f routerFunc) httprouter.Handle {
 	return func(res http.ResponseWriter, req *http.Request, params httprouter.Params) {
 		if err := f(res, req, params); err != nil {
-			LogError().Println(err.Error()) // Not so fatal error
+			LogError().Println(err.Error())
 
-			temp, err := template.ParseFiles("templates/404.html")
-			if err != nil {
-				LogError().Fatalln(err.Error()) // Fatal error for not finding 404.html
+			temp, intenalErr := template.ParseFiles("templates/layout.html", "templates/error.html")
+			if intenalErr != nil {
+				LogError().Fatalln(intenalErr.Error()) // Fatal error for not finding error.html
 			}
 
-			err = temp.Execute(res, nil)
-			if err != nil {
-				LogError().Fatalln(err.Error()) // Fatal error for not finding 404.html
+			intenalErr = temp.ExecuteTemplate(res, "layout", MakeTemplateData("Error", err.Error()))
+			if intenalErr != nil {
+				LogError().Fatalln(intenalErr.Error()) // Fatal error for not able to execute error.html
 			}
 		}
 	}
@@ -42,16 +42,16 @@ func NewServer() *Server {
 	server.mux = httprouter.New()
 	server.storage = NewMySqlStorage()
 
-	server.mux.GET("/blog", withJWTAuth(makeRouterHandleFunc(server.getBlogsHandle)))
-	server.mux.GET("/blog/:id", withJWTAuth((makeRouterHandleFunc(server.getBlogByIdHandle))))
+	server.mux.GET("/blog", withJWTAuthMiddleware(makeRouterHandleFunc(server.getBlogsHandle)))
+	server.mux.GET("/blog/:id", withJWTAuthMiddleware((makeRouterHandleFunc(server.getBlogByIdHandle))))
 	server.mux.GET("/login", makeRouterHandleFunc(server.getLoginHandle))
 	server.mux.GET("/signup", makeRouterHandleFunc(server.getSignupHandle))
-	server.mux.GET("/write", withJWTAuth(makeRouterHandleFunc(server.getWriteBlogHandle)))
-	server.mux.GET("/profile", withJWTAuth(makeRouterHandleFunc(server.getProfileHandle)))
+	server.mux.GET("/write", withJWTAuthMiddleware(makeRouterHandleFunc(server.getWriteBlogHandle)))
+	server.mux.GET("/profile", withJWTAuthMiddleware(makeRouterHandleFunc(server.getProfileHandle)))
 
 	server.mux.POST("/login", makeRouterHandleFunc(server.postLoginHandle))
 	server.mux.POST("/signup", makeRouterHandleFunc(server.postSignupHandle))
-	server.mux.POST("/write", withJWTAuth(makeRouterHandleFunc(server.postWriteBlogHandle)))
+	server.mux.POST("/write", withJWTAuthMiddleware(makeRouterHandleFunc(server.postWriteBlogHandle)))
 
 	server.mux.NotFound = http.HandlerFunc(server.handle404)
 
