@@ -1,1 +1,23 @@
+# Binaries
 bin/
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Database & Runtime Data
+data/*.db
+data/*.db-wal
+data/*.db-shm
+data/*.db-journal
+
+# Local Log Outputs
+logs/*.txt
+
+# OS / Editor Metadata
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp

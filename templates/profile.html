@@ -1,9 +1,67 @@
 {{ define "content" }}
+<div class="profile-document">
 
-<h2>Name: {{ .Name }}</h2>
-<h2>Email: {{ .Email }}</h2>
-<h2>Date of Birth: {{ .DateOfBirth }}</h2>
-<h2>Profile created on: {{ .DateCreated }}</h2>
-<h2>Admin status: {{ .Admin }}</h2>
+  <div class="profile-header">
+    <div class="profile-badge mono">RESEARCHER DOSSIER</div>
+    <h1>{{ .User.Name }}</h1>
+    <div class="profile-meta">
+      <span class="mono">{{ .User.Email }}</span> &bull; 
+      <span>Member since {{ .User.DateCreated }}</span> &bull;
+      <span>{{ if .User.Admin }}<strong>Editorial Board / Administrator</strong>{{ else }}Contributing Scholar{{ end }}</span>
+    </div>
+  </div>
 
+  <div class="profile-content">
+    <div class="section-row">
+      <h2>Authored Manuscripts ({{ len .Blogs }})</h2>
+      <a href="/write" class="btn btn-outline" style="font-size: 0.82rem; padding: 0.35rem 0.8rem;">+ Deposit Paper</a>
+    </div>
+
+    {{ if .Blogs }}
+      <div class="author-papers-list">
+        {{ range .Blogs }}
+        <div class="paper-summary-card">
+          <div class="summary-top">
+            <span class="mono id-tag">MS-{{ .Id }}</span>
+            <span class="date-tag">{{ .DateCreated }}</span>
+            {{ if .IsPrivate }}
+              <span class="tag-restricted">&bull; Restricted / Private Manuscript</span>
+            {{ else }}
+              <span class="tag-open">Open Access</span>
+            {{ end }}
+          </div>
+
+          <h3 class="summary-title">
+            <a href="/blog/{{ .Id }}">{{ .Title }}</a>
+          </h3>
+
+          {{ if .Abstract }}
+            <p class="summary-abstract">{{ .Abstract }}</p>
+          {{ end }}
+
+          <div class="summary-footer">
+            <div class="summary-metrics">
+              <span>&hearts; {{ .LikesCount }} Endorsements</span>
+              <span>&para; {{ .CommentsCount }} Reviews</span>
+            </div>
+
+            <div class="summary-actions">
+              <a href="/blog/{{ .Id }}" class="btn-read">View Paper &rarr;</a>
+              <form action="/blog/{{ .Id }}/delete" method="POST" style="display:inline;" onsubmit="return confirm('Retract this paper?');">
+                <button type="submit" class="btn-retract">Retract</button>
+              </form>
+            </div>
+          </div>
+        </div>
+        {{ end }}
+      </div>
+    {{ else }}
+      <div class="empty-profile">
+        <p>You have not deposited any manuscripts into the archive yet.</p>
+        <a href="/write" class="btn" style="margin-top: 1rem;">Submit Your First Paper</a>
+      </div>
+    {{ end }}
+  </div>
+
+</div>
 {{ end }}

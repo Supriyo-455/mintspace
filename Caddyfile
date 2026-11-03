@@ -1,0 +1,25 @@
+# Caddy Production Reverse Proxy & SSL Configuration
+# Replace {$DOMAIN:localhost} with your domain (e.g. mintspace.yourdomain.com)
+
+{$DOMAIN:localhost} {
+    # Automatic HTTPS is enabled by default by Caddy
+
+    # Security Headers
+    header {
+        Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+        X-Content-Type-Options "nosniff"
+        X-Frame-Options "DENY"
+        Referrer-Policy "strict-origin-when-cross-origin"
+    }
+
+    # Load balance requests across cluster nodes with active health checks
+    reverse_proxy mintspace-node1:3000 mintspace-node2:3000 {
+        lb_policy round_robin
+        health_uri /healthz
+        health_interval 5s
+        health_timeout 2s
+    }
+
+    # Gzip and zstd compression
+    encode zstd gzip
+}

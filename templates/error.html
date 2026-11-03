@@ -1,4 +1,14 @@
 {{ define "content" }}
-<h1>Error Occured!</h1>
-<h2>{{ . }}</h2>
+<div class="message-card">
+  <div class="message-badge mono">ADVISORY / EXCEPTION NOTICE</div>
+  <h2>Archival Exception Encountered</h2>
+  <div class="error-box mono">
+    {{ . }}
+  </div>
+  <p class="message-sub">The requested operation could not be completed in conformance with archive policies.</p>
+  <div class="message-actions">
+    <a href="javascript:history.back()" class="btn btn-outline">&larr; Return to Previous Page</a>
+    <a href="/blog" class="btn">Repository Index</a>
+  </div>
+</div>
 {{ end }}

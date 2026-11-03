@@ -3,69 +3,69 @@ package main
 import (
 	"encoding/json"
 	"os"
+	"regexp"
 
 	"github.com/gomarkdown/markdown"
 	"github.com/gomarkdown/markdown/html"
 	"github.com/gomarkdown/markdown/parser"
+	"github.com/microcosm-cc/bluemonday"
 )
 
 func WriteToFile(path, data string) error {
-	err := os.WriteFile(path, []byte(data), 0666)
-	return err
+	return os.WriteFile(path, []byte(data), 0666)
 }
 
 func CreateFolder(path string) error {
-	if err := os.MkdirAll(path, os.ModePerm); err != nil {
-		return err
-	}
-	return nil
+	return os.MkdirAll(path, os.ModePerm)
 }
 
 func ReadFile(path string) []byte {
 	data, err := os.ReadFile(path)
 	if err != nil {
-		LogError().Fatalln(err.Error())
+		LogError().Println("Error reading file:", err.Error())
+		return nil
 	}
 	return data
 }
 
 func FileExist(path string) bool {
 	_, err := os.Stat(path)
-	if err != nil {
-		if os.IsNotExist(err) {
-			return false
-		}
-		LogError().Fatalln(err.Error())
-	}
-	return true
+	return err == nil
 }
 
 func LoadJson(filename string, key interface{}) {
 	inFile, err := os.Open(filename)
 	if err != nil {
-		LogError().Fatalln(err.Error())
+		LogError().Println("Warning: cannot open json file:", filename, err.Error())
+		return
 	}
+	defer inFile.Close()
 
 	decoder := json.NewDecoder(inFile)
-
-	err = decoder.Decode(key)
-	if err != nil {
-		LogError().Fatalln(err.Error())
+	if err := decoder.Decode(key); err != nil {
+		LogError().Println("Warning: failed to decode json:", filename, err.Error())
 	}
-
-	inFile.Close()
 }
 
+// MdToHTML parses markdown to HTML and sanitizes it against XSS
 func MdToHTML(md []byte) []byte {
-	// create markdown parser with extensions
-	extensions := parser.CommonExtensions | parser.AutoHeadingIDs | parser.NoEmptyLineBeforeBlock
+	// Enable extensions: tables, footnotes, autolink, fenced code, heading IDs, math equations
+	extensions := parser.CommonExtensions | parser.AutoHeadingIDs | parser.NoEmptyLineBeforeBlock | parser.MathJax | parser.Footnotes
 	p := parser.NewWithExtensions(extensions)
 	doc := p.Parse(md)
 
-	// create html renderer with extensions
 	htmlFlags := html.CommonFlags | html.HrefTargetBlank
 	opts := html.RendererOptions{Flags: htmlFlags}
 	renderer := html.NewRenderer(opts)
 
-	return markdown.Render(doc, renderer)
+	rendered := markdown.Render(doc, renderer)
+
+	// Sanitize output to prevent stored XSS while preserving legitimate styles and code blocks
+	policy := bluemonday.UGCPolicy()
+	policy.AllowAttrs("class").Matching(regexp.MustCompile(`^[a-zA-Z0-9_\-\s]+$`)).Globally()
+	policy.AllowAttrs("id").Matching(regexp.MustCompile(`^[a-zA-Z0-9_\-]+$`)).Globally()
+	policy.AllowElements("span", "div", "pre", "code", "table", "thead", "tbody", "tr", "th", "td", "sup", "sub", "hr", "blockquote")
+	policy.AllowAttrs("align").OnElements("th", "td")
+
+	return policy.SanitizeBytes(rendered)
 }

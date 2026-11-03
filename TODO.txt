@@ -1,58 +1,40 @@
-[Important]:
-    - Create error page for displaying the errors
-    - Protection against database not found
-    - Make a search functionality
-        - Use database indexing
-        - Use memcached and elastic search
-    - Use Object Relational Mapper for Database?
-    - Secure the jwt token or use something to secure the login functionality
-    - Use context for routes and database
-    - Move mysql password and user credentials to a hidden file?
-    - Create a method to get the blog id from database by passing certain filtering conditions
-    - Make login required for premium contents and not for normal contents
-    - Seperate mysql test database and prod database
-    - Get user data struct when required
-        -ref: https://stackoverflow.com/questions/46130446/fetching-logged-in-user-info-for-display
-    - MVC architecture
-    - Create a mechanism to create appropiate markdown file when creating blogs
-    - Use Bluemonday for sanitizing unsafeHTML (XSS Attack prevention)
-    - Singleton pattern and error handling for mysql database
-    - Admin page
-    - Form validations in blog writting page
-    
-    
+# MintSpace - Project Status & Roadmap
 
-[Future upgrades]:
-    - Move to gin.
-    - Dockerise the project
-    - Use redis or memcache
+## [Completed & Shipped]:
+- [x] Moved away from MySQL to embedded, zero-dependency SQLite (modernc.org/sqlite).
+- [x] Content-Addressable Storage (CAS):
+    - Implemented BlobStorage interface with LocalCASStorage.
+    - All blogs stored canonically as raw Markdown indexed by SHA-256 hash.
+    - Raw markdown inspectable via /blob/<hash>.
+    - Ready for drop-in distributed storage (IPFS/Arweave/MinIO).
+- [x] Research Paper UI Design System:
+    - Academic serif typography (Newsreader, EB Garamond, Computer Modern styling).
+    - Scholarly masthead ("MINTSPACE // OPEN RESEARCH ARCHIVE").
+    - Academic paper presentation: Title, author affiliation, date, SHA-256 integrity badge.
+    - Indented Abstract block.
+    - KaTeX math formula rendering ($E=mc^2$ and block math $$...$$).
+    - Clean academic tables, footnotes, and blockquotes.
+    - BibTeX citation generator with one-click copy.
+- [x] Scholarly Endorsements (Likes):
+    - Interactive AJAX toggle with live counter updates.
+- [x] Peer Review & Discussion (Comments):
+    - Formal commentary section for scholarly feedback.
+- [x] Access Control & Private Blogs:
+    - Public vs. Restricted/Private manuscript policy.
+    - Protected via middleware and database filtering.
+- [x] Editorial Board & Administration Console (/admin):
+    - Dashboard statistics (manuscripts, scholars, comments, likes).
+    - Manage manuscripts (audit, delete/retract).
+    - Manage users (promote to editor/admin, revoke admin).
+- [x] Security Fixes:
+    - Patched JWT middleware bypass vulnerability.
+    - Secure identity extraction from verified JWT cryptographic claims.
+    - Bluemonday UGC policy sanitization preventing XSS while allowing math and code tags.
+- [x] Default Editorial Seed Data:
+    - Default admin: admin@mintspace.io / admin123.
+    - Seeded initial scholarly paper on Content-Addressable Storage.
 
-
-[Current Status]:
-    Working but blogs and accounts are not yet linked, also blog need to be stored inside db.
-
-
-[Fixed things]:
-    - Login page not showing. (FIX THIS) Date: 04-10-2023
-    - Close database connection after closing the app
-    - User created by the test function not showing inside database but the test is passing? (FIX THIS)
-    - Redirect signup page to login page after successful user creation.
-    - User password encryption using bcrypt
-    - Remove sampleDb and sampleDbfuncs
-    - Right now we are storing the blogs in a particular folder which will change in the future.
-        The blog creation request struct stores blog content, Image url, title which we can store inside the database,
-        so we need to update the blog fetching mechanism again from file based to database based.
-        - Remove blogs folder, update all the dependencies of blogs folder to fetch blogs from mongo database.
-        - Create detailed blog request which will have the followings
-            - Author
-            - Premium status
-            - Date of creation
-        - Store blog with this informations
-    - jwt authentication for login and cookie storage for token
-    - After login the home page is appearing blank
-    - remove secret from jwtAuth.go to a hidden file
-    - User profile page
-    - Create methods to fetch blog list from mysql_storage and display list of blog in the main page
-    - App crashing when entering wrong credentials. (FIX THIS) **VVIP
-    - Redirect login page to home page if already authenticated
-    - Improve variable scanning inside mysql_storage.go to be more compact
+## [Future Distributed Storage Upgrades]:
+- [ ] Implement IPFSStorage adapter satisfying the BlobStorage interface.
+- [ ] Add decentralized pinning (Pinata / web3.storage).
+- [ ] Arweave permanent archiving adapter.

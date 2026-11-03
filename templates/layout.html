@@ -1,22 +1,461 @@
 {{ define "layout" }}
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>{{ .Title }}</title>
+
+  <!-- Typography & Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Charter:ital,wght@0,400;0,700;1,400&family=EB+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Merriweather:ital,wght@0,300;0,400;0,700;1,300;1,400&display=swap" rel="stylesheet">
+
+  <!-- Centralized Style Sheet -->
+  <link rel="stylesheet" href="/static/css/style.css">
+
+  <!-- KaTeX for LaTeX Math Rendering -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css" crossorigin="anonymous">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js" crossorigin="anonymous"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js" crossorigin="anonymous"></script>
+
+  <!-- Highlight.js for Quiet, Readable Syntax Highlighting -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+
+  <!-- Mermaid.js for Academic Flowcharts & Diagrams -->
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10.9.0/dist/mermaid.min.js"></script>
+
+  <script>
+    function triggerMathRendering() {
+      if (typeof renderMathInElement === 'function') {
+        renderMathInElement(document.body, {
+          delimiters: [
+            {left: '$$', right: '$$', display: true},
+            {left: '$', right: '$', display: false},
+            {left: '\\[', right: '\\]', display: true},
+            {left: '\\(', right: '\\)', display: false}
+          ],
+          throwOnError: false,
+          ignoredTags: ["script", "noscript", "style", "textarea", "pre", "code"]
+        });
+      }
+    }
+
+    function sanitizeMermaid(text) {
+      // Auto-quote unquoted labels containing & or special chars: A[Foo & Bar] -> A["Foo & Bar"]
+      return text.replace(/(\b[A-Za-z0-9_-]+)\[([^\]\n"]*&[^\]\n"]*)\]/g, '$1["$2"]');
+    }
+
+    async function triggerMermaidRendering() {
+      if (typeof mermaid === 'undefined') return;
+
+      try {
+        mermaid.initialize({
+          startOnLoad: false,
+          theme: 'neutral',
+          themeVariables: {
+            fontFamily: 'Consolas, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+            fontSize: '13px',
+            primaryColor: '#ffffff',
+            primaryBorderColor: '#334155',
+            primaryTextColor: '#0f172a',
+            lineColor: '#475569',
+            secondaryColor: '#f8fafc',
+            tertiaryColor: '#ffffff',
+            clusterBkg: '#fcfcfb',
+            clusterBorder: '#94a3b8',
+            edgeLabelBackground: '#ffffff'
+          },
+          flowchart: {
+            useMaxWidth: false,
+            htmlLabels: true,
+            curve: 'basis',
+            padding: 16,
+            nodeSpacing: 45,
+            rankSpacing: 45
+          },
+          securityLevel: 'loose'
+        });
+      } catch (e) {
+        console.warn("Mermaid init:", e);
+      }
+
+      const allCodeBlocks = document.querySelectorAll('.markdown-body pre code');
+      const mermaidKeywords = [
+        'flowchart', 'graph ', 'sequencediagram', 'classdiagram', 
+        'statediagram', 'erdiagram', 'gantt', 'pie', 'gitgraph', 'journey'
+      ];
+
+      let counter = 0;
+      for (const code of allCodeBlocks) {
+        const pre = code.closest('pre');
+        if (!pre || pre.dataset.mermaidProcessed === 'true') continue;
+
+        const isClassMermaid = code.classList.contains('language-mermaid') || 
+                               code.classList.contains('language-flowchart') ||
+                               pre.classList.contains('language-mermaid');
+
+        const rawText = code.textContent.trim();
+        const firstLine = rawText.split('\n')[0].trim().toLowerCase();
+        const isKeywordMermaid = mermaidKeywords.some(kw => firstLine.startsWith(kw));
+
+        if (isClassMermaid || isKeywordMermaid) {
+          pre.dataset.mermaidProcessed = 'true';
+          const cleanDef = sanitizeMermaid(rawText);
+
+          const figure = document.createElement('figure');
+          figure.className = 'paper-figure';
+
+          const figureNum = ++counter;
+          const figureTitle = 'Figure ' + figureNum;
+
+          const header = document.createElement('div');
+          header.className = 'paper-figure-header';
+
+          const titleSpan = document.createElement('span');
+          titleSpan.className = 'paper-figure-title';
+          titleSpan.textContent = figureTitle;
+
+          const maxBtn = document.createElement('button');
+          maxBtn.className = 'btn-figure-maximize';
+          maxBtn.type = 'button';
+          maxBtn.innerHTML = '&#x2922; Maximize';
+          maxBtn.title = 'Open fullscreen zoomable viewer';
+
+          header.appendChild(titleSpan);
+          header.appendChild(maxBtn);
+          figure.appendChild(header);
+
+          const canvas = document.createElement('div');
+          canvas.className = 'paper-figure-canvas';
+          canvas.title = 'Click to maximize and zoom';
+
+          const diagramId = 'mermaid-figure-' + figureNum;
+
+          let renderedSvg = null;
+          try {
+            const res = await mermaid.render(diagramId, cleanDef);
+            renderedSvg = res.svg;
+          } catch (renderErr) {
+            console.warn("Retrying with raw definition for:", diagramId, renderErr);
+            try {
+              const retryId = diagramId + '-retry';
+              const res = await mermaid.render(retryId, rawText);
+              renderedSvg = res.svg;
+            } catch (finalErr) {
+              console.error("Mermaid diagram could not be rendered:", finalErr);
+              pre.dataset.mermaidProcessed = 'failed';
+            }
+          }
+
+          if (renderedSvg) {
+            canvas.innerHTML = renderedSvg;
+            const svgEl = canvas.querySelector('svg');
+            if (svgEl) {
+              svgEl.style.maxWidth = '100%';
+              svgEl.style.height = 'auto';
+              svgEl.style.display = 'inline-block';
+              svgEl.style.margin = '0 auto';
+
+              const viewBox = svgEl.getAttribute('viewBox');
+              if (viewBox) {
+                const parts = viewBox.split(/[\s,]+/).filter(Boolean);
+                if (parts.length === 4) {
+                  const vbWidth = parseFloat(parts[2]);
+                  if (vbWidth > 750) {
+                    svgEl.style.minWidth = Math.min(vbWidth, 850) + 'px';
+                  }
+                }
+              }
+            }
+
+            maxBtn.onclick = function(e) {
+              e.stopPropagation();
+              openFigureLightbox(renderedSvg, figureTitle);
+            };
+
+            canvas.onclick = function() {
+              openFigureLightbox(renderedSvg, figureTitle);
+            };
+
+            figure.appendChild(canvas);
+            pre.parentNode.replaceChild(figure, pre);
+          }
+        }
+      }
+    }
+
+    function highlightAllCodeBlocks() {
+      if (typeof hljs === 'undefined') return;
+
+      const codeBlocks = document.querySelectorAll('.markdown-body pre code');
+      codeBlocks.forEach(code => {
+        const pre = code.closest('pre');
+        if (!pre) return;
+
+        // Skip Mermaid diagrams
+        if (code.classList.contains('language-mermaid') || 
+            code.classList.contains('language-flowchart') ||
+            pre.classList.contains('language-mermaid') ||
+            pre.dataset.mermaidProcessed === 'true') {
+          return;
+        }
+
+        // Apply syntax highlighting
+        if (!code.dataset.highlighted) {
+          hljs.highlightElement(code);
+          code.dataset.highlighted = 'yes';
+        }
+
+        // Wrap code block with subtle academic copy helper
+        if (!pre.parentNode.classList.contains('paper-code-block')) {
+          const wrapper = document.createElement('div');
+          wrapper.className = 'paper-code-block';
+
+          let lang = '';
+          for (const cls of code.classList) {
+            if (cls.startsWith('language-')) {
+              lang = cls.replace('language-', '').toUpperCase();
+              break;
+            }
+          }
+          if (lang === 'CPP') lang = 'C++';
+          if (lang === 'BAT') lang = 'BATCH';
+
+          if (lang) {
+            const badge = document.createElement('span');
+            badge.className = 'code-lang-tag mono';
+            badge.textContent = lang;
+            wrapper.appendChild(badge);
+          }
+
+          const copyBtn = document.createElement('button');
+          copyBtn.className = 'btn-copy-code mono';
+          copyBtn.type = 'button';
+          copyBtn.textContent = 'Copy';
+          copyBtn.onclick = function() {
+            navigator.clipboard.writeText(code.innerText).then(() => {
+              copyBtn.textContent = 'Copied';
+              copyBtn.classList.add('copied');
+              setTimeout(() => {
+                copyBtn.textContent = 'Copy';
+                copyBtn.classList.remove('copied');
+              }, 2000);
+            });
+          };
+          wrapper.appendChild(copyBtn);
+
+          pre.parentNode.insertBefore(wrapper, pre);
+          wrapper.appendChild(pre);
+        }
+      });
+    }
+
+    // Fullscreen Figure Lightbox State & Controls
+    let currentLightboxScale = 1;
+    let currentLightboxX = 0;
+    let currentLightboxY = 0;
+    let isLightboxDragging = false;
+    let lightboxStartX = 0;
+    let lightboxStartY = 0;
+
+    function updateLightboxTransform() {
+      const content = document.getElementById('lightbox-content');
+      const zoomVal = document.getElementById('lightbox-zoom-val');
+      if (content) {
+        content.style.transform = 'translate(' + currentLightboxX + 'px, ' + currentLightboxY + 'px) scale(' + currentLightboxScale + ')';
+      }
+      if (zoomVal) {
+        zoomVal.textContent = Math.round(currentLightboxScale * 100) + '%';
+      }
+    }
+
+    function zoomLightbox(delta) {
+      currentLightboxScale = Math.min(Math.max(currentLightboxScale + delta, 0.2), 5);
+      updateLightboxTransform();
+    }
+
+    function resetLightboxZoom() {
+      currentLightboxScale = 1;
+      currentLightboxX = 0;
+      currentLightboxY = 0;
+      updateLightboxTransform();
+    }
+
+    function openFigureLightbox(svgHtml, title) {
+      const modal = document.getElementById('figure-lightbox');
+      const content = document.getElementById('lightbox-content');
+      const titleEl = document.getElementById('lightbox-title');
+      if (!modal || !content) return;
+
+      if (title && titleEl) titleEl.textContent = title;
+      content.innerHTML = svgHtml;
+
+      const svg = content.querySelector('svg');
+      if (svg) {
+        svg.style.maxWidth = 'none';
+        svg.style.height = 'auto';
+        svg.style.display = 'block';
+        svg.style.margin = '0 auto';
+        const vb = svg.getAttribute('viewBox');
+        if (vb) {
+          const parts = vb.split(/[\s,]+/).filter(Boolean);
+          if (parts.length === 4) {
+            const vbW = parseFloat(parts[2]);
+            if (vbW > 0) svg.style.width = vbW + 'px';
+          }
+        }
+      }
+
+      currentLightboxScale = 1;
+      currentLightboxX = 0;
+      currentLightboxY = 0;
+
+      modal.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+
+      const stage = document.getElementById('lightbox-stage');
+      if (stage && svg) {
+        const stageW = stage.clientWidth - 80;
+        const svgW = svg.getBoundingClientRect().width;
+        if (svgW > stageW && stageW > 300) {
+          currentLightboxScale = Math.max(stageW / svgW, 0.5);
+        }
+      }
+      updateLightboxTransform();
+    }
+
+    function closeFigureLightbox() {
+      const modal = document.getElementById('figure-lightbox');
+      if (modal) modal.style.display = 'none';
+      document.body.style.overflow = '';
+    }
+
+    async function triggerAllRenderers() {
+      triggerMathRendering();
+      await triggerMermaidRendering();
+      highlightAllCodeBlocks();
+    }
+
+    document.addEventListener("DOMContentLoaded", function() {
+      triggerAllRenderers();
+      window.addEventListener("load", triggerAllRenderers);
+      setTimeout(triggerAllRenderers, 200);
+      setTimeout(triggerAllRenderers, 600);
+
+      const stage = document.getElementById('lightbox-stage');
+      if (stage) {
+        stage.addEventListener('wheel', function(e) {
+          e.preventDefault();
+          const zoomFactor = e.deltaY < 0 ? 0.15 : -0.15;
+          zoomLightbox(zoomFactor);
+        }, { passive: false });
+
+        stage.addEventListener('mousedown', function(e) {
+          if (e.button !== 0) return;
+          isLightboxDragging = true;
+          lightboxStartX = e.clientX - currentLightboxX;
+          lightboxStartY = e.clientY - currentLightboxY;
+          stage.style.cursor = 'grabbing';
+        });
+
+        window.addEventListener('mousemove', function(e) {
+          if (!isLightboxDragging) return;
+          currentLightboxX = e.clientX - lightboxStartX;
+          currentLightboxY = e.clientY - lightboxStartY;
+          updateLightboxTransform();
+        });
+
+        window.addEventListener('mouseup', function() {
+          if (isLightboxDragging) {
+            isLightboxDragging = false;
+            if (stage) stage.style.cursor = 'grab';
+          }
+        });
+
+        stage.addEventListener('dblclick', function() {
+          if (currentLightboxScale === 1) {
+            zoomLightbox(0.5);
+          } else {
+            resetLightboxZoom();
+          }
+        });
+      }
+
+      window.addEventListener('keydown', function(e) {
+        const modal = document.getElementById('figure-lightbox');
+        if (!modal || modal.style.display === 'none') return;
+
+        if (e.key === 'Escape') {
+          closeFigureLightbox();
+        } else if (e.key === '+' || e.key === '=') {
+          zoomLightbox(0.25);
+        } else if (e.key === '-' || e.key === '_') {
+          zoomLightbox(-0.25);
+        } else if (e.key === '0') {
+          resetLightboxZoom();
+        }
+      });
+    });
+  </script>
 </head>
 
 <body>
 
-  {{ template "content" .Content }}
+  <header class="masthead">
+    <div class="masthead-inner">
+      <a href="/blog" class="brand-title">
+        MintSpace
+      </a>
+
+      <nav class="nav-links">
+        <a href="/blog">Archive</a>
+        {{ if .User }}
+          <a href="/write">Submit Paper</a>
+          <a href="/profile">My Works</a>
+          {{ if .User.IsAdmin }}
+            <a href="/admin"><span class="nav-badge">Console</span> Editorial</a>
+          {{ end }}
+          <a href="/logout">Sign Out ({{ .User.Name }})</a>
+        {{ else }}
+          <a href="/login">Sign In</a>
+          <a href="/signup" class="btn btn-outline" style="padding: 0.35rem 0.8rem; font-size: 0.82rem;">Register</a>
+        {{ end }}
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    {{ template "content" .Content }}
+  </main>
 
   <footer>
-    <!-- About me -->
+    <p><strong>MintSpace Research & Journal Platform</strong> &mdash; Content-Addressable Cryptographic Publishing</p>
+    <p class="mono">Markdown Repository &bull; SHA-256 CAS Verified &bull; Distributed Storage Ready</p>
   </footer>
 
-</body>
+  <!-- Fullscreen Figure Lightbox Modal -->
+  <div id="figure-lightbox" class="figure-lightbox" style="display: none;" role="dialog" aria-modal="true" aria-label="Figure Viewer">
+    <div class="lightbox-backdrop" onclick="closeFigureLightbox()"></div>
+    <div class="lightbox-container">
+      <div class="lightbox-toolbar">
+        <span class="lightbox-title" id="lightbox-title">Figure Viewer</span>
+        <div class="lightbox-controls">
+          <button type="button" class="lightbox-btn" onclick="zoomLightbox(-0.25)" title="Zoom Out (Minus)">−</button>
+          <span class="lightbox-zoom-level" id="lightbox-zoom-val">100%</span>
+          <button type="button" class="lightbox-btn" onclick="zoomLightbox(0.25)" title="Zoom In (Plus)">+</button>
+          <button type="button" class="lightbox-btn" onclick="resetLightboxZoom()" title="Reset 100%">Reset</button>
+          <button type="button" class="lightbox-btn lightbox-close" onclick="closeFigureLightbox()" title="Close (Escape)">✕ Close</button>
+        </div>
+      </div>
+      <div class="lightbox-stage" id="lightbox-stage">
+        <div class="lightbox-content" id="lightbox-content"></div>
+      </div>
+      <div class="lightbox-hint">Click & drag to pan &bull; Scroll wheel to zoom &bull; Double click to zoom &bull; Press Esc to close</div>
+    </div>
+  </div>
 
+</body>
 </html>
 {{ end }}

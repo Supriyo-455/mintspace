@@ -1,0 +1,55 @@
+services:
+  # Caddy Reverse Proxy with Automatic Let's Encrypt SSL
+  caddy:
+    image: caddy:2-alpine
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on:
+      - mintspace-node1
+      - mintspace-node2
+
+  # MintSpace Cluster Node 1 (Primary)
+  mintspace-node1:
+    build: .
+    restart: unless-stopped
+    environment:
+      - SECRET=${MINT_SECRET:-super-secure-production-research-secret-2026}
+      - PEER_NODES=http://mintspace-node2:3000
+    volumes:
+      - node1_data:/app/data
+      - node1_logs:/app/logs
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://127.0.0.1:3000/healthz"]
+      interval: 10s
+      timeout: 3s
+      retries: 3
+
+  # MintSpace Cluster Node 2 (Distributed Replica Node)
+  mintspace-node2:
+    build: .
+    restart: unless-stopped
+    environment:
+      - SECRET=${MINT_SECRET:-super-secure-production-research-secret-2026}
+      - PEER_NODES=http://mintspace-node1:3000
+    volumes:
+      - node2_data:/app/data
+      - node2_logs:/app/logs
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://127.0.0.1:3000/healthz"]
+      interval: 10s
+      timeout: 3s
+      retries: 3
+
+volumes:
+  caddy_data:
+  caddy_config:
+  node1_data:
+  node1_logs:
+  node2_data:
+  node2_logs:

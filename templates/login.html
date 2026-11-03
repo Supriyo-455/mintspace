@@ -1,89 +1,38 @@
 {{ define "content" }}
-<form action="/login" method="POST">
-    <h1>Login to your account</h1>
-    <label id="email">
-        Email Address
-        <input type="email" name="email" required />
-    </label>
-    <label>
-        Password
-        <input type="password" name="password" required />
-    </label>
-    <input type="submit" class="validateDontSubmit" name="login" value="Login" />
-</form>
+<div class="auth-card">
 
-<style>
-    /* Center the form both horizontally and vertically */
-    html,
-    body {
-        height: 100%;
-        margin: 0;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background-color: #f0f0f0;
-    }
+  <div class="auth-header">
+    <div class="auth-tag mono">PEER ARCHIVE ACCESS</div>
+    <h1>Scholar Sign In</h1>
+    <p class="auth-sub">Enter your academic or contributor credentials to deposit manuscripts and join peer review.</p>
+  </div>
 
-    /* Style the form container */
-    form {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        max-width: 20em;
-        padding: 2em;
-        background-color: #fff;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        border-radius: 0.4em;
-    }
+  <form action="/login" method="POST" class="auth-form">
 
-    /* Style the heading */
-    h1 {
-        font-size: 1.8em;
-        margin-bottom: 1em;
-        color: #333;
-    }
+    <div class="form-group">
+      <label for="email" class="form-label">Email Identity</label>
+      <input type="email" id="email" name="email" class="form-control" placeholder="scholar@institution.edu" required autofocus />
+    </div>
 
-    /* Style labels */
-    label {
-        display: flex;
-        flex-direction: column;
-        margin-bottom: 1em;
-        font-weight: bold;
-        width: 100%;
-        color: #555;
-    }
+    <div class="form-group">
+      <label for="password" class="form-label">Secret Password</label>
+      <input type="password" id="password" name="password" class="form-control" placeholder="&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;" required />
+    </div>
 
-    /* Style input fields */
-    input[type="email"],
-    input[type="password"] {
-        padding: 1em;
-        margin-top: 0.2em;
-        /* Adjusted margin */
-        border: 1px solid #ccc;
-        border-radius: 0.4em;
-        font-size: 1em;
-        width: 100%;
-        box-sizing: border-box;
-        /* Ensure consistent sizing */
-    }
+    <div class="form-actions">
+      <button type="submit" class="btn btn-auth">Authenticate &rarr;</button>
+    </div>
 
-    /* Style the login button */
-    input[type="submit"] {
-        background-color: #007bff;
-        color: white;
-        padding: 1em 1.5em;
-        border: none;
-        border-radius: 0.4em;
-        font-size: 1.2em;
-        cursor: pointer;
-        transition: background-color 0.3s ease-in-out;
-        width: 100%;
-        /* Make the button width 100% to match input fields */
-    }
+  </form>
 
-    /* Hover effect for the button */
-    input[type="submit"]:hover {
-        background-color: #0056b3;
-    }
-</style>
+  <div class="auth-demo-hint">
+    <div class="hint-title mono">System Demo Credentials:</div>
+    <p><strong>Admin Editor:</strong> <span class="mono">admin@mintspace.io</span> / <span class="mono">admin123</span></p>
+  </div>
+
+  <div class="auth-footer">
+    <p>Do not hold an active researcher account? <a href="/signup">Register here</a>.</p>
+  </div>
+
+</div>
 {{ end }}

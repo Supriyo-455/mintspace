@@ -1,60 +1,97 @@
 {{ define "content" }}
+<div class="submit-desk">
 
-<div>
-    <div>
-        <label for="blog-title">Blog Title</label>
-        <input type="text" name="blog-title" id="blog-title" />
+  <div class="submit-header">
+    <div class="paper-badge-mono mono">SCHOLARLY SUBMISSION PORTAL</div>
+    <h1>Submit Manuscript &bull; Archival Deposit</h1>
+    <p class="submit-desc">
+      Deposit your academic paper or technical article. The manuscript body will be stored canonically as Markdown, verified via SHA-256 Content-Addressable Storage (CAS), and indexed for peer review.
+    </p>
+  </div>
+
+  <form id="submission-form" action="/write" method="POST" enctype="multipart/form-data" class="academic-form">
+
+    <div class="form-section">
+      <label for="blog-title" class="field-label">Paper Title <span class="required">*</span></label>
+      <input type="text" id="blog-title" name="title" class="field-input" placeholder="e.g., Content-Addressable Storage and Distributed Hash Tables" required />
     </div>
 
-
-    <div>
-        <label for="blog-coverImage">Blog Cover Image</label>
-        <input type="url" name="blog-coverImage" id="blog-coverImage" />
+    <div class="form-section">
+      <label for="blog-abstract" class="field-label">Abstract <span class="field-hint">(Condensed scholarly summary)</span></label>
+      <textarea id="blog-abstract" name="abstract" rows="3" class="field-input field-textarea" placeholder="Provide a concise summary of thesis, methodology, results, and architectural implications..."></textarea>
     </div>
 
-    <div>
-        <link rel="stylesheet" href="https://unpkg.com/easymde/dist/easymde.min.css">
-        <script src="https://unpkg.com/easymde/dist/easymde.min.js"></script>
-        <textarea id="blog-content"></textarea>
+    <div class="form-row">
+      <div class="form-section half">
+        <label for="blog-cover" class="field-label">Figure / Illustration URL <span class="field-hint">(Optional)</span></label>
+        <input type="url" id="blog-cover" name="imageurl" class="field-input" placeholder="https://example.com/architecture-diagram.png" />
+      </div>
+
+      <div class="form-section half privacy-section">
+        <label class="field-label">Access Policy</label>
+        <div class="checkbox-wrapper">
+          <input type="checkbox" id="is_private" name="is_private" />
+          <label for="is_private" class="checkbox-label">
+            <strong>Restricted Access (Private Paper)</strong>
+            <span>Only you and repository administrators can read this manuscript.</span>
+          </label>
+        </div>
+      </div>
     </div>
 
-    <div>
-        <button id="save-blog">Save blog</button>
+    <!-- Upload .md file helper -->
+    <div class="form-section upload-box">
+      <label class="field-label">Or Upload Markdown Document (.md)</label>
+      <input type="file" id="md-file-input" name="markdown_file" accept=".md,.markdown,text/markdown" />
+      <span class="upload-hint">Selecting a .md file will auto-populate the markdown editor below.</span>
     </div>
+
+    <div class="form-section">
+      <label for="blog-content" class="field-label">Manuscript Body (Markdown & LaTeX Supported) <span class="required">*</span></label>
+
+      <!-- EasyMDE Markdown Editor -->
+      <link rel="stylesheet" href="https://unpkg.com/easymde/dist/easymde.min.css">
+      <script src="https://unpkg.com/easymde/dist/easymde.min.js"></script>
+
+      <textarea id="blog-content" name="content"></textarea>
+    </div>
+
+    <div class="form-actions">
+      <a href="/blog" class="btn btn-outline">Cancel</a>
+      <button type="submit" id="submit-btn" class="btn btn-submit">
+        Verify &amp; Deposit Manuscript &rarr;
+      </button>
+    </div>
+
+  </form>
+
 </div>
 
 <script>
-    // TODO: Send post request to the server
-    const blogTitle = document.getElementById("blog-title");
-    const blogCoverImage = document.getElementById("blog-coverImage");
-    const easyMDE = new EasyMDE({ element: document.getElementById('blog-content'), lineNumbers: true });
+  const easyMDE = new EasyMDE({
+    element: document.getElementById('blog-content'),
+    lineNumbers: true,
+    spellChecker: false,
+    placeholder: "Draft your manuscript using standard Markdown and LaTeX math formulas ($E=mc^2$)...",
+    minHeight: "400px",
+    status: ["lines", "words", "cursor"]
+  });
 
-    const saveBlog = function (body) {
-        fetch('write', {
-            method: 'POST',
-            body: JSON.stringify(body),
-            headers: {
-                'Content-type': 'application/json',
-            }
-        }).then(res => {
-            if (!res.ok) {
-                throw new Error("Network response was not ok!");
-            }
-            return res.json;
-        }).then(data => {
-            console.log(data.toString);
-        }).catch(error =>
-            console.error(error)
-        );
+  // Handle client-side markdown file upload preview
+  document.getElementById('md-file-input').addEventListener('change', function(e) {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = function(evt) {
+        easyMDE.value(evt.target.result);
+      };
+      reader.readAsText(file);
     }
+  });
 
-    document.getElementById("save-blog").addEventListener("click", e => {
-        const body = {
-            "title": blogTitle.value,
-            "imageurl": blogCoverImage.value,
-            "content": easyMDE.value(),
-        };
-        saveBlog(body);
-    });
+  // Ensure easyMDE value is synced to textarea before standard form submission
+  document.getElementById('submission-form').addEventListener('submit', function(e) {
+    document.getElementById('blog-content').value = easyMDE.value();
+  });
 </script>
 {{ end }}

@@ -1,25 +1,35 @@
 package main
 
-/*
-	Requirements:
-		1) Insert User, Blog
-		2) Update User, Blog
-		3) Delete Blog
-		4) Get user by email, user name, id
-		5) Get blog by title, id, author
-*/
-
 type Storage interface {
 	Connect() error
 	Disconnect()
-	CheckUserTable() error
+	InitSchema() error
+
+	// User methods
 	CreateUser(user *User) error
 	DeleteUser(email string) error
 	GetUserByEmail(email string) (*User, error)
-	GetAllBlogs() (*Blogs, error)
+	GetAllUsers() ([]User, error)
+	SetUserAdmin(email string, isAdmin bool) error
+
+	// Blog methods
 	CreateBlog(blog *Blog) (int64, error)
 	DeleteBlog(id int64) error
 	GetBlogById(id int64) (*Blog, error)
-	// GetBlogsByTitle(title string) (Blogs, error)
-	// GetBlogsByAuthorName(authorName string) (Blogs, error)
+	GetAllBlogs(viewerEmail string, isAdmin bool) ([]Blog, error)
+	GetBlogsByAuthor(authorEmail string) ([]Blog, error)
+
+	// Like methods
+	ToggleLike(blogId int64, userEmail string) (hasLiked bool, newCount int, err error)
+	HasUserLiked(blogId int64, userEmail string) (bool, error)
+
+	// Comment methods
+	CreateComment(comment *Comment) (int64, error)
+	GetCommentById(id int64) (*Comment, error)
+	GetCommentsByBlogId(blogId int64, viewerEmail string) ([]Comment, error)
+	DeleteComment(id int64) error
+	ToggleCommentLike(commentId int64, userEmail string) (hasLiked bool, newCount int, err error)
+
+	// Metrics
+	GetStats() (*Stats, error)
 }

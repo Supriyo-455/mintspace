@@ -1,9 +1,279 @@
+{{ define "commentItem" }}
+<div id="comment-{{ .Comment.Id }}" class="comment-item {{ if gt .Comment.ParentId 0 }}comment-reply-item{{ end }}">
+  <div class="comment-meta">
+    <span class="comment-author">{{ .Comment.AuthorName }}</span>
+    <span class="comment-email mono">&lt;{{ .Comment.UserEmail }}&gt;</span>
+    <span class="comment-date">&bull; {{ .Comment.DateCreated }}</span>
+  </div>
+  <div class="comment-body">
+    {{ .Comment.Content }}
+  </div>
+
+  <div class="comment-actions-bar">
+    <!-- Like comment button -->
+    <button type="button" class="btn-comment-like {{ if .Comment.UserHasLiked }}liked{{ end }}" onclick="toggleCommentLike({{ .Comment.Id }})" title="Like comment">
+      <span id="c-like-icon-{{ .Comment.Id }}">{{ if .Comment.UserHasLiked }}&hearts;{{ else }}&#9825;{{ end }}</span>
+      <span id="c-like-count-{{ .Comment.Id }}">{{ .Comment.LikesCount }}</span>
+    </button>
+
+    <!-- Reply trigger -->
+    {{ if .CurrentSession }}
+      <button type="button" class="btn-comment-reply" onclick="toggleReplyBox({{ .Comment.Id }})">
+        &#8617; Reply
+      </button>
+
+      {{ if or .CurrentSession.IsAdmin (eq .CurrentSession.Email .Comment.UserEmail) }}
+        <form action="/comment/{{ .Comment.Id }}/delete" method="POST" style="display: inline-block; margin: 0;" onsubmit="return confirm('Delete this comment?');">
+          <button type="submit" class="btn-comment-delete" title="Delete comment">
+            Delete
+          </button>
+        </form>
+      {{ end }}
+    {{ end }}
+  </div>
+
+  <!-- Inline Reply Box -->
+  {{ if .CurrentSession }}
+    <form id="reply-form-{{ .Comment.Id }}" action="/blog/{{ .BlogId }}/comment" method="POST" class="inline-reply-form" style="display: none;">
+      <input type="hidden" name="parent_id" value="{{ .Comment.Id }}" />
+      <textarea name="comment" rows="2" placeholder="Write a reply to {{ .Comment.AuthorName }}..." required></textarea>
+      <div class="inline-reply-actions">
+        <button type="button" class="btn btn-outline btn-reply-cancel" onclick="toggleReplyBox({{ .Comment.Id }})">Cancel</button>
+        <button type="submit" class="btn btn-reply-submit">Post Reply</button>
+      </div>
+    </form>
+  {{ end }}
+
+  <!-- Recursive Child Replies -->
+  {{ if .Comment.Replies }}
+    <div class="replies-thread">
+      {{ $blogId := .BlogId }}
+      {{ $session := .CurrentSession }}
+      {{ range .Comment.Replies }}
+        {{ template "commentItem" (dict "Comment" . "BlogId" $blogId "CurrentSession" $session) }}
+      {{ end }}
+    </div>
+  {{ end }}
+</div>
+{{ end }}
+
 {{ define "content" }}
-<h1>{{ .Blog.Title }}</h1>
-<h3>Author: {{ .Blog.AuthorEmail }}</h3>
-<p>ImageURL: {{ .Blog.CoverImageURL }}</p>
-<p>
-  Type: {{ if .Blog.Premium }} Premium Content {{ else }} Regular Content {{ end
-  }}
-</p>
-{{ template "blogcontent" .Content }} {{ end }}
+<article class="paper-document">
+
+  <header class="paper-header">
+    <h1 class="paper-title-main">{{ .Blog.Title }}</h1>
+
+    <div class="paper-meta-authors">
+      <div class="author-block">
+        <span class="author-name-large">{{ .Blog.AuthorName }}</span>
+        <span class="author-affiliation"><a href="mailto:{{ .Blog.AuthorEmail }}">{{ .Blog.AuthorEmail }}</a></span>
+      </div>
+    </div>
+
+    <div class="paper-pub-details">
+      <div class="meta-item">
+        <span class="meta-label">Date Published:</span>
+        <span class="meta-value">{{ .Blog.DateCreated }}</span>
+      </div>
+
+      <div class="meta-item">
+        <span class="meta-label">Integrity (SHA-256):</span>
+        <a href="/blob/{{ .Blog.ContentHash }}" target="_blank" class="meta-value mono hash-link" title="View canonical raw markdown">
+          {{ .Blog.ContentHash }} &nearr;
+        </a>
+      </div>
+
+      <div class="meta-item">
+        <span class="meta-label">Access Policy:</span>
+        <span class="meta-value">
+          {{ if .Blog.IsPrivate }}
+            <span class="badge-private-tag">&bull; Private / Restricted Manuscript</span>
+          {{ else }}
+            <span class="badge-public-tag">Public Archival Copy</span>
+          {{ end }}
+        </span>
+      </div>
+    </div>
+
+    {{ if .Blog.Abstract }}
+    <section class="paper-abstract-box">
+      <div class="abstract-heading">ABSTRACT</div>
+      <p class="abstract-body">{{ .Blog.Abstract }}</p>
+    </section>
+    {{ end }}
+  </header>
+
+  <!-- Paper Body -->
+  <div class="paper-body-content markdown-body">
+    {{ .RenderedHTML }}
+  </div>
+
+  <!-- Academic Citations & Endorsement Bar -->
+  <section class="paper-toolbar">
+    <div class="toolbar-left">
+      <!-- Like / Endorsement AJAX button -->
+      <button id="like-btn" class="endorse-btn {{ if .Blog.UserHasLiked }}endorsed{{ end }}" onclick="toggleEndorsement({{ .Blog.Id }})">
+        <span id="like-icon">{{ if .Blog.UserHasLiked }}&hearts;{{ else }}&#9825;{{ end }}</span>
+        <span id="like-text">{{ if .Blog.UserHasLiked }}Endorsed{{ else }}Endorse Paper{{ end }}</span>
+        <span id="like-count" class="endorse-count">{{ .Blog.LikesCount }}</span>
+      </button>
+
+      <button class="btn btn-outline" onclick="toggleBibtex()">Cite Article (BibTeX)</button>
+
+      <a href="/blob/{{ .Blog.ContentHash }}" target="_blank" class="btn btn-outline">Raw Markdown</a>
+    </div>
+
+    {{ if .CurrentSession }}
+      {{ if or .CurrentSession.IsAdmin (eq .CurrentSession.Email .Blog.AuthorEmail) }}
+        <div class="toolbar-right">
+          <form action="/blog/{{ .Blog.Id }}/delete" method="POST" onsubmit="return confirm('Retract and delete this manuscript? This action cannot be undone.');">
+            <button type="submit" class="btn btn-danger" style="font-size: 0.82rem; padding: 0.4rem 0.8rem;">Retract Paper</button>
+          </form>
+        </div>
+      {{ end }}
+    {{ end }}
+  </section>
+
+  <!-- BibTeX Drawer -->
+  <div id="bibtex-box" class="bibtex-container" style="display: none;">
+    <div class="bibtex-header">
+      <span class="mono">BibTeX Reference Citation</span>
+      <button class="btn-copy" onclick="copyBibtex()">Copy</button>
+    </div>
+    <pre id="bibtex-code" class="mono">@article{mintspace_{{ .Blog.Id }},
+  author  = { {{- .Blog.AuthorName -}} },
+  title   = { {{- .Blog.Title -}} },
+  journal = {MintSpace Open Research Archive},
+  year    = { {{- slice .Blog.DateCreated 0 4 -}} },
+  doi     = {10.mintspace/paper.{{ .Blog.Id }}},
+  hash    = { {{- .Blog.ContentHash -}} }
+}</pre>
+  </div>
+
+  <!-- Discussion Section -->
+  <section id="discussion" class="discussion-section">
+    <div class="discussion-header">
+      <h2>Comments ({{ len .Comments }})</h2>
+    </div>
+
+    <!-- Post Top-Level Comment Box -->
+    {{ if .CurrentSession }}
+      <form action="/blog/{{ .Blog.Id }}/comment" method="POST" class="comment-form">
+        <input type="hidden" name="parent_id" value="0" />
+        <label for="comment-text" class="comment-label">Comment as <strong>{{ .CurrentSession.Name }}</strong>:</label>
+        <textarea id="comment-text" name="comment" rows="4" placeholder="Write a comment..." required></textarea>
+        <div class="comment-submit-row">
+          <button type="submit" class="btn">Post Comment</button>
+        </div>
+      </form>
+    {{ else }}
+      <div class="comment-signin-prompt">
+        <a href="/login">Sign in</a> to join the conversation.
+      </div>
+    {{ end }}
+
+    <!-- Comments List with Threaded Replies -->
+    <div class="comments-list">
+      {{ if .Comments }}
+        {{ $blogId := .Blog.Id }}
+        {{ $session := .CurrentSession }}
+        {{ range .Comments }}
+          {{ template "commentItem" (dict "Comment" . "BlogId" $blogId "CurrentSession" $session) }}
+        {{ end }}
+      {{ else }}
+        <p class="no-comments">No commentary has been recorded for this manuscript yet.</p>
+      {{ end }}
+    </div>
+  </section>
+
+</article>
+
+<script>
+  function toggleReplyBox(commentId) {
+    const form = document.getElementById('reply-form-' + commentId);
+    if (!form) return;
+    if (form.style.display === 'none' || form.style.display === '') {
+      form.style.display = 'block';
+      const ta = form.querySelector('textarea');
+      if (ta) ta.focus();
+    } else {
+      form.style.display = 'none';
+    }
+  }
+
+  function toggleCommentLike(commentId) {
+    fetch('/comment/' + commentId + '/like', {
+      method: 'POST',
+      headers: { 'Accept': 'application/json' }
+    })
+    .then(res => {
+      if (res.status === 401) {
+        window.location.href = '/login';
+        return null;
+      }
+      return res.json();
+    })
+    .then(data => {
+      if (!data) return;
+      const count = document.getElementById('c-like-count-' + commentId);
+      const icon = document.getElementById('c-like-icon-' + commentId);
+      const btn = count ? count.closest('.btn-comment-like') : null;
+
+      if (count) count.innerText = data.count;
+      if (data.hasLiked) {
+        if (btn) btn.classList.add('liked');
+        if (icon) icon.innerHTML = '&hearts;';
+      } else {
+        if (btn) btn.classList.remove('liked');
+        if (icon) icon.innerHTML = '&#9825;';
+      }
+    })
+    .catch(err => console.error('Comment like error:', err));
+  }
+
+  function toggleBibtex() {
+    const box = document.getElementById("bibtex-box");
+    box.style.display = box.style.display === "none" ? "block" : "none";
+  }
+
+  function copyBibtex() {
+    const code = document.getElementById("bibtex-code").innerText;
+    navigator.clipboard.writeText(code).then(() => {
+      alert("BibTeX citation copied to clipboard!");
+    });
+  }
+
+  function toggleEndorsement(blogId) {
+    fetch('/blog/' + blogId + '/like', {
+      method: 'POST',
+      headers: { 'Accept': 'application/json' }
+    })
+    .then(res => {
+      if (res.status === 401) {
+        window.location.href = '/login';
+        return null;
+      }
+      return res.json();
+    })
+    .then(data => {
+      if (!data) return;
+      const btn = document.getElementById("like-btn");
+      const icon = document.getElementById("like-icon");
+      const text = document.getElementById("like-text");
+      const count = document.getElementById("like-count");
+
+      count.innerText = data.count;
+      if (data.hasLiked) {
+        btn.classList.add("endorsed");
+        icon.innerHTML = "&hearts;";
+        text.innerText = "Endorsed";
+      } else {
+        btn.classList.remove("endorsed");
+        icon.innerHTML = "&#9825;";
+        text.innerText = "Endorse Paper";
+      }
+    })
+    .catch(err => console.error("Endorsement error:", err));
+  }
+</script>
+{{ end }}

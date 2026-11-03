@@ -1,0 +1,1871 @@
+:root {
+  --paper-bg: #fdfdfc;
+  --paper-surface: #ffffff;
+  --ink: #1c1d1f;
+  --ink-muted: #57595d;
+  --ink-subtle: #7a7d84;
+  --rule: #e5e5e2;
+  --rule-subtle: #f0f0ed;
+  --academic-blue: #1b4965;
+  --academic-accent: #2c6e49;
+  --paper-shadow: 0 1px 3px rgba(0, 0, 0, 0.05), 0 4px 12px rgba(0, 0, 0, 0.03);
+  --container-max-width: 1160px;
+  --masthead-max-width: 1200px;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--paper-bg);
+  color: var(--ink);
+  font-family: 'Constantia', 'Charter', 'Merriweather', 'EB Garamond', Georgia, serif;
+  font-size: 19px;
+  line-height: 1.68;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: var(--academic-blue);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: color 0.15s ease;
+}
+
+a:hover {
+  color: #0b2545;
+}
+
+/* ==========================================================================
+   Masthead & Navigation
+   ========================================================================== */
+.masthead {
+  border-bottom: 2px solid var(--ink);
+  background-color: var(--paper-surface);
+  padding: 1.25rem 2rem;
+}
+
+.masthead-inner {
+  max-width: var(--masthead-max-width);
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.brand-title {
+  font-family: 'Constantia', 'Charter', 'Merriweather', serif;
+  font-size: 1.45rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.brand-title span {
+  font-size: 0.82rem;
+  letter-spacing: 0.12em;
+  font-weight: 500;
+  color: var(--ink-muted);
+  margin-left: 0.5rem;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 0.88rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+
+.nav-links a {
+  color: var(--ink);
+  text-decoration: none;
+  padding-bottom: 2px;
+  border-bottom: 1px solid transparent;
+}
+
+.nav-links a:hover {
+  border-bottom-color: var(--ink);
+}
+
+.nav-badge {
+  display: inline-block;
+  font-size: 0.72rem;
+  padding: 0.15rem 0.45rem;
+  background: #e8ecf1;
+  border-radius: 3px;
+  color: var(--academic-blue);
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+/* ==========================================================================
+   Main Container (Increased content width for reading & research)
+   ========================================================================== */
+.container {
+  max-width: var(--container-max-width);
+  width: 100%;
+  margin: 2.5rem auto;
+  padding: 0 2rem;
+  flex: 1;
+}
+
+/* ==========================================================================
+   Buttons & Form Controls
+   ========================================================================== */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 0.9rem;
+  font-weight: 500;
+  padding: 0.55rem 1.1rem;
+  background: var(--ink);
+  color: #fff;
+  border: 1px solid var(--ink);
+  border-radius: 4px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.15s ease;
+}
+
+.btn:hover {
+  background: #33363b;
+  color: #fff;
+}
+
+.btn-outline {
+  background: transparent;
+  color: var(--ink);
+  border: 1px solid var(--rule);
+}
+
+.btn-outline:hover {
+  background: #f4f4f2;
+  border-color: var(--ink-subtle);
+  color: var(--ink);
+}
+
+.btn-danger {
+  background: #a82020;
+  border-color: #a82020;
+  color: #fff;
+}
+
+.btn-danger:hover {
+  background: #871616;
+}
+
+.mono {
+  font-family: Consolas, 'Courier New', monospace;
+}
+
+/* ==========================================================================
+   Repository Archive Index (bloglist.html)
+   ========================================================================== */
+.archive-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--rule);
+  margin-bottom: 1.5rem;
+}
+
+.archive-headline h1 {
+  font-size: 2.25rem;
+  font-weight: 700;
+  line-height: 1.25;
+  margin-bottom: 0.5rem;
+  letter-spacing: -0.01em;
+}
+
+.archive-desc {
+  font-size: 1.08rem;
+  color: var(--ink-muted);
+  max-width: 800px;
+  line-height: 1.55;
+}
+
+.archive-meta-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 0.85rem;
+  color: var(--ink-subtle);
+  padding: 0.5rem 0;
+  margin-bottom: 2rem;
+  border-bottom: 1px dashed var(--rule);
+}
+
+.storage-tag {
+  color: var(--academic-accent);
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.papers-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2.25rem;
+}
+
+.paper-card {
+  background: var(--paper-surface);
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  padding: 2rem 2.5rem;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.paper-card:hover {
+  box-shadow: var(--paper-shadow);
+  border-color: #d1d5db;
+}
+
+.paper-badge-row {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 0.78rem;
+  margin-bottom: 0.75rem;
+  color: var(--ink-subtle);
+}
+
+.paper-id {
+  font-weight: 600;
+  color: var(--academic-blue);
+  background: #edf2f7;
+  padding: 0.1rem 0.4rem;
+  border-radius: 3px;
+}
+
+.badge-private {
+  color: #b91c1c;
+  font-weight: 600;
+  background: #fef2f2;
+  padding: 0.1rem 0.45rem;
+  border-radius: 3px;
+}
+
+.badge-public {
+  color: var(--academic-accent);
+  font-weight: 500;
+}
+
+.paper-title {
+  font-size: 1.75rem;
+  line-height: 1.35;
+  font-weight: 700;
+  margin-bottom: 0.6rem;
+}
+
+.paper-title a {
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.paper-title a:hover {
+  color: var(--academic-blue);
+}
+
+.paper-authors {
+  font-size: 0.95rem;
+  color: var(--ink-muted);
+  margin-bottom: 1rem;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+.author-name {
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.author-email {
+  font-size: 0.85rem;
+  color: var(--ink-subtle);
+  margin-left: 0.3rem;
+}
+
+.paper-abstract {
+  font-style: italic;
+  font-size: 1.05rem;
+  color: #374151;
+  line-height: 1.62;
+  margin-bottom: 1.25rem;
+  padding-left: 1.25rem;
+  border-left: 3px solid #cbd5e1;
+}
+
+.paper-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 1rem;
+  border-top: 1px solid var(--rule-subtle);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 0.85rem;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+}
+
+.paper-stats {
+  display: flex;
+  gap: 1.25rem;
+  color: var(--ink-muted);
+}
+
+.paper-hash-preview {
+  font-size: 0.78rem;
+  color: var(--ink-subtle);
+  background: #f8fafc;
+  padding: 0.15rem 0.5rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 3px;
+}
+
+.hash-label {
+  font-weight: 600;
+  color: var(--academic-blue);
+}
+
+.btn-read {
+  font-weight: 600;
+  color: var(--academic-blue);
+  text-decoration: none;
+  font-size: 0.92rem;
+}
+
+.btn-read:hover {
+  text-decoration: underline;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 4rem 2rem;
+  background: var(--paper-surface);
+  border: 1px dashed var(--rule);
+  border-radius: 4px;
+}
+
+/* ==========================================================================
+   Full Research Paper View (blog.html)
+   ========================================================================== */
+.paper-document {
+  background: var(--paper-surface);
+  border: 1px solid var(--rule);
+  border-radius: 2px;
+  padding: 3.5rem 4rem;
+  box-shadow: var(--paper-shadow);
+}
+
+.journal-tagline {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
+  color: var(--ink-subtle);
+  font-weight: 600;
+  text-transform: uppercase;
+  border-bottom: 2px solid var(--ink);
+  padding-bottom: 0.4rem;
+  margin-bottom: 2rem;
+}
+
+.paper-header {
+  margin-bottom: 3rem;
+}
+
+.paper-title-main {
+  font-size: 2.75rem;
+  line-height: 1.25;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin-bottom: 1.5rem;
+}
+
+.paper-meta-authors {
+  margin-bottom: 1.5rem;
+}
+
+.author-block {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.author-name-large {
+  font-size: 1.35rem;
+  font-weight: 600;
+}
+
+.author-affiliation {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 0.88rem;
+  color: var(--ink-muted);
+}
+
+.paper-pub-details {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.75rem;
+  padding: 1.1rem 0;
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 0.84rem;
+  margin-bottom: 2rem;
+}
+
+.meta-item {
+  display: flex;
+  gap: 0.4rem;
+  align-items: center;
+}
+
+.meta-label {
+  color: var(--ink-subtle);
+  font-weight: 500;
+}
+
+.meta-value {
+  color: var(--ink);
+}
+
+.hash-link {
+  color: var(--academic-blue);
+  text-decoration: underline;
+  font-size: 0.78rem;
+  max-width: 320px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: inline-block;
+}
+
+.badge-private-tag {
+  color: #b91c1c;
+  background: #fef2f2;
+  padding: 0.1rem 0.45rem;
+  border-radius: 2px;
+  font-weight: 600;
+}
+
+.badge-public-tag {
+  color: var(--academic-accent);
+  font-weight: 600;
+}
+
+/* Abstract Box */
+.paper-abstract-box {
+  background: #f9f9f8;
+  border-left: 4px solid var(--ink);
+  padding: 1.5rem 2rem;
+  margin: 2rem 0;
+  border-radius: 0 4px 4px 0;
+}
+
+.abstract-heading {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: var(--ink);
+  margin-bottom: 0.5rem;
+}
+
+.abstract-body {
+  font-style: italic;
+  font-size: 1.1rem;
+  line-height: 1.68;
+  color: #2c2f33;
+}
+
+/* Markdown Paper Content */
+.paper-body-content {
+  font-size: 1.18rem;
+  line-height: 1.84;
+  color: var(--ink);
+  border-bottom: 1px solid var(--rule);
+  padding-bottom: 3rem;
+}
+
+.paper-body-content h1,
+.paper-body-content h2,
+.paper-body-content h3,
+.paper-body-content h4 {
+  margin-top: 2.4rem;
+  margin-bottom: 0.9rem;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.paper-body-content h1 { font-size: 2rem; border-bottom: 1px solid var(--rule); padding-bottom: 0.4rem; }
+.paper-body-content h2 { font-size: 1.6rem; }
+.paper-body-content h3 { font-size: 1.3rem; }
+
+.paper-body-content p {
+  margin-bottom: 1.5rem;
+  text-align: justify;
+  text-justify: inter-word;
+}
+
+.paper-body-content ul,
+.paper-body-content ol {
+  margin: 1.25rem 0 1.6rem 2.25rem;
+}
+
+.paper-body-content li {
+  margin-bottom: 0.5rem;
+}
+
+.paper-body-content blockquote {
+  border-left: 3px solid var(--academic-blue);
+  padding: 0.9rem 1.75rem;
+  background: #f8fafc;
+  margin: 1.75rem 0;
+  font-style: italic;
+}
+
+/* ==========================================================================
+   Code Blocks (Academic Typography - Calm, Focused, Eye-Friendly)
+   ========================================================================== */
+.paper-code-block {
+  position: relative;
+  margin: 2rem 0;
+  border: 1px solid #e1e4e8;
+  border-radius: 4px;
+  background: #f6f8fa;
+}
+
+.paper-code-block .code-lang-tag {
+  position: absolute;
+  top: 0.65rem;
+  right: 4.8rem;
+  font-family: Consolas, 'Courier New', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  color: #6a737d;
+  user-select: none;
+  font-weight: 600;
+}
+
+.paper-code-block .btn-copy-code {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.75rem;
+  background: #ffffff;
+  border: 1px solid #d1d5da;
+  color: #444d56;
+  font-family: Consolas, 'Courier New', monospace;
+  padding: 0.2rem 0.55rem;
+  border-radius: 3px;
+  font-size: 0.72rem;
+  cursor: pointer;
+  opacity: 0.75;
+  transition: opacity 0.15s ease, border-color 0.15s ease;
+}
+
+.paper-code-block:hover .btn-copy-code {
+  opacity: 1;
+}
+
+.paper-code-block .btn-copy-code:hover {
+  background: #f3f4f6;
+  border-color: #959da5;
+  color: #24292e;
+}
+
+.paper-code-block .btn-copy-code.copied {
+  background: #2ea44f;
+  color: #ffffff;
+  border-color: #2ea44f;
+}
+
+.paper-body-content pre {
+  margin: 0 !important;
+  background: transparent !important;
+  color: #24292e;
+  padding: 1.25rem 1.4rem;
+  border-radius: 4px;
+  overflow-x: auto;
+  font-family: Consolas, 'Courier New', monospace;
+  font-size: 0.92rem;
+  line-height: 1.6;
+}
+
+.paper-body-content code {
+  font-family: Consolas, 'Courier New', monospace;
+  background: #edf0f2;
+  padding: 0.15rem 0.35rem;
+  border-radius: 3px;
+  font-size: 0.88em;
+  color: #24292e;
+}
+
+.paper-body-content pre code {
+  background: transparent !important;
+  padding: 0 !important;
+  color: inherit;
+  font-size: inherit;
+  font-family: inherit;
+}
+
+.paper-body-content pre code.hljs {
+  padding: 0 !important;
+  background: transparent !important;
+}
+
+.paper-body-content table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 2rem 0;
+  font-size: 0.98rem;
+}
+
+.paper-body-content th,
+.paper-body-content td {
+  padding: 0.85rem 1.15rem;
+  border: 1px solid var(--rule);
+  text-align: left;
+}
+
+.paper-body-content th {
+  background: #f8f8f6;
+  font-weight: 600;
+}
+
+/* KaTeX Math Equation Polish */
+.katex-display {
+  margin: 1.5rem 0 !important;
+  padding: 0.5rem 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+.katex {
+  font-size: 1.15em;
+}
+
+/* ==========================================================================
+   Scientific Figures & Flowcharts (Clean, Integrated & Unclipped)
+   ========================================================================== */
+.paper-figure {
+  margin: 2.75rem 0;
+  width: 100%;
+  display: block;
+  clear: both;
+}
+
+.paper-figure-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 0.85rem;
+  background: #f8fafc;
+  border: 1px solid var(--rule);
+  border-bottom: none;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 0.8rem;
+  user-select: none;
+}
+
+.paper-figure-title {
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--ink-muted);
+}
+
+.btn-figure-maximize {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  color: var(--ink);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 0.76rem;
+  font-weight: 600;
+  padding: 0.25rem 0.65rem;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.btn-figure-maximize:hover {
+  background: #0f172a;
+  border-color: #0f172a;
+  color: #ffffff;
+}
+
+.paper-figure-canvas {
+  display: block;
+  width: 100%;
+  padding: 1.75rem 1.5rem;
+  background: #ffffff;
+  border: 1px solid var(--rule);
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  box-sizing: border-box;
+  text-align: center;
+  cursor: zoom-in;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+  transition: border-color 0.15s ease;
+}
+
+.paper-figure:hover .paper-figure-canvas,
+.paper-figure:hover .paper-figure-header {
+  border-color: #cbd5e1;
+}
+
+.paper-figure-canvas svg {
+  display: inline-block;
+  vertical-align: middle;
+  height: auto;
+  max-width: 100%;
+}
+
+/* ==========================================================================
+   Fullscreen Figure Lightbox Modal (Zoom, Pan & Maximize)
+   ========================================================================== */
+.figure-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 1.25rem;
+}
+
+.lightbox-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.88);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+.lightbox-container {
+  position: relative;
+  z-index: 2;
+  width: 95vw;
+  height: 92vh;
+  max-width: 1600px;
+  background: #1e293b;
+  border: 1px solid #334155;
+  border-radius: 8px;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.lightbox-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.65rem 1.25rem;
+  background: #0f172a;
+  border-bottom: 1px solid #334155;
+  color: #f8fafc;
+  user-select: none;
+}
+
+.lightbox-title {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  color: #e2e8f0;
+}
+
+.lightbox-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.lightbox-btn {
+  background: #1e293b;
+  border: 1px solid #475569;
+  color: #f1f5f9;
+  font-family: Consolas, -apple-system, BlinkMacSystemFont, "Segoe UI", monospace;
+  font-size: 0.82rem;
+  font-weight: 600;
+  padding: 0.3rem 0.65rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lightbox-btn:hover {
+  background: #334155;
+  border-color: #64748b;
+  color: #ffffff;
+}
+
+.lightbox-zoom-level {
+  font-family: Consolas, 'Courier New', monospace;
+  font-size: 0.85rem;
+  color: #cbd5e1;
+  min-width: 52px;
+  text-align: center;
+  font-weight: 600;
+}
+
+.lightbox-btn.lightbox-close {
+  background: #dc2626;
+  border-color: #ef4444;
+  color: #ffffff;
+  margin-left: 0.75rem;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+.lightbox-btn.lightbox-close:hover {
+  background: #b91c1c;
+}
+
+.lightbox-stage {
+  flex: 1;
+  overflow: hidden;
+  position: relative;
+  background: #0f172a;
+  cursor: grab;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lightbox-stage:active {
+  cursor: grabbing;
+}
+
+.lightbox-content {
+  transform-origin: center center;
+  transition: transform 0.08s ease-out;
+  padding: 2.5rem;
+  display: inline-block;
+  user-select: none;
+}
+
+.lightbox-content svg {
+  background: #ffffff;
+  padding: 2.5rem;
+  border-radius: 8px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.45);
+  max-width: none !important;
+  display: block;
+}
+
+.lightbox-hint {
+  padding: 0.45rem 1.25rem;
+  background: #0f172a;
+  border-top: 1px solid #334155;
+  color: #94a3b8;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 0.75rem;
+  text-align: center;
+  letter-spacing: 0.02em;
+}
+
+/* Paper Toolbar & Endorsement */
+.paper-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2rem 0;
+  border-bottom: 1px solid var(--rule);
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.toolbar-left {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  flex-wrap: wrap;
+}
+
+.endorse-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 0.88rem;
+  font-weight: 600;
+  padding: 0.55rem 1.1rem;
+  background: #fff;
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  cursor: pointer;
+  color: var(--ink);
+  transition: all 0.15s ease;
+}
+
+.endorse-btn:hover {
+  border-color: #d11a2a;
+  color: #d11a2a;
+}
+
+.endorse-btn.endorsed {
+  background: #fef2f2;
+  border-color: #f87171;
+  color: #dc2626;
+}
+
+.endorse-count {
+  background: #f3f4f6;
+  padding: 0.1rem 0.5rem;
+  border-radius: 10px;
+  font-size: 0.8rem;
+}
+
+/* BibTeX Drawer */
+.bibtex-container {
+  background: #f9f9f8;
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  padding: 1.5rem;
+  margin: 1.75rem 0;
+}
+
+.bibtex-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.85rem;
+  font-size: 0.88rem;
+  font-weight: 600;
+}
+
+.btn-copy {
+  background: #fff;
+  border: 1px solid var(--rule);
+  padding: 0.3rem 0.75rem;
+  font-size: 0.78rem;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.bibtex-container pre {
+  background: #fff;
+  padding: 1.25rem;
+  border: 1px solid var(--rule-subtle);
+  font-size: 0.86rem;
+  overflow-x: auto;
+  color: #334155;
+}
+
+/* Discussion & Peer Commentary */
+.discussion-section {
+  margin-top: 3.5rem;
+}
+
+.discussion-header h2 {
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin-bottom: 0.35rem;
+}
+
+.discussion-desc {
+  font-size: 0.98rem;
+  color: var(--ink-muted);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  margin-bottom: 2rem;
+}
+
+.comment-form {
+  background: #fbfbfa;
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  padding: 1.75rem;
+  margin-bottom: 2.75rem;
+}
+
+.comment-label {
+  display: block;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 0.9rem;
+  margin-bottom: 0.65rem;
+}
+
+.comment-form textarea {
+  width: 100%;
+  padding: 0.85rem;
+  font-family: 'Constantia', 'Charter', 'Merriweather', Georgia, serif;
+  font-size: 1.05rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 4px;
+  background: #fff;
+  resize: vertical;
+}
+
+.comment-submit-row {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 0.85rem;
+}
+
+.comment-signin-prompt {
+  padding: 1.5rem;
+  background: #f8fafc;
+  border: 1px dashed var(--rule);
+  border-radius: 4px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 0.92rem;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.comments-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+}
+
+.comment-item {
+  border-bottom: 1px solid var(--rule-subtle);
+  padding-bottom: 1.5rem;
+  transition: background-color 0.15s ease;
+}
+
+.comment-meta {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 0.84rem;
+  color: var(--ink-subtle);
+  margin-bottom: 0.45rem;
+}
+
+.comment-author {
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.comment-email {
+  font-size: 0.78rem;
+  margin-left: 0.3rem;
+}
+
+.comment-body {
+  font-size: 1.05rem;
+  line-height: 1.65;
+  color: #2b2e33;
+  margin-bottom: 0.65rem;
+}
+
+/* Threaded Comment Actions (Likes & Replies) */
+.comment-actions-bar {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 0.4rem;
+}
+
+.btn-comment-like {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  background: transparent;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 0.18rem 0.55rem;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 0.76rem;
+  color: #475569;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.btn-comment-like:hover {
+  border-color: #f87171;
+  color: #dc2626;
+  background: #fef2f2;
+}
+
+.btn-comment-like.liked {
+  border-color: #f87171;
+  background: #fef2f2;
+  color: #dc2626;
+  font-weight: 600;
+}
+
+.btn-comment-reply {
+  background: transparent;
+  border: none;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--academic-blue);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.15rem 0.35rem;
+  border-radius: 3px;
+}
+
+.btn-comment-reply:hover {
+  text-decoration: underline;
+  color: #0b2545;
+}
+
+.btn-comment-delete {
+  background: transparent;
+  border: none;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: #a82020;
+  cursor: pointer;
+  padding: 0.15rem 0.35rem;
+  border-radius: 3px;
+}
+
+.btn-comment-delete:hover {
+  text-decoration: underline;
+  color: #871616;
+}
+
+/* Inline Reply Form */
+.inline-reply-form {
+  background: #f8fafc;
+  border: 1px solid #cbd5e1;
+  border-radius: 4px;
+  padding: 1rem 1.25rem;
+  margin: 0.85rem 0 1rem 0;
+}
+
+.inline-reply-form textarea {
+  width: 100%;
+  padding: 0.65rem;
+  font-family: 'Constantia', 'Charter', 'Merriweather', Georgia, serif;
+  font-size: 1rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 3px;
+  background: #ffffff;
+  resize: vertical;
+}
+
+.inline-reply-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.btn-reply-cancel {
+  padding: 0.25rem 0.65rem;
+  font-size: 0.78rem;
+}
+
+.btn-reply-submit {
+  padding: 0.25rem 0.85rem;
+  font-size: 0.78rem;
+  background: var(--academic-blue);
+  border-color: var(--academic-blue);
+}
+
+.btn-reply-submit:hover {
+  background: #0f3045;
+}
+
+/* Nested Replies Thread */
+.replies-thread {
+  margin-left: 1.75rem;
+  padding-left: 1.25rem;
+  border-left: 2px solid #e2e8f0;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  margin-top: 1rem;
+}
+
+.comment-reply-item {
+  border-bottom: 1px dashed var(--rule-subtle);
+  padding-bottom: 1rem;
+}
+
+.comment-reply-item:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.no-comments {
+  font-style: italic;
+  color: var(--ink-subtle);
+  padding: 1rem 0;
+}
+
+/* ==========================================================================
+   Paper Submission Desk (writeBlog.html)
+   ========================================================================== */
+.submit-desk {
+  background: var(--paper-surface);
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  padding: 3.5rem;
+  box-shadow: var(--paper-shadow);
+}
+
+.paper-badge-mono {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--academic-blue);
+  letter-spacing: 0.1em;
+  margin-bottom: 0.5rem;
+}
+
+.submit-header {
+  border-bottom: 2px solid var(--ink);
+  padding-bottom: 1.5rem;
+  margin-bottom: 2.5rem;
+}
+
+.submit-header h1 {
+  font-size: 2.35rem;
+  font-weight: 700;
+  line-height: 1.25;
+  margin-bottom: 0.5rem;
+}
+
+.submit-desc {
+  color: var(--ink-muted);
+  font-size: 1.05rem;
+  line-height: 1.55;
+}
+
+.academic-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.85rem;
+}
+
+.form-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.form-row {
+  display: flex;
+  gap: 1.75rem;
+}
+
+.half {
+  flex: 1;
+}
+
+.field-label {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.field-hint {
+  font-weight: 400;
+  color: var(--ink-subtle);
+  font-size: 0.82rem;
+}
+
+.required {
+  color: #dc2626;
+}
+
+.field-input {
+  width: 100%;
+  padding: 0.8rem 1rem;
+  font-family: 'Constantia', 'Charter', 'Merriweather', Georgia, serif;
+  font-size: 1.15rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 4px;
+  background: #fdfdfc;
+}
+
+.field-input:focus {
+  outline: none;
+  border-color: var(--ink);
+  background: #fff;
+}
+
+.field-textarea {
+  font-size: 1.05rem;
+  resize: vertical;
+}
+
+.privacy-section {
+  justify-content: flex-end;
+}
+
+.checkbox-wrapper {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  background: #f8fafc;
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  padding: 0.95rem 1.15rem;
+}
+
+.checkbox-wrapper input[type="checkbox"] {
+  margin-top: 0.25rem;
+  width: 1.15rem;
+  height: 1.15rem;
+  accent-color: var(--academic-blue);
+}
+
+.checkbox-label {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 0.88rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  cursor: pointer;
+}
+
+.checkbox-label strong {
+  color: var(--ink);
+}
+
+.checkbox-label span {
+  color: var(--ink-subtle);
+  font-size: 0.8rem;
+}
+
+.upload-box {
+  background: #fbfbfa;
+  border: 1px dashed #cbd5e1;
+  padding: 1.25rem 1.5rem;
+  border-radius: 4px;
+}
+
+.upload-hint {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 0.82rem;
+  color: var(--ink-subtle);
+  margin-top: 0.35rem;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 1rem;
+  padding-top: 1.75rem;
+  border-top: 1px solid var(--rule);
+}
+
+.btn-submit {
+  background: var(--academic-blue);
+  border-color: var(--academic-blue);
+  padding: 0.7rem 1.75rem;
+  font-size: 0.98rem;
+}
+
+.btn-submit:hover {
+  background: #0f3045;
+}
+
+.EasyMDEContainer {
+  font-family: Consolas, 'Courier New', monospace !important;
+}
+
+/* ==========================================================================
+   Editorial Board & Administration Console (admin.html)
+   ========================================================================== */
+.admin-dashboard {
+  background: var(--paper-surface);
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  padding: 3.5rem;
+  box-shadow: var(--paper-shadow);
+}
+
+.badge-console {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: var(--academic-blue);
+  margin-bottom: 0.5rem;
+}
+
+.admin-header {
+  border-bottom: 2px solid var(--ink);
+  padding-bottom: 1.5rem;
+  margin-bottom: 2.25rem;
+}
+
+.admin-header h1 {
+  font-size: 2.25rem;
+  font-weight: 700;
+  margin-bottom: 0.4rem;
+}
+
+.admin-desc {
+  color: var(--ink-muted);
+  font-size: 1rem;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 3.5rem;
+}
+
+.stat-card {
+  background: #fbfbfa;
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  padding: 1.5rem 1.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.stat-num {
+  font-size: 2.4rem;
+  font-weight: 700;
+  color: var(--ink);
+  line-height: 1.1;
+}
+
+.stat-title {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 0.84rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--ink-subtle);
+}
+
+.stat-detail {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 0.78rem;
+  color: var(--ink-muted);
+  margin-top: 0.2rem;
+}
+
+.admin-section {
+  margin-bottom: 3.5rem;
+}
+
+.section-title-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.25rem;
+}
+
+.admin-section h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 1.25rem;
+}
+
+.table-container {
+  overflow-x: auto;
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 0.9rem;
+  background: #fff;
+}
+
+.admin-table th,
+.admin-table td {
+  padding: 0.9rem 1.15rem;
+  text-align: left;
+  border-bottom: 1px solid var(--rule-subtle);
+}
+
+.admin-table th {
+  background: #f9f9f8;
+  font-weight: 600;
+  color: var(--ink-muted);
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.table-paper-link {
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.table-paper-link:hover {
+  color: var(--academic-blue);
+  text-decoration: underline;
+}
+
+.badge-tag {
+  display: inline-block;
+  padding: 0.15rem 0.55rem;
+  border-radius: 3px;
+  font-size: 0.76rem;
+  font-weight: 600;
+}
+
+.tag-public { background: #edf7ed; color: #1e4620; }
+.tag-private { background: #fee2e2; color: #991b1b; }
+.tag-admin { background: #e0f2fe; color: #0369a1; }
+.tag-user { background: #f1f5f9; color: #475569; }
+.text-muted { color: var(--ink-subtle); }
+
+.btn-table-action {
+  font-size: 0.78rem;
+  padding: 0.35rem 0.7rem;
+  border-radius: 3px;
+  cursor: pointer;
+  font-family: inherit;
+  border: 1px solid var(--rule);
+}
+
+.btn-promote {
+  background: var(--academic-blue);
+  color: #fff;
+  border-color: var(--academic-blue);
+}
+
+/* ==========================================================================
+   Author Profile (profile.html)
+   ========================================================================== */
+.profile-document {
+  background: var(--paper-surface);
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  padding: 3.5rem;
+  box-shadow: var(--paper-shadow);
+}
+
+.profile-badge {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--academic-blue);
+  letter-spacing: 0.12em;
+  margin-bottom: 0.4rem;
+}
+
+.profile-header {
+  border-bottom: 2px solid var(--ink);
+  padding-bottom: 1.5rem;
+  margin-bottom: 2.5rem;
+}
+
+.profile-header h1 {
+  font-size: 2.35rem;
+  font-weight: 700;
+  margin-bottom: 0.4rem;
+}
+
+.profile-meta {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 0.9rem;
+  color: var(--ink-muted);
+}
+
+.section-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.75rem;
+}
+
+.author-papers-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+}
+
+.paper-summary-card {
+  background: #fbfbfa;
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  padding: 1.75rem;
+}
+
+.summary-top {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 0.8rem;
+  margin-bottom: 0.5rem;
+  color: var(--ink-subtle);
+}
+
+.id-tag {
+  font-weight: 600;
+  color: var(--academic-blue);
+}
+
+.tag-restricted { color: #b91c1c; font-weight: 600; }
+.tag-open { color: var(--academic-accent); font-weight: 600; }
+
+.summary-title {
+  font-size: 1.45rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.summary-title a { color: var(--ink); text-decoration: none; }
+.summary-title a:hover { color: var(--academic-blue); text-decoration: underline; }
+
+.summary-abstract {
+  font-style: italic;
+  font-size: 1rem;
+  color: var(--ink-muted);
+  margin-bottom: 1rem;
+}
+
+.summary-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 0.85rem;
+  padding-top: 0.85rem;
+  border-top: 1px dashed var(--rule);
+}
+
+.summary-metrics {
+  display: flex;
+  gap: 1.25rem;
+  color: var(--ink-subtle);
+}
+
+.summary-actions {
+  display: flex;
+  gap: 0.85rem;
+  align-items: center;
+}
+
+.btn-retract {
+  background: transparent;
+  border: none;
+  color: #dc2626;
+  font-size: 0.8rem;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.empty-profile {
+  text-align: center;
+  padding: 3.5rem;
+  background: #fbfbfa;
+  border: 1px dashed var(--rule);
+  border-radius: 4px;
+}
+
+/* ==========================================================================
+   Auth (login.html & signup.html)
+   ========================================================================== */
+.auth-card {
+  max-width: 520px;
+  margin: 3rem auto;
+  background: var(--paper-surface);
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  padding: 2.75rem;
+  box-shadow: var(--paper-shadow);
+}
+
+.auth-tag {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--academic-blue);
+  letter-spacing: 0.1em;
+  margin-bottom: 0.4rem;
+}
+
+.auth-header {
+  border-bottom: 2px solid var(--ink);
+  padding-bottom: 1.25rem;
+  margin-bottom: 2rem;
+}
+
+.auth-header h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 0.35rem;
+}
+
+.auth-sub {
+  font-size: 0.95rem;
+  color: var(--ink-muted);
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.35rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.form-label {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.form-control {
+  padding: 0.75rem 0.9rem;
+  font-family: 'Constantia', 'Charter', 'Merriweather', Georgia, serif;
+  font-size: 1.05rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 4px;
+  background: #fdfdfc;
+}
+
+.form-control:focus {
+  outline: none;
+  border-color: var(--ink);
+  background: #fff;
+}
+
+.btn-auth {
+  width: 100%;
+  padding: 0.75rem;
+  background: var(--academic-blue);
+  border-color: var(--academic-blue);
+  font-size: 1rem;
+}
+
+.btn-auth:hover {
+  background: #0f3045;
+}
+
+.auth-demo-hint {
+  margin-top: 1.75rem;
+  padding: 0.85rem 1.15rem;
+  background: #f8fafc;
+  border: 1px dashed var(--rule);
+  border-radius: 4px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 0.84rem;
+  color: var(--ink-muted);
+}
+
+.hint-title {
+  font-weight: 600;
+  color: var(--academic-blue);
+  margin-bottom: 0.25rem;
+  font-size: 0.75rem;
+}
+
+.auth-footer {
+  margin-top: 2rem;
+  padding-top: 1.35rem;
+  border-top: 1px solid var(--rule-subtle);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 0.88rem;
+  color: var(--ink-muted);
+  text-align: center;
+}
+
+/* ==========================================================================
+   Error & 404 Messages
+   ========================================================================== */
+.message-card {
+  max-width: 680px;
+  margin: 3.5rem auto;
+  background: var(--paper-surface);
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  padding: 3rem;
+  box-shadow: var(--paper-shadow);
+  text-align: center;
+}
+
+.message-badge {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--academic-blue);
+  letter-spacing: 0.1em;
+  margin-bottom: 0.5rem;
+}
+
+.message-card h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 1.35rem;
+}
+
+.error-box {
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  color: #991b1b;
+  padding: 1.1rem 1.35rem;
+  border-radius: 4px;
+  font-size: 0.92rem;
+  text-align: left;
+  margin-bottom: 1.35rem;
+  word-break: break-word;
+}
+
+.message-sub {
+  font-size: 1rem;
+  color: var(--ink-muted);
+  margin-bottom: 2rem;
+}
+
+.message-actions {
+  display: flex;
+  justify-content: center;
+  gap: 1.25rem;
+}
+
+/* ==========================================================================
+   Footer
+   ========================================================================== */
+footer {
+  border-top: 1px solid var(--rule);
+  padding: 2.75rem 2rem;
+  margin-top: 4rem;
+  background: var(--paper-surface);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 0.84rem;
+  color: var(--ink-muted);
+  text-align: center;
+}
+
+footer p {
+  margin-bottom: 0.4rem;
+}

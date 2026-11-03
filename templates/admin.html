@@ -1,0 +1,141 @@
+{{ define "content" }}
+<div class="admin-dashboard">
+
+  <div class="admin-header">
+    <div class="badge-console mono">EDITORIAL BOARD CONSOLE</div>
+    <h1>System Administration &amp; Repository Oversight</h1>
+    <p class="admin-desc">
+      Manage registered researchers, audit public and restricted manuscripts, and monitor Content-Addressable Storage health.
+    </p>
+  </div>
+
+  <!-- Metric Statistics Cards -->
+  <div class="stats-grid">
+    <div class="stat-card">
+      <span class="stat-num">{{ .Stats.TotalBlogs }}</span>
+      <span class="stat-title">Total Manuscripts</span>
+      <span class="stat-detail">{{ .Stats.TotalPublic }} Public &bull; {{ .Stats.TotalPrivate }} Restricted</span>
+    </div>
+
+    <div class="stat-card">
+      <span class="stat-num">{{ .Stats.TotalUsers }}</span>
+      <span class="stat-title">Registered Scholars</span>
+      <span class="stat-detail">Editorial &amp; Authors</span>
+    </div>
+
+    <div class="stat-card">
+      <span class="stat-num">{{ .Stats.TotalComments }}</span>
+      <span class="stat-title">Peer Review Notes</span>
+      <span class="stat-detail">Scholarly Discussions</span>
+    </div>
+
+    <div class="stat-card">
+      <span class="stat-num">{{ .Stats.TotalLikes }}</span>
+      <span class="stat-title">Endorsements</span>
+      <span class="stat-detail">Community citations</span>
+    </div>
+  </div>
+
+  <!-- Manuscript Management Section -->
+  <section class="admin-section">
+    <div class="section-title-row">
+      <h2>All Archived Manuscripts ({{ len .Blogs }})</h2>
+      <a href="/write" class="btn btn-outline" style="font-size: 0.8rem; padding: 0.35rem 0.75rem;">+ New Paper</a>
+    </div>
+
+    <div class="table-container">
+      <table class="admin-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Policy</th>
+            <th>Integrity (CID)</th>
+            <th>Date</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{ range .Blogs }}
+          <tr>
+            <td class="mono">MS-{{ .Id }}</td>
+            <td>
+              <a href="/blog/{{ .Id }}" class="table-paper-link"><strong>{{ .Title }}</strong></a>
+            </td>
+            <td>
+              <span>{{ .AuthorName }}</span>
+              <br><small class="mono text-muted">&lt;{{ .AuthorEmail }}&gt;</small>
+            </td>
+            <td>
+              {{ if .IsPrivate }}
+                <span class="badge-tag tag-private">Restricted</span>
+              {{ else }}
+                <span class="badge-tag tag-public">Public</span>
+              {{ end }}
+            </td>
+            <td class="mono text-muted" title="{{ .ContentHash }}">
+              <a href="/blob/{{ .ContentHash }}" target="_blank">{{ printf "%.10s..." .ContentHash }}</a>
+            </td>
+            <td>{{ .DateCreated }}</td>
+            <td>
+              <form action="/admin/blog/delete" method="POST" onsubmit="return confirm('Retract manuscript #{{ .Id }} permanently?');">
+                <input type="hidden" name="id" value="{{ .Id }}" />
+                <button type="submit" class="btn-table-action btn-danger">Retract</button>
+              </form>
+            </td>
+          </tr>
+          {{ end }}
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- User Management Section -->
+  <section class="admin-section">
+    <h2>Registered Scholars &amp; Editors ({{ len .Users }})</h2>
+
+    <div class="table-container">
+      <table class="admin-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Scholar Name</th>
+            <th>Email Identity</th>
+            <th>Role</th>
+            <th>Registered</th>
+            <th>Privileges</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{ range .Users }}
+          <tr>
+            <td class="mono">{{ .Id }}</td>
+            <td><strong>{{ .Name }}</strong></td>
+            <td class="mono">{{ .Email }}</td>
+            <td>
+              {{ if .Admin }}
+                <span class="badge-tag tag-admin">Editor / Admin</span>
+              {{ else }}
+                <span class="badge-tag tag-user">Author</span>
+              {{ end }}
+            </td>
+            <td>{{ .DateCreated }}</td>
+            <td>
+              <form action="/admin/user/toggle" method="POST">
+                <input type="hidden" name="email" value="{{ .Email }}" />
+                <input type="hidden" name="is_admin" value="{{ if .Admin }}0{{ else }}1{{ end }}" />
+                <button type="submit" class="btn-table-action {{ if .Admin }}btn-outline{{ else }}btn-promote{{ end }}">
+                  {{ if .Admin }}Revoke Admin{{ else }}Make Editor{{ end }}
+                </button>
+              </form>
+            </td>
+          </tr>
+          {{ end }}
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+</div>
+{{ end }}
