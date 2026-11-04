@@ -76,6 +76,7 @@ func (server *Server) RegisterRoutes() {
 	server.mux.GET("/", makeRouterHandleFunc(server.getIndexHandle))
 	server.mux.GET("/blog", makeRouterHandleFunc(server.getBlogsHandle))
 	server.mux.GET("/blog/:id", makeRouterHandleFunc(server.getBlogByIdHandle))
+	server.mux.GET("/blog/:id/pdf", makeRouterHandleFunc(server.getPdfBlogHandle))
 	server.mux.GET("/blob/:hash", makeRouterHandleFunc(server.getRawBlobHandle))
 	server.mux.GET("/login", makeRouterHandleFunc(server.getLoginHandle))
 	server.mux.POST("/login", withRateLimit(server.authLimiter, makeRouterHandleFunc(server.postLoginHandle)))
@@ -287,6 +288,57 @@ func (server *Server) getRawBlobHandle(res http.ResponseWriter, req *http.Reques
 	}
 	res.Header().Set("Content-Type", "text/markdown; charset=utf-8")
 	_, _ = res.Write(rawBytes)
+	return nil
+}
+
+func (server *Server) getPdfBlogHandle(res http.ResponseWriter, req *http.Request, params httprouter.Params) error {
+	id, err := strconv.ParseInt(params.ByName("id"), 10, 64)
+	if err != nil {
+		return fmt.Errorf("invalid paper ID")
+	}
+
+	blog, err := server.storage.GetBlogById(id)
+	if err != nil {
+		return err
+	}
+
+	user := getSessionUser(req)
+
+	// Authorization check for private blogs
+	if blog.IsPrivate {
+		if user == nil || (!user.IsAdmin && user.Email != blog.AuthorEmail) {
+			return fmt.Errorf("restricted access: This paper is marked private by the author")
+		}
+	}
+
+	rawBytes, err := server.blobStorage.Get(blog.ContentHash)
+	if err != nil {
+		return fmt.Errorf("failed to fetch paper content: %w", err)
+	}
+
+	generator := NewAcademicPDFGenerator(blog, string(rawBytes))
+	pdfBytes, err := generator.Generate()
+	if err != nil {
+		return fmt.Errorf("failed to generate academic PDF: %w", err)
+	}
+
+	// Clean filename for HTTP Header
+	sanitizedTitle := strings.Map(func(r rune) rune {
+		if (r >= 'a' && r <= 'z') || (r >= 'A' && r <= 'Z') || (r >= '0' && r <= '9') || r == '-' || r == '_' || r == ' ' {
+			return r
+		}
+		return '_'
+	}, blog.Title)
+	sanitizedTitle = strings.TrimSpace(sanitizedTitle)
+	if sanitizedTitle == "" {
+		sanitizedTitle = fmt.Sprintf("MintSpace-Paper-%d", blog.Id)
+	}
+	filename := fmt.Sprintf("%s.pdf", sanitizedTitle)
+
+	res.Header().Set("Content-Type", "application/pdf")
+	res.Header().Set("Content-Disposition", fmt.Sprintf("attachment; filename=\"%s\"", filename))
+	res.Header().Set("Content-Length", strconv.Itoa(len(pdfBytes)))
+	_, _ = res.Write(pdfBytes)
 	return nil
 }
 

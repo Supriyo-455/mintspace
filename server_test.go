@@ -541,3 +541,40 @@ func TestDistributedCASMeshSync(t *testing.T) {
 		t.Fatalf("expected self-healing local persistence on node 2 after peer retrieval")
 	}
 }
+
+func TestServerSidePDFGeneration(t *testing.T) {
+	server := createIsolatedTestServer(t)
+
+	// Demo paper is seeded in test server at ID 1
+	req := httptest.NewRequest("GET", "/blog/1/pdf", nil)
+	rr := httptest.NewRecorder()
+	server.mux.ServeHTTP(rr, req)
+
+	if rr.Code != http.StatusOK {
+		t.Fatalf("expected status 200, got %d: %s", rr.Code, rr.Body.String())
+	}
+
+	contentType := rr.Header().Get("Content-Type")
+	if contentType != "application/pdf" {
+		t.Fatalf("expected Content-Type application/pdf, got %s", contentType)
+	}
+
+	contentDisposition := rr.Header().Get("Content-Disposition")
+	if !strings.Contains(contentDisposition, "attachment; filename=") {
+		t.Fatalf("expected Content-Disposition attachment header, got %s", contentDisposition)
+	}
+
+	body := rr.Body.Bytes()
+	if len(body) < 100 {
+		t.Fatalf("expected substantial PDF payload, got %d bytes", len(body))
+	}
+
+	// Verify standard PDF header magic bytes
+	if !bytes.HasPrefix(body, []byte("%PDF-")) {
+		prefixLen := 10
+		if len(body) < prefixLen {
+			prefixLen = len(body)
+		}
+		t.Fatalf("invalid PDF signature: %q", body[:prefixLen])
+	}
+}
