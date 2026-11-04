@@ -455,26 +455,20 @@ func (g *AcademicPDFGenerator) renderHorizontalRule() {
 func (g *AcademicPDFGenerator) renderCodeBlock(lang string, lines []string) {
 	pdf := g.pdf
 
-	// Calculate code block height
 	lineHeight := 3.8
 	headerHeight := 6.0
-	padding := 5.0
+	padding := 4.0
 	totalHeight := headerHeight + float64(len(lines))*lineHeight + padding
 
 	// If block is moderately sized and doesn't fit on current page, break to new page
-	if totalHeight < 120 && pdf.GetY()+totalHeight > 270 {
+	if totalHeight < 110 && pdf.GetY()+totalHeight > 265 {
 		pdf.AddPage()
 	}
 
 	yStart := pdf.GetY()
-	currentLines := lines
-
-	// If block is extremely long (>1 page), split it gracefully
-	maxLinesPerPage := int((265 - yStart - headerHeight) / lineHeight)
-	if maxLinesPerPage < 4 && yStart > 100 {
+	if yStart > 240 {
 		pdf.AddPage()
 		yStart = pdf.GetY()
-		maxLinesPerPage = int((265 - yStart - headerHeight) / lineHeight)
 	}
 
 	// Header tag
@@ -490,38 +484,58 @@ func (g *AcademicPDFGenerator) renderCodeBlock(lang string, lines []string) {
 	pdf.SetXY(22, yStart+1)
 	pdf.SetFont("Courier", "B", 7.5)
 	pdf.SetTextColor(71, 85, 105)
-	pdf.CellFormat(166, 4, lang, "", 0, "L", false, 0, "")
+
+	cleanLang := sanitizeForPDF(lang)
+	if pdf.GetStringWidth(cleanLang) > 160 {
+		cleanLang = cleanLang[:20] + "..."
+	}
+	pdf.CellFormat(166, 4, cleanLang, "", 0, "L", false, 0, "")
 
 	pdf.SetY(yStart + headerHeight)
 
-	// Code container
-	codeY := pdf.GetY()
+	// Code container lines
+	pageStartY := pdf.GetY()
 	pdf.SetFont("Courier", "", 7.5)
 	pdf.SetTextColor(15, 23, 42)
 
-	for idx, l := range currentLines {
-		if pdf.GetY() > 268 {
+	maxLineW := 166.0
+
+	for _, l := range lines {
+		if pdf.GetY()+lineHeight > 265 {
+			// Finish border on current page
+			pdf.SetDrawColor(203, 213, 225)
+			pdf.Rect(18, pageStartY, 174, pdf.GetY()-pageStartY+1, "D")
+
 			pdf.AddPage()
-			pdf.SetY(22)
+			pdf.SetY(20)
+			pageStartY = 20
+			pdf.SetFont("Courier", "", 7.5)
+			pdf.SetTextColor(15, 23, 42)
 		}
 
 		cleanL := sanitizeForPDF(l)
-		// Indent code line
+		// Truncate line if it exceeds box width so it never overshoots horizontally
+		if pdf.GetStringWidth(cleanL) > maxLineW {
+			for len(cleanL) > 4 && pdf.GetStringWidth(cleanL+"...") > maxLineW {
+				cleanL = cleanL[:len(cleanL)-1]
+			}
+			cleanL += "..."
+		}
+
 		pdf.SetX(22)
 		pdf.CellFormat(168, lineHeight, cleanL, "", 1, "L", false, 0, "")
-		_ = idx
 	}
 
-	// Border around code
+	// Draw closing border on final page
 	pdf.SetDrawColor(203, 213, 225)
-	pdf.Rect(18, codeY, 174, pdf.GetY()-codeY+2, "D")
+	pdf.Rect(18, pageStartY, 174, pdf.GetY()-pageStartY+1, "D")
 	pdf.Ln(4)
 }
 
 func (g *AcademicPDFGenerator) renderMathEquation(expr string) {
 	pdf := g.pdf
 
-	if pdf.GetY()+18 > 270 {
+	if pdf.GetY()+18 > 265 {
 		pdf.AddPage()
 	}
 
@@ -542,81 +556,68 @@ func (g *AcademicPDFGenerator) renderMathEquation(expr string) {
 	pdf.SetY(y + 13)
 }
 
-// renderMermaidDiagram parses Mermaid flowchart DSL and renders an elegant, readable vector diagram
+// renderMermaidDiagram parses Mermaid DSL and routes to specialized flowchart, sequence, or class diagram renderers
 func (g *AcademicPDFGenerator) renderMermaidDiagram(lines []string) {
-	pdf := g.pdf
-	g.figCounter++
-
-	// Extract nodes and relationships
-	type Node struct {
-		ID    string
-		Label string
-	}
-	type Edge struct {
-		From  string
-		To    string
-		Label string
-	}
-
-	nodesMap := make(map[string]string)
-	var orderedNodes []Node
-	var edges []Edge
-	var subgraphs []string
-
-	nodeRegex := regexp.MustCompile(`([A-Za-z0-9_-]+)\[([^\]]+)\]`)
-	edgeRegex := regexp.MustCompile(`([A-Za-z0-9_-]+)\s*(?:-->|---|-.->)\s*(?:\|([^|]+)\|)?\s*([A-Za-z0-9_-]+)`)
-
+	// Detect diagram type
+	diagramType := "flowchart"
 	for _, l := range lines {
 		trimmed := strings.TrimSpace(l)
-		if strings.HasPrefix(trimmed, "subgraph") {
-			sgName := strings.TrimSpace(strings.TrimPrefix(trimmed, "subgraph"))
-			subgraphs = append(subgraphs, sgName)
-			continue
-		}
-		if trimmed == "end" {
-			continue
-		}
-
-		// Match nodes
-		if matches := nodeRegex.FindAllStringSubmatch(l, -1); len(matches) > 0 {
-			for _, m := range matches {
-				id := m[1]
-				lbl := m[2]
-				lbl = strings.ReplaceAll(lbl, "<br/>", " ")
-				lbl = strings.ReplaceAll(lbl, "<br>", " ")
-				if _, exists := nodesMap[id]; !exists {
-					nodesMap[id] = lbl
-					orderedNodes = append(orderedNodes, Node{ID: id, Label: lbl})
-				}
-			}
-		}
-
-		// Match edges
-		if matches := edgeRegex.FindAllStringSubmatch(l, -1); len(matches) > 0 {
-			for _, m := range matches {
-				edges = append(edges, Edge{
-					From:  m[1],
-					Label: m[2],
-					To:    m[3],
-				})
-			}
+		if strings.HasPrefix(trimmed, "sequenceDiagram") {
+			diagramType = "sequence"
+			break
+		} else if strings.HasPrefix(trimmed, "classDiagram") {
+			diagramType = "class"
+			break
+		} else if strings.HasPrefix(trimmed, "flowchart") || strings.HasPrefix(trimmed, "graph") {
+			diagramType = "flowchart"
+			break
 		}
 	}
 
-	// Determine diagram height
-	numNodes := len(orderedNodes)
-	if numNodes == 0 {
-		// Fallback to text representation
-		g.renderCodeBlock("ARCHITECTURE DIAGRAM", lines)
+	switch diagramType {
+	case "sequence":
+		g.renderSequenceDiagram(lines)
+	case "class":
+		g.renderClassDiagram(lines)
+	default:
+		g.renderFlowchart(lines)
+	}
+}
+
+func (g *AcademicPDFGenerator) renderSequenceDiagram(lines []string) {
+	g.figCounter++
+	pdf := g.pdf
+
+	type SeqStep struct {
+		From string
+		To   string
+		Text string
+	}
+	var steps []SeqStep
+	msgRegex := regexp.MustCompile(`^\s*([A-Za-z0-9_]+)\s*(?:->>|-->>|->|-->)\s*([A-Za-z0-9_]+)\s*:\s*(.*)$`)
+
+	for _, l := range lines {
+		if m := msgRegex.FindStringSubmatch(l); len(m) == 4 {
+			steps = append(steps, SeqStep{
+				From: m[1],
+				To:   m[2],
+				Text: strings.TrimSpace(m[3]),
+			})
+		}
+	}
+
+	if len(steps) == 0 {
+		g.renderCodeBlock("ARCHITECTURE SEQUENCE SPECIFICATION", lines)
 		return
 	}
 
-	boxHeight := float64(numNodes)*11 + 22
-	if boxHeight > 140 {
-		boxHeight = 140
+	stepH := 7.0
+	boxHeight := float64(len(steps))*stepH + 13.0
+	if boxHeight > 180 {
+		boxHeight = 180
 	}
 
-	if pdf.GetY()+boxHeight+15 > 270 {
+	if pdf.GetY()+boxHeight+8 > 265 {
 		pdf.AddPage()
 	}
 
@@ -626,62 +627,471 @@ func (g *AcademicPDFGenerator) renderMermaidDiagram(lines []string) {
 	pdf.SetFillColor(255, 255, 255)
 	pdf.SetDrawColor(203, 213, 225)
 	pdf.SetLineWidth(0.3)
-	pdf.Rect(18, yStart, 174, boxHeight+10, "DF")
+	pdf.Rect(18, yStart, 174, boxHeight, "DF")
 
-	// Figure Header Caption
+	// Header Caption
 	pdf.SetFillColor(248, 250, 252)
 	pdf.Rect(18, yStart, 174, 6.5, "DF")
 	pdf.SetXY(22, yStart+1.2)
 	pdf.SetFont("Helvetica", "B", 7.5)
 	pdf.SetTextColor(71, 85, 105)
+	capText := fmt.Sprintf("FIGURE %d: ARCHITECTURAL SEQUENCE SPECIFICATION", g.figCounter)
+	pdf.CellFormat(166, 4, capText, "", 0, "L", false, 0, "")
 
-	captionText := fmt.Sprintf("FIGURE %d: ARCHITECTURE FLOWCHART SPECIFICATION", g.figCounter)
-	if len(subgraphs) > 0 {
-		captionText += fmt.Sprintf(" (%s)", strings.Join(subgraphs, " / "))
+	// Render sequence steps
+	curY := yStart + 8.5
+	for idx, s := range steps {
+		if curY+stepH > yStart+boxHeight {
+			break
+		}
+
+		// Step Pill
+		pdf.SetFillColor(241, 245, 249)
+		pdf.SetDrawColor(203, 213, 225)
+		pdf.SetLineWidth(0.2)
+		pdf.RoundedRect(22, curY, 15, 5.2, 1.0, "1234", "DF")
+		pdf.SetXY(22, curY+0.6)
+		pdf.SetFont("Helvetica", "B", 6.5)
+		pdf.SetTextColor(71, 85, 105)
+		pdf.CellFormat(15, 4, fmt.Sprintf("Step %d", idx+1), "", 0, "C", false, 0, "")
+
+		// Actor direction pill
+		actorW := 38.0
+		pdf.RoundedRect(39, curY, actorW, 5.2, 1.0, "1234", "DF")
+		pdf.SetXY(39, curY+0.6)
+		pdf.SetFont("Helvetica", "B", 6.5)
+		pdf.SetTextColor(15, 23, 42)
+		actorStr := fmt.Sprintf("%s -> %s", s.From, s.To)
+		if pdf.GetStringWidth(actorStr) > actorW-2 {
+			actorStr = s.From + "->" + s.To
+		}
+		pdf.CellFormat(actorW, 4, actorStr, "", 0, "C", false, 0, "")
+
+		// Action description text
+		descX := 80.0
+		descW := 108.0
+		pdf.SetXY(descX, curY+0.6)
+		pdf.SetFont("Times", "", 7.5)
+		pdf.SetTextColor(30, 41, 59)
+		cleanDesc := sanitizeForPDF(s.Text)
+		if pdf.GetStringWidth(cleanDesc) > descW {
+			for len(cleanDesc) > 4 && pdf.GetStringWidth(cleanDesc+"...") > descW {
+				cleanDesc = cleanDesc[:len(cleanDesc)-1]
+			}
+			cleanDesc += "..."
+		}
+		pdf.CellFormat(descW, 4, cleanDesc, "", 0, "L", false, 0, "")
+
+		curY += stepH
 	}
-	pdf.CellFormat(166, 4, captionText, "", 0, "L", false, 0, "")
 
-	// Render node cards inside figure
+	pdf.SetY(yStart + boxHeight + 6)
+}
+
+func (g *AcademicPDFGenerator) renderClassDiagram(lines []string) {
+	g.figCounter++
+	pdf := g.pdf
+
+	type ClassBlock struct {
+		Name    string
+		Members []string
+	}
+	var classes []ClassBlock
+	var curClass *ClassBlock
+
+	classHeaderRegex := regexp.MustCompile(`^\s*class\s+([A-Za-z0-9_]+)\s*\{?`)
+
+	for _, l := range lines {
+		trimmed := strings.TrimSpace(l)
+		if m := classHeaderRegex.FindStringSubmatch(trimmed); len(m) == 2 {
+			if curClass != nil {
+				classes = append(classes, *curClass)
+			}
+			curClass = &ClassBlock{Name: m[1]}
+			continue
+		}
+		if trimmed == "}" {
+			if curClass != nil {
+				classes = append(classes, *curClass)
+				curClass = nil
+			}
+			continue
+		}
+		if curClass != nil && (strings.HasPrefix(trimmed, "+") || strings.HasPrefix(trimmed, "-")) {
+			curClass.Members = append(curClass.Members, trimmed)
+		}
+	}
+	if curClass != nil {
+		classes = append(classes, *curClass)
+	}
+
+	if len(classes) == 0 {
+		g.renderCodeBlock("CLASS & DATA STRUCTURE SPECIFICATION", lines)
+		return
+	}
+
+	// Calculate layout
+	boxHeight := 0.0
+	for _, c := range classes {
+		cardH := float64(len(c.Members))*5.0 + 9.0
+		boxHeight += cardH + 3.0
+	}
+	boxHeight += 12.0
+	if boxHeight > 200 {
+		boxHeight = 200
+	}
+
+	if pdf.GetY()+boxHeight+8 > 265 {
+		pdf.AddPage()
+	}
+
+	yStart := pdf.GetY() + 2
+
+	// Outer frame
+	pdf.SetFillColor(255, 255, 255)
+	pdf.SetDrawColor(203, 213, 225)
+	pdf.SetLineWidth(0.3)
+	pdf.Rect(18, yStart, 174, boxHeight, "DF")
+
+	// Caption bar
+	pdf.SetFillColor(248, 250, 252)
+	pdf.Rect(18, yStart, 174, 6.5, "DF")
+	pdf.SetXY(22, yStart+1.2)
+	pdf.SetFont("Helvetica", "B", 7.5)
+	pdf.SetTextColor(71, 85, 105)
+	capText := fmt.Sprintf("FIGURE %d: DATA STRUCTURE SPECIFICATION", g.figCounter)
+	pdf.CellFormat(166, 4, capText, "", 0, "L", false, 0, "")
+
 	curY := yStart + 9.0
+	for _, c := range classes {
+		cardH := float64(len(c.Members))*5.0 + 8.0
+		if curY+cardH > yStart+boxHeight {
+			break
+		}
+
+		// Class header
+		pdf.SetFillColor(241, 245, 249)
+		pdf.SetDrawColor(100, 116, 139)
+		pdf.SetLineWidth(0.2)
+		pdf.Rect(24, curY, 162, cardH, "DF")
+
+		pdf.Rect(24, curY, 162, 5.5, "DF")
+		pdf.SetXY(26, curY+0.8)
+		pdf.SetFont("Courier", "B", 7.5)
+		pdf.SetTextColor(15, 23, 42)
+		pdf.CellFormat(158, 4, "struct "+c.Name, "", 0, "L", false, 0, "")
+
+		mY := curY + 6.2
+		pdf.SetFont("Courier", "", 7.0)
+		pdf.SetTextColor(51, 65, 85)
+		for _, m := range c.Members {
+			cleanM := sanitizeForPDF(m)
+			if pdf.GetStringWidth(cleanM) > 156 {
+				cleanM = cleanM[:75] + "..."
+			}
+			pdf.SetXY(28, mY)
+			pdf.CellFormat(154, 4.5, cleanM, "", 0, "L", false, 0, "")
+			mY += 5.0
+		}
+
+		curY += cardH + 3.0
+	}
+
+	pdf.SetY(yStart + boxHeight + 6)
+}
+
+type FlowchartNode struct {
+	ID       string
+	Label    string
+	Subgraph string
+}
+
+func (g *AcademicPDFGenerator) renderFlowchart(lines []string) {
+	g.figCounter++
+	pdf := g.pdf
+
+	nodesMap := make(map[string]bool)
+	var orderedNodes []FlowchartNode
+	var subgraphs []string
+	subgraphNodeMap := make(map[string][]FlowchartNode)
+
+	currentSubgraph := ""
+
+	// Support all Mermaid node shapes: [label], ["label"], [(label)], ([label]), {label}
+	nodeRegex := regexp.MustCompile(`([A-Za-z0-9_-]+)(?:\[\((.*?)\)\]|\["(.*?)"\]|\[(.*?)\]|\((.*?)\)|\{(.*?)\})`)
+
+	for _, l := range lines {
+		trimmed := strings.TrimSpace(l)
+		if strings.HasPrefix(trimmed, "subgraph") {
+			sgName := strings.TrimSpace(strings.TrimPrefix(trimmed, "subgraph"))
+			// Clean any trailing or bracketed annotation
+			if idx := strings.Index(sgName, "["); idx != -1 {
+				sgName = strings.TrimSpace(sgName[:idx])
+			}
+			subgraphs = append(subgraphs, sgName)
+			currentSubgraph = sgName
+			continue
+		}
+		if trimmed == "end" {
+			currentSubgraph = ""
+			continue
+		}
+
+		if matches := nodeRegex.FindAllStringSubmatch(l, -1); len(matches) > 0 {
+			for _, m := range matches {
+				id := m[1]
+				// Find first non-empty match group for label
+				lbl := ""
+				for gIdx := 2; gIdx < len(m); gIdx++ {
+					if m[gIdx] != "" {
+						lbl = m[gIdx]
+						break
+					}
+				}
+				if lbl == "" {
+					lbl = id
+				}
+				lbl = strings.ReplaceAll(lbl, "<br/>", " ")
+				lbl = strings.ReplaceAll(lbl, "<br>", " ")
+				lbl = strings.Trim(lbl, "\"")
+
+				if !nodesMap[id] {
+					nodesMap[id] = true
+					nodeObj := FlowchartNode{ID: id, Label: lbl, Subgraph: currentSubgraph}
+					orderedNodes = append(orderedNodes, nodeObj)
+					if currentSubgraph != "" {
+						subgraphNodeMap[currentSubgraph] = append(subgraphNodeMap[currentSubgraph], nodeObj)
+					}
+				}
+			}
+		}
+	}
+
+	numNodes := len(orderedNodes)
+	if numNodes == 0 {
+		g.renderCodeBlock("ARCHITECTURE DIAGRAM", lines)
+		return
+	}
+
+	// Figure Header Caption (Guaranteed fit inside header cell)
+	captionPrefix := fmt.Sprintf("FIGURE %d: ARCHITECTURE FLOWCHART SPECIFICATION", g.figCounter)
+	fullCaption := captionPrefix
+	if len(subgraphs) > 0 {
+		fullCaption += fmt.Sprintf(" (%s)", strings.Join(subgraphs, " / "))
+	}
+	fullCaption = sanitizeForPDF(fullCaption)
+
+	maxCapW := 162.0
+	pdf.SetFont("Helvetica", "B", 7.5)
+	if pdf.GetStringWidth(fullCaption) > maxCapW {
+		for len(fullCaption) > 10 && pdf.GetStringWidth(fullCaption+"...") > maxCapW {
+			fullCaption = fullCaption[:len(fullCaption)-1]
+		}
+		fullCaption += "..."
+	}
+
+	// Check if this diagram qualifies for 2-Column Side-By-Side Layout
+	if len(subgraphs) == 2 && len(subgraphNodeMap[subgraphs[0]]) > 0 && len(subgraphNodeMap[subgraphs[1]]) > 0 {
+		g.renderTwoColumnFlowchart(subgraphs[0], subgraphNodeMap[subgraphs[0]], subgraphs[1], subgraphNodeMap[subgraphs[1]], fullCaption)
+		return
+	}
+
+	// Single Column Centered Layout
+	stepY := 9.2
+	nodeH := 6.8
+	if numNodes > 9 {
+		// Compact mode for taller flowcharts
+		stepY = 7.8
+		nodeH = 5.8
+	}
+
+	boxHeight := float64(numNodes)*stepY + 12.0
+	if boxHeight > 200 {
+		boxHeight = 200
+	}
+
+	// Check page break: NEVER overshoot the 265mm printable baseline
+	if pdf.GetY()+boxHeight+8 > 265 {
+		pdf.AddPage()
+	}
+
+	yStart := pdf.GetY() + 2
+
+	// Outer Frame
+	pdf.SetFillColor(255, 255, 255)
+	pdf.SetDrawColor(203, 213, 225)
+	pdf.SetLineWidth(0.3)
+	pdf.Rect(18, yStart, 174, boxHeight, "DF")
+
+	// Header Bar
+	pdf.SetFillColor(248, 250, 252)
+	pdf.Rect(18, yStart, 174, 6.5, "DF")
+	pdf.SetXY(22, yStart+1.2)
+	pdf.SetFont("Helvetica", "B", 7.5)
+	pdf.SetTextColor(71, 85, 105)
+	pdf.CellFormat(166, 4, fullCaption, "", 0, "L", false, 0, "")
+
+	// Render node cards
+	nodeW := 154.0
+	curY := yStart + 8.5
+
 	for idx, n := range orderedNodes {
-		if curY+9.5 > yStart+boxHeight {
+		if curY+nodeH > yStart+boxHeight {
 			break
 		}
 
 		// Node Box
-		nodeW := 154.0
-		nodeH := 7.0
 		pdf.SetFillColor(241, 245, 249)
 		pdf.SetDrawColor(100, 116, 139)
 		pdf.SetLineWidth(0.2)
 		pdf.RoundedRect(28, curY, nodeW, nodeH, 1.2, "1234", "DF")
 
-		// Node Text
-		pdf.SetXY(30, curY+1.2)
-		pdf.SetFont("Helvetica", "B", 7.5)
+		// Node Text (strictly measured to never spill horizontally)
+		pdf.SetFont("Helvetica", "B", 7.0)
 		pdf.SetTextColor(15, 23, 42)
 		cleanLbl := sanitizeForPDF(n.Label)
-		if len(cleanLbl) > 85 {
-			cleanLbl = cleanLbl[:82] + "..."
+		maxLblW := nodeW - 8.0
+		if pdf.GetStringWidth(cleanLbl) > maxLblW {
+			for len(cleanLbl) > 4 && pdf.GetStringWidth(cleanLbl+"...") > maxLblW {
+				cleanLbl = cleanLbl[:len(cleanLbl)-1]
+			}
+			cleanLbl += "..."
 		}
-		pdf.CellFormat(nodeW-4, 4.5, cleanLbl, "", 0, "C", false, 0, "")
+		pdf.SetXY(28, curY+(nodeH-4.5)/2.0)
+		pdf.CellFormat(nodeW, 4.5, cleanLbl, "", 0, "C", false, 0, "")
 
-		// Arrow downward to next node if sequential
-		if idx < len(orderedNodes)-1 {
+		// Downward arrow
+		if idx < len(orderedNodes)-1 && curY+stepY+nodeH <= yStart+boxHeight {
 			arrowY := curY + nodeH
+			arrowLen := stepY - nodeH
+			midX := 105.0
 			pdf.SetDrawColor(71, 85, 105)
 			pdf.SetLineWidth(0.4)
-			pdf.Line(105, arrowY, 105, arrowY+3)
+			pdf.Line(midX, arrowY, midX, arrowY+arrowLen)
 
 			// Arrowhead
-			pdf.Line(103.5, arrowY+2, 105, arrowY+3)
-			pdf.Line(106.5, arrowY+2, 105, arrowY+3)
+			pdf.Line(midX-1.5, arrowY+arrowLen-1.0, midX, arrowY+arrowLen)
+			pdf.Line(midX+1.5, arrowY+arrowLen-1.0, midX, arrowY+arrowLen)
 		}
 
-		curY += 10.0
+		curY += stepY
 	}
 
-	pdf.SetY(yStart + boxHeight + 14)
+	pdf.SetY(yStart + boxHeight + 6)
+}
+
+func (g *AcademicPDFGenerator) renderTwoColumnFlowchart(name1 string, nodes1 []FlowchartNode, name2 string, nodes2 []FlowchartNode, fullCaption string) {
+	pdf := g.pdf
+
+	maxCount := len(nodes1)
+	if len(nodes2) > maxCount {
+		maxCount = len(nodes2)
+	}
+
+	stepY := 8.5
+	nodeH := 6.2
+	boxHeight := float64(maxCount)*stepY + 19.0
+	if boxHeight > 200 {
+		boxHeight = 200
+	}
+
+	if pdf.GetY()+boxHeight+8 > 265 {
+		pdf.AddPage()
+	}
+
+	yStart := pdf.GetY() + 2
+
+	// Outer frame
+	pdf.SetFillColor(255, 255, 255)
+	pdf.SetDrawColor(203, 213, 225)
+	pdf.SetLineWidth(0.3)
+	pdf.Rect(18, yStart, 174, boxHeight, "DF")
+
+	// Header Caption
+	pdf.SetFillColor(248, 250, 252)
+	pdf.Rect(18, yStart, 174, 6.5, "DF")
+	pdf.SetXY(22, yStart+1.2)
+	pdf.SetFont("Helvetica", "B", 7.5)
+	pdf.SetTextColor(71, 85, 105)
+	pdf.CellFormat(166, 4, fullCaption, "", 0, "L", false, 0, "")
+
+	colW := 78.0
+	col1X := 22.0
+	col2X := 105.0
+	innerNodeW := 74.0
+
+	// Column 1 Header Pill
+	pdf.SetFillColor(241, 245, 249)
+	pdf.SetDrawColor(148, 163, 184)
+	pdf.SetLineWidth(0.2)
+	pdf.RoundedRect(col1X, yStart+8.0, colW, 5.0, 1.0, "1234", "DF")
+	pdf.SetXY(col1X, yStart+8.5)
+	pdf.SetFont("Helvetica", "B", 6.8)
+	pdf.SetTextColor(71, 85, 105)
+	cleanName1 := sanitizeForPDF(name1)
+	if pdf.GetStringWidth(cleanName1) > colW-4 {
+		cleanName1 = cleanName1[:25] + "..."
+	}
+	pdf.CellFormat(colW, 4.0, cleanName1, "", 0, "C", false, 0, "")
+
+	// Column 2 Header Pill
+	pdf.RoundedRect(col2X, yStart+8.0, colW, 5.0, 1.0, "1234", "DF")
+	pdf.SetXY(col2X, yStart+8.5)
+	pdf.SetFont("Helvetica", "B", 6.8)
+	pdf.SetTextColor(71, 85, 105)
+	cleanName2 := sanitizeForPDF(name2)
+	if pdf.GetStringWidth(cleanName2) > colW-4 {
+		cleanName2 = cleanName2[:25] + "..."
+	}
+	pdf.CellFormat(colW, 4.0, cleanName2, "", 0, "C", false, 0, "")
+
+	renderCol := func(startX float64, nodes []FlowchartNode) {
+		curY := yStart + 15.0
+		nodeX := startX + (colW-innerNodeW)/2.0
+		midX := nodeX + innerNodeW/2.0
+
+		for idx, n := range nodes {
+			if curY+nodeH > yStart+boxHeight {
+				break
+			}
+
+			pdf.SetFillColor(248, 250, 252)
+			pdf.SetDrawColor(100, 116, 139)
+			pdf.SetLineWidth(0.2)
+			pdf.RoundedRect(nodeX, curY, innerNodeW, nodeH, 1.0, "1234", "DF")
+
+			pdf.SetFont("Helvetica", "B", 6.5)
+			pdf.SetTextColor(15, 23, 42)
+			cleanLbl := sanitizeForPDF(n.Label)
+			maxLblW := innerNodeW - 6.0
+			if pdf.GetStringWidth(cleanLbl) > maxLblW {
+				for len(cleanLbl) > 4 && pdf.GetStringWidth(cleanLbl+"...") > maxLblW {
+					cleanLbl = cleanLbl[:len(cleanLbl)-1]
+				}
+				cleanLbl += "..."
+			}
+			pdf.SetXY(nodeX, curY+(nodeH-4.0)/2.0)
+			pdf.CellFormat(innerNodeW, 4.0, cleanLbl, "", 0, "C", false, 0, "")
+
+			// Downward arrow
+			if idx < len(nodes)-1 && curY+stepY+nodeH <= yStart+boxHeight {
+				arrowY := curY + nodeH
+				arrowLen := stepY - nodeH
+				pdf.SetDrawColor(71, 85, 105)
+				pdf.SetLineWidth(0.4)
+				pdf.Line(midX, arrowY, midX, arrowY+arrowLen)
+				pdf.Line(midX-1.2, arrowY+arrowLen-0.8, midX, arrowY+arrowLen)
+				pdf.Line(midX+1.2, arrowY+arrowLen-0.8, midX, arrowY+arrowLen)
+			}
+
+			curY += stepY
+		}
+	}
+
+	renderCol(col1X, nodes1)
+	renderCol(col2X, nodes2)
+
+	pdf.SetY(yStart + boxHeight + 6)
 }
 
 func (g *AcademicPDFGenerator) renderTable(rows [][]string) {
@@ -732,6 +1142,13 @@ func (g *AcademicPDFGenerator) renderTable(rows [][]string) {
 			val := ""
 			if cIdx < len(row) {
 				val = sanitizeForPDF(row[cIdx])
+			}
+			maxCellW := colW - 3.0
+			if pdf.GetStringWidth(val) > maxCellW {
+				for len(val) > 4 && pdf.GetStringWidth(val+"...") > maxCellW {
+					val = val[:len(val)-1]
+				}
+				val += "..."
 			}
 			pdf.CellFormat(colW, rowH, val, "", 0, "L", true, 0, "")
 		}

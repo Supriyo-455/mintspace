@@ -8,6 +8,7 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"net/url"
+	"os"
 	"path/filepath"
 	"strings"
 	"testing"
@@ -577,4 +578,27 @@ func TestServerSidePDFGeneration(t *testing.T) {
 		}
 		t.Fatalf("invalid PDF signature: %q", body[:prefixLen])
 	}
+}
+
+func TestInspectAllDiagramsInBlog5(t *testing.T) {
+	data, err := os.ReadFile("data/blobs/0caf60ffe400ce0e8fa1ce904f4cffc30c5abb3fc6a59f1256554802b4bde2ec.md")
+	if err != nil {
+		t.Skip("blog 5 blob not found:", err)
+	}
+
+	blog := &Blog{
+		Id:          5,
+		Title:       "Handmade hero complete tutorial",
+		AuthorName:  "Editorial Admin",
+		AuthorEmail: "admin@mintspace.io",
+		DateCreated: "2026-11-03",
+		ContentHash: "0caf60ffe400ce0e8fa1ce904f4cffc30c5abb3fc6a59f1256554802b4bde2ec",
+	}
+
+	gen := NewAcademicPDFGenerator(blog, string(data))
+	pdfBytes, err := gen.Generate()
+	if err != nil {
+		t.Fatalf("failed to generate blog 5 PDF: %v", err)
+	}
+	t.Logf("Generated blog 5 PDF: %d bytes, pages: %d", len(pdfBytes), gen.pdf.PageNo())
 }
