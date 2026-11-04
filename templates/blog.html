@@ -60,6 +60,16 @@
 {{ define "content" }}
 <article class="paper-document">
 
+  <!-- Print-Only Scholarly Publication Header -->
+  <div class="print-pub-header">
+    <div class="print-pub-brand">
+      <strong>MINTSPACE</strong> &bull; Open Research Archive
+    </div>
+    <div class="print-pub-doi">
+      Paper ID: MS-{{ .Blog.Id }} &bull; DOI: 10.mintspace/paper.{{ .Blog.Id }}
+    </div>
+  </div>
+
   <header class="paper-header">
     <h1 class="paper-title-main">{{ .Blog.Title }}</h1>
 
@@ -95,6 +105,17 @@
       </div>
     </div>
 
+    <!-- Quick Article Actions -->
+    <div class="paper-actions-top">
+      <button type="button" class="btn-pdf-header" onclick="downloadArticleAsPDF()" title="Download publication-ready vector PDF">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: -2px; margin-right: 4px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+        Download PDF
+      </button>
+      <button type="button" class="btn btn-outline" style="padding: 0.25rem 0.65rem; font-size: 0.82rem;" onclick="toggleBibtex()">
+        Cite BibTeX
+      </button>
+    </div>
+
     {{ if .Blog.Abstract }}
     <section class="paper-abstract-box">
       <div class="abstract-heading">ABSTRACT</div>
@@ -116,6 +137,11 @@
         <span id="like-icon">{{ if .Blog.UserHasLiked }}&hearts;{{ else }}&#9825;{{ end }}</span>
         <span id="like-text">{{ if .Blog.UserHasLiked }}Endorsed{{ else }}Endorse Paper{{ end }}</span>
         <span id="like-count" class="endorse-count">{{ .Blog.LikesCount }}</span>
+      </button>
+
+      <button type="button" class="btn btn-outline" onclick="downloadArticleAsPDF()" title="Download publication-ready vector PDF">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: -2px; margin-right: 3px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+        Download PDF
       </button>
 
       <button class="btn btn-outline" onclick="toggleBibtex()">Cite Article (BibTeX)</button>
@@ -186,9 +212,43 @@
     </div>
   </section>
 
+  <!-- Print-Only Colophon / Integrity Footer -->
+  <div class="print-pub-footer">
+    <div class="print-meta-line">
+      <strong>Archival Provenance:</strong> Cryptographic Content-Addressable Storage (CAS)
+    </div>
+    <div class="print-hash-line mono">
+      SHA-256 Payload Hash: {{ .Blog.ContentHash }}
+    </div>
+    <div class="print-cite-line">
+      Published: {{ .Blog.DateCreated }} &bull; Canonical Web Copy: http://127.0.0.1:3000/blog/{{ .Blog.Id }}
+    </div>
+  </div>
+
 </article>
 
 <script>
+  function downloadArticleAsPDF() {
+    const originalTitle = document.title;
+    const paperTitleEl = document.querySelector('.paper-title-main');
+    const paperTitle = paperTitleEl ? paperTitleEl.innerText.trim() : 'Manuscript';
+
+    // Set document title so browser "Save as PDF" defaults to the paper title
+    document.title = paperTitle + ' - MintSpace';
+
+    // Ensure all KaTeX and Mermaid renderers are completed
+    if (typeof triggerAllRenderers === 'function') {
+      triggerAllRenderers();
+    }
+
+    // Trigger browser native vector print dialog
+    setTimeout(function() {
+      window.print();
+      setTimeout(function() {
+        document.title = originalTitle;
+      }, 1000);
+    }, 150);
+  }
   function toggleReplyBox(commentId) {
     const form = document.getElementById('reply-form-' + commentId);
     if (!form) return;

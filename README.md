@@ -34,6 +34,7 @@ Instead of storing articles as mutable database records, MintSpace treats every 
 * **Interactive Scientific Diagrams**: Built-in support for **Mermaid.js** flowcharts and architecture diagrams with an interactive **Full-Screen Lightbox** (zoom from 20% to 500%, mouse drag pan, reset, and keyboard shortcuts).
 * **Syntax-Highlighted Code Blocks**: Academic code listings with language identification badges and one-click clipboard copying.
 * **One-Click BibTeX Citation**: Auto-generates standardized BibTeX citations with embedded SHA-256 hashes for cryptographic reference.
+* **Publication-Grade Vector PDF Export**: Dedicated one-click "Download PDF" feature generating crisp, multi-page vector PDFs with full document fidelity—including native vector Mermaid flowcharts, KaTeX formulas, wrapped code listings, running archival headers, and cryptographic colophon footers.
 
 ### 2. Cryptographic Content-Addressable Storage (CAS)
 * **Tamper-Evident Publishing**: If a single character is modified, its content hash changes immediately, alerting readers to content alteration.

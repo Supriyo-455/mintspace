@@ -1869,3 +1869,410 @@ footer {
 footer p {
   margin-bottom: 0.4rem;
 }
+
+/* ==========================================================================
+   Article Action Toolbar & Header PDF Actions
+   ========================================================================== */
+.paper-actions-top {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  margin-top: 1.15rem;
+  padding-top: 0.85rem;
+  border-top: 1px solid var(--rule);
+}
+
+.btn-pdf-header {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  background: var(--paper-surface);
+  border: 1px solid #cbd5e1;
+  color: var(--academic-blue);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 0.82rem;
+  font-weight: 600;
+  padding: 0.3rem 0.75rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.btn-pdf-header:hover {
+  background: #f1f5f9;
+  border-color: var(--academic-blue);
+  color: #0b2545;
+}
+
+.print-pub-header,
+.print-pub-footer {
+  display: none;
+}
+
+/* ==========================================================================
+   Academic Print & PDF Export Stylesheet
+   Produces publication-grade, crisp vector PDFs with legible diagrams and math
+   ========================================================================== */
+@media print {
+  @page {
+    size: A4 portrait;
+    margin: 18mm 14mm 18mm 14mm;
+  }
+
+  /* Reset layout for physical paper printing */
+  html, body {
+    background: #ffffff !important;
+    color: #0f172a !important;
+    font-family: 'Constantia', 'Charter', 'Merriweather', 'EB Garamond', Georgia, serif !important;
+    font-size: 10.5pt !important;
+    line-height: 1.55 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* Hide interactive web chrome & navigational UI */
+  .masthead,
+  footer,
+  .paper-toolbar,
+  .paper-actions-top,
+  .btn-pdf-header,
+  .btn,
+  .btn-copy-code,
+  .code-lang-tag,
+  .btn-figure-maximize,
+  .figure-lightbox,
+  .bibtex-container,
+  #bibtex-box,
+  .comment-form,
+  .comment-signin-prompt,
+  .comment-actions-bar,
+  .inline-reply-form,
+  .btn-comment-reply,
+  .btn-comment-delete,
+  .btn-comment-like {
+    display: none !important;
+  }
+
+  .container {
+    max-width: 100% !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .paper-document {
+    box-shadow: none !important;
+    border: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    background: transparent !important;
+    max-width: 100% !important;
+  }
+
+  /* Academic Print Header (Running Top Rule) */
+  .print-pub-header {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    border-bottom: 1.5pt solid #1c1d1f !important;
+    padding-bottom: 0.35rem !important;
+    margin-bottom: 1.5rem !important;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif !important;
+    font-size: 8pt !important;
+    color: #475569 !important;
+    letter-spacing: 0.05em !important;
+    text-transform: uppercase !important;
+  }
+
+  .print-pub-brand strong {
+    color: #0f172a !important;
+    font-weight: 700 !important;
+  }
+
+  /* Paper Title & Authors */
+  .paper-header {
+    margin-bottom: 1.25rem !important;
+    padding-bottom: 0.75rem !important;
+    border-bottom: 0.75pt solid #cbd5e1 !important;
+  }
+
+  .paper-title-main {
+    font-size: 22pt !important;
+    line-height: 1.2 !important;
+    font-weight: 700 !important;
+    color: #0f172a !important;
+    margin-bottom: 0.75rem !important;
+    page-break-after: avoid !important;
+    break-after: avoid !important;
+  }
+
+  .paper-meta-authors {
+    margin-bottom: 0.65rem !important;
+  }
+
+  .author-name-large {
+    font-size: 12pt !important;
+    font-weight: 700 !important;
+    color: #0f172a !important;
+  }
+
+  .author-affiliation {
+    font-size: 9pt !important;
+    color: #475569 !important;
+  }
+
+  .author-affiliation a {
+    color: #1e293b !important;
+    text-decoration: none !important;
+  }
+
+  .paper-pub-details {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 1.25rem !important;
+    font-size: 8.5pt !important;
+    color: #475569 !important;
+    padding: 0.4rem 0 !important;
+    border-top: 0.5pt solid #e2e8f0 !important;
+    margin-top: 0.4rem !important;
+  }
+
+  .hash-link {
+    color: #1e293b !important;
+    text-decoration: none !important;
+  }
+
+  /* Abstract Box */
+  .paper-abstract-box {
+    background: #f8fafc !important;
+    border-left: 2.5pt solid #0f172a !important;
+    padding: 0.75rem 1rem !important;
+    margin: 1.2rem 0 1.5rem 0 !important;
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+  }
+
+  .abstract-heading {
+    font-size: 8pt !important;
+    letter-spacing: 0.12em !important;
+    font-weight: 700 !important;
+    color: #0f172a !important;
+    margin-bottom: 0.35rem !important;
+  }
+
+  .abstract-body {
+    font-size: 9.5pt !important;
+    line-height: 1.5 !important;
+    color: #334155 !important;
+    font-style: italic !important;
+  }
+
+  /* Headings */
+  h1, h2, h3, h4, h5, h6 {
+    page-break-after: avoid !important;
+    break-after: avoid !important;
+    color: #0f172a !important;
+    margin-top: 1.5rem !important;
+    margin-bottom: 0.5rem !important;
+  }
+
+  p {
+    orphans: 3 !important;
+    widows: 3 !important;
+    margin-bottom: 0.9rem !important;
+  }
+
+  /* Code Blocks */
+  .paper-code-block {
+    margin: 1.2rem 0 !important;
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+    position: static !important;
+  }
+
+  .paper-body-content pre {
+    border: 0.5pt solid #cbd5e1 !important;
+    background: #f8fafc !important;
+    color: #0f172a !important;
+    padding: 0.75rem 1rem !important;
+    font-family: Consolas, 'Courier New', monospace !important;
+    font-size: 8pt !important;
+    line-height: 1.45 !important;
+    white-space: pre-wrap !important;
+    word-break: break-all !important;
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+  }
+
+  .paper-body-content code {
+    font-family: Consolas, 'Courier New', monospace !important;
+    font-size: 0.9em !important;
+    background: #f1f5f9 !important;
+    color: #0f172a !important;
+    padding: 0.1em 0.3em !important;
+  }
+
+  .paper-body-content pre code {
+    background: transparent !important;
+    padding: 0 !important;
+  }
+
+  /* KaTeX Math Equations */
+  .katex-display {
+    margin: 1rem 0 !important;
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+    overflow: visible !important;
+  }
+
+  .katex {
+    color: #0f172a !important;
+    font-size: 1.05em !important;
+  }
+
+  /* Scientific Figures & Flowcharts (Mermaid Vector SVGs) */
+  .paper-figure {
+    margin: 1.5rem 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+    text-align: center !important;
+  }
+
+  .paper-figure-header {
+    display: flex !important;
+    justify-content: flex-start !important;
+    background: #f8fafc !important;
+    border: 0.5pt solid #cbd5e1 !important;
+    border-bottom: none !important;
+    padding: 0.3rem 0.65rem !important;
+  }
+
+  .paper-figure-title {
+    font-size: 7.5pt !important;
+    letter-spacing: 0.06em !important;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+    color: #475569 !important;
+  }
+
+  .paper-figure-canvas {
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    border: 0.5pt solid #cbd5e1 !important;
+    border-radius: 0 0 4px 4px !important;
+    padding: 1rem !important;
+    background: #ffffff !important;
+    box-shadow: none !important;
+    overflow: visible !important;
+    cursor: default !important;
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+  }
+
+  .paper-figure-canvas svg {
+    min-width: 0 !important;
+    max-width: 100% !important;
+    width: auto !important;
+    height: auto !important;
+    display: block !important;
+    margin: 0 auto !important;
+    background: transparent !important;
+  }
+
+  /* Tables */
+  .paper-body-content table {
+    width: 100% !important;
+    max-width: 100% !important;
+    border-collapse: collapse !important;
+    margin: 1.25rem 0 !important;
+    font-size: 8.5pt !important;
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+  }
+
+  .paper-body-content th,
+  .paper-body-content td {
+    border: 0.5pt solid #cbd5e1 !important;
+    padding: 0.45rem 0.75rem !important;
+    text-align: left !important;
+  }
+
+  .paper-body-content th {
+    background: #f1f5f9 !important;
+    font-weight: 700 !important;
+    color: #0f172a !important;
+  }
+
+  /* Discussion Section (Clean Academic Summary) */
+  .discussion-section {
+    margin-top: 2rem !important;
+    padding-top: 1.25rem !important;
+    border-top: 1pt solid #cbd5e1 !important;
+    page-break-before: auto !important;
+  }
+
+  .discussion-header h2 {
+    font-size: 12pt !important;
+    margin-bottom: 0.75rem !important;
+  }
+
+  .comment-item {
+    border: 0.5pt solid #e2e8f0 !important;
+    border-radius: 4px !important;
+    padding: 0.75rem 1rem !important;
+    margin-bottom: 0.75rem !important;
+    background: #fafafa !important;
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+  }
+
+  .comment-author {
+    font-size: 8.5pt !important;
+    font-weight: 700 !important;
+    color: #0f172a !important;
+  }
+
+  .comment-email {
+    font-size: 7.5pt !important;
+    color: #64748b !important;
+  }
+
+  .comment-date {
+    font-size: 7.5pt !important;
+    color: #64748b !important;
+  }
+
+  .comment-body {
+    font-size: 9pt !important;
+    line-height: 1.45 !important;
+    color: #334155 !important;
+    margin-top: 0.35rem !important;
+  }
+
+  /* Academic Print Colophon Footer */
+  .print-pub-footer {
+    display: block !important;
+    border-top: 1.5pt solid #0f172a !important;
+    padding-top: 0.65rem !important;
+    margin-top: 2.5rem !important;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif !important;
+    font-size: 7.5pt !important;
+    color: #64748b !important;
+    line-height: 1.4 !important;
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+  }
+
+  .print-pub-footer .print-hash-line {
+    font-family: Consolas, 'Courier New', monospace !important;
+    color: #0f172a !important;
+    font-size: 8pt !important;
+    margin: 0.2rem 0 !important;
+  }
+}
